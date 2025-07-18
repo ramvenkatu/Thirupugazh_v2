@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thirupugazh Song List Generator</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+    
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.6.0/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-primary text-white py-3 mb-4">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h1 class="h3 mb-0">
+                        <i class="bi bi-music-note-beamed me-2"></i>
+                        Thirupugazh Song List Generator
+                    </h1>
+                    <small class="text-light">Automated playlist creation following the 13-step sequence</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <div class="container-fluid main-container">
+        <div class="row h-100">
+            
+            <!-- Left Column - Control Panel (45%) -->
+            <div class="col-lg-5 col-md-12 control-panel">
+                
+                <!-- Playlist Generation Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-play-circle me-2"></i>
+                            Generate Playlist
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="playlistForm">
+                            <div class="mb-3">
+                                <label for="durationInput" class="form-label">
+                                    Desired Duration (minutes)
+                                </label>
+                                <input 
+                                    type="number" 
+                                    class="form-control" 
+                                    id="durationInput" 
+                                    min="10" 
+                                    max="300" 
+                                    value="60" 
+                                    required>
+                                <div class="form-text">
+                                    Enter duration between 10 and 300 minutes
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg" id="generateBtn">
+                                    <i class="bi bi-magic me-2"></i>
+                                    Generate Playlist
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="exportPdfBtn" disabled>
+                                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                                    Export as PDF
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" id="clearPlaylistBtn" disabled>
+                                    <i class="bi bi-trash me-2"></i>
+                                    Clear Playlist
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- AI Chatbot Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-robot me-2"></i>
+                            AI Assistant
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="chatInput" class="form-label">
+                                Ask AI to modify your playlist
+                            </label>
+                            <div class="input-group">
+                                <textarea 
+                                    class="form-control" 
+                                    id="chatInput" 
+                                    rows="3"
+                                    placeholder="e.g., Remove the first song, Add more songs from Thiruchendur..."
+                                    disabled></textarea>
+                                <button class="btn btn-info" type="button" id="chatBtn" disabled>
+                                    <i class="bi bi-send"></i>
+                                </button>
+                            </div>
+                            <div class="form-text">
+                                Generate a playlist first to enable AI assistance
+                            </div>
+                        </div>
+                        
+                        <!-- Chat Messages -->
+                        <div id="chatMessages" class="chat-messages d-none">
+                            <!-- Chat messages will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chatbot Tips Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-lightbulb me-2"></i>
+                            AI Assistant Commands
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="fw-bold">Available Commands:</h6>
+                        <ul class="list-unstyled">
+                            <li><code>Add [album name]</code> - Add songs from an album</li>
+                            <li><code>Remove song [position]</code> - Remove song at position</li>
+                            <li><code>Replace song [position] with [album]</code> - Replace with song from album</li>
+                            <li><code>Add song [title]</code> - Search and add specific song</li>
+                        </ul>
+                        
+                        <h6 class="fw-bold mt-3">Examples:</h6>
+                        <ul class="list-unstyled text-muted small">
+                            <li><em>"Add more songs from thiruchendur"</em></li>
+                            <li><em>"Remove the first song"</em></li>
+                            <li><em>"Replace song 3 with pazhani"</em></li>
+                            <li><em>"Add song oruvarai oruvar"</em></li>
+                        </ul>
+                        
+                        <div class="alert alert-info small mb-2">
+                            <i class="bi bi-info-circle me-1"></i>
+                            <strong>Note:</strong> Songs are automatically positioned according to the 13-step sequence hierarchy, not your requested position.
+                        </div>
+                        
+                        <div class="alert alert-warning small mb-0">
+                            <i class="bi bi-music-note me-1"></i>
+                            <strong>கந்தர் அனுபூதி Album:</strong> Contains only one comprehensive song "கந்தர் அனுபூதி - அனைத்தும்" which includes the complete கந்தர் அனுபூதி content.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column - Results Panel (55%) -->
+            <div class="col-lg-7 col-md-12 results-panel">
+                
+                <!-- Playlist Results Card -->
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h5 class="card-title mb-0">
+                                    <i class="bi bi-list-ol me-2"></i>
+                                    Generated Playlist
+                                </h5>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-light text-primary" id="playlistStats">
+                                    No playlist generated
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        
+                        <!-- Empty State -->
+                        <div id="emptyState" class="text-center py-5">
+                            <i class="bi bi-music-note display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">No Playlist Generated</h4>
+                            <p class="text-muted">
+                                Use the control panel on the left to generate your first playlist.
+                                The system will follow the traditional 13-step sequence.
+                            </p>
+                        </div>
+
+                        <!-- Playlist Table -->
+                        <div id="playlistContainer" class="d-none">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0" id="playlistTable">
+                                    <thead class="table-dark sticky-top">
+                                        <tr>
+                                            <th scope="col" class="text-center" style="width: 5%;">Sl.No</th>
+                                            <th scope="col" style="width: 30%;">Song Title</th>
+                                            <th scope="col" style="width: 15%;">Song Number 8th Ed</th>
+                                            <th scope="col" style="width: 15%;">Raagam</th>
+                                            <th scope="col" style="width: 20%;">Album</th>
+                                            <th scope="col" class="text-center" style="width: 15%;">Alankaaram</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="playlistTableBody">
+                                        <!-- Playlist rows will be dynamically added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-3 mt-4">
+        <small class="text-muted">
+            Thirupugazh Song List Generator v2.1 | Following the traditional 13-step sequence
+        </small>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center py-4">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h5>Processing Request...</h5>
+                    <p class="text-muted mb-0">Please wait while we generate your playlist</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Consolidated Toast Notification -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="notificationToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header" id="toastHeader">
+                <i class="me-2" id="toastIcon"></i>
+                <strong class="me-auto" id="toastTitle">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastBody">
+                Message will appear here.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Songs Database -->
+    <script src="songs.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html> 
