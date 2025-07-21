@@ -1,0 +1,55 @@
+{
+  "members": [
+    {
+      "id": 1,
+      "name": "Smt & Sri Radha Ananthasivam",
+      "phone_numbers": [
+        "9880550882"
+      ],
+      "address": "75,Mudappa road , M.S .Ngr, B-33"
+    },
+    {
+      "id": 2,
+      "name": "Bharati",
+      "phone_numbers": [
+        "9945478713"
+      ],
+      "address": "#92,Shastri Nilayam, Horamavu Main Road,B-43."
+    },
+    {
+      "id": 3,
+      "name": "Saraswati Ram",
+      "phone_numbers": [
+        "8904316334",
+        "9343434141"
+      ],
+      "address": "21,G-3,Shanta PAradise Aptt, Wheelar Rd,Cox Town"
+    },
+    {
+      "id": 4,
+      "name": "Smt & Sri.Maragatam Sivasubramanian",
+      "phone_numbers": [
+        "9008183622",
+        "9902000676"
+      ],
+      "address": "35,2nd Cross,Swami Vivekananda Layout, Jayanti Ngr,Horamavu Rd, Land Mark:Vibgyor High School & Asha Kiran Special Needs-B-43"
+    },
+    {
+      "id": 5,
+      "name": "Smt & Sri.Sujatha Krishnamurthy",
+      "phone_numbers": [
+        "9686955751"
+      ],
+      "address": "B-305,Fortuna Krrish , K-Channa Sandra, Kalkere,Horamavu,B-43"
+    },
+    {
+      "id": 6,
+      "name": "I V P – Bhajan @ Sura Bharathi",
+      "phone_numbers": [
+        "9341735565",
+        "9739006635"
+      ],
+      "address": "Service Road,Kalyana nagar – B-43"
+    }
+  ]
+}

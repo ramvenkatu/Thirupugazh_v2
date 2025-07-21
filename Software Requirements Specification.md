@@ -3,46 +3,72 @@ Here is the complete Software Requirements Specification (SRS) document, updated
 ***
 
 ### **Software Requirements Specification: Thirupugazh Song List Generator**
-**Version:** 2.8
-**Date:** January 29, 2025
+**Version:** 3.1
+**Date:** January 31, 2025
 
 ---
 ### 1. Introduction
 
 #### 1.1 Purpose
-This document specifies the requirements for the Thirupugazh Song List Generator. The application's primary objective is to automate the creation of structured, timed playlists for bhajan sessions by adhering to a specific 16-step thematic sequence, thereby saving significant manual preparation time for organizers.
+This document specifies the requirements for the Thirupugazh Song List Generator. The application's primary objective is to automate the creation of structured, timed playlists for bhajan sessions by adhering to a specific 16-step thematic sequence, while providing comprehensive event management capabilities including prayer selection, function scheduling, and host member coordination, thereby saving significant manual preparation time for organizers.
 
 #### 1.2 Scope
-The system will consist of a client-side web application and a server-side Node.js backend. The web interface will allow a user to generate a playlist of a specified duration. The backend will house a rule-based engine to construct the playlist according to the strict sequence, manage a persistent history of generated songs in a MySQL database to avoid repetition, and securely interact with a Large Language Model (LLM) for post-generation modifications. The scope includes comprehensive song search functionality, PDF export, keyboard shortcuts, and robust error handling.
+The system will consist of a client-side web application and a server-side Node.js backend. The web interface will allow users to generate playlists with comprehensive event details including prayer selection, function/occasion specification, bhajan scheduling details, and host member coordination. The backend will house a rule-based engine to construct playlists according to the strict sequence, manage persistent history in a MySQL database, and securely interact with LLM services. The scope includes glassmorphism UI design, comprehensive event management, enhanced PDF generation with headers, and robust error handling.
 
-#### 1.3 Recent Updates (Version 2.8)
-* **Alankaaram Functionality:** Added comprehensive Alankaaram support with checkbox selection and customizable time duration (default 4 minutes, range 1-30 minutes) for enhanced playlist customization.
-* **PDF Layout Enhancement:** Changed PDF orientation to landscape mode with increased font sizes (14px body, 12px table cells, 24px title) for optimal readability on various devices.
-* **Alankaaram PDF Display:** PDF export now includes Alankaaram column showing tickmarks (✓) and time durations for songs with Alankaaram enabled, providing complete playlist information.
-* **Table Structure Update:** Enhanced playlist table with 6 columns including the new Alankaaram column, with optimized column widths for landscape layout.
+#### 1.3 Latest Updates (Version 3.1)
+* **Refined Glassmorphism Design:** Enhanced glassmorphism implementation with white, gray, and silver gradient color scheme for elegant, professional appearance with improved readability and accessibility.
+* **Enhanced Playlist Header Display:** Complete redesign of playlist section headers with the following improvements:
+  - **Removed all text labels and colons** ("Prarthanai:", "Function:", etc.) for cleaner presentation
+  - **Center-aligned all content** horizontally for professional appearance
+  - **Implemented 4-line format:** Line 1: Prayer text (italic), Line 2: Function name (bold), Line 3: Date | Day | Time range, Line 4: Host details with contact information
+* **Enhanced Time Management:** Upgraded time input system with dual time field support:
+  - **Start Time Field:** Replaced single "Time" field with "Start Time" for event beginning
+  - **End Time Field:** Added new "End Time" field for event conclusion
+  - **Time Range Display:** Shows time as "Start Time - End Time" format in headers (e.g., "02:30 PM - 05:00 PM")
+* **Improved Duration Accuracy:** Enhanced playlist generation algorithm with precision targeting:
+  - **5% Variance Tolerance:** Algorithm now maintains playlist duration within 5% of requested target
+  - **Intelligent Calculation:** Uses actual song durations from database for accurate time estimation
+  - **Real-time Feedback:** System provides clear logging of duration accuracy and suggestions for adjustments
+* **Professional PDF Generation:** Complete overhaul of PDF export functionality:
+  - **Enhanced Header Formatting:** Clean, center-aligned headers without labels, matching playlist section format
+  - **Header Repetition:** Headers automatically repeat on every page when content spans multiple pages
+  - **Improved Table Borders:** Properly closed table borders preventing content spillage between pages
+  - **Content Cleanup:** Removed unnecessary generated timestamps and footer text for cleaner professional appearance
+  - **16pt Bold Font:** Enhanced readability with larger, bold fonts throughout PDF documents
 
-#### 1.4 Previous Updates (Version 2.7)
+#### 1.4 Major Updates (Version 3.0)
+* **Glassmorphism UI Design:** Complete visual redesign with frosted glass aesthetic, animated gradient backgrounds, backdrop filters, and enhanced visual depth throughout the application.
+* **Comprehensive Event Management System:** Added three new input sections for complete bhajan event coordination:
+  - **Prarthanai Selector:** Interactive prayer selection with preview buttons showing first 2-3 words of each prayer text
+  - **Function Selector:** Comprehensive occasion/function selection from predefined list of 31 Tamil festival functions
+  - **Bhajan Details Section:** Date/time selection with auto-populated day field and complete member management system
+* **Enhanced Playlist Generation Logic:** Added new Step 5f in the 16-step sequence for குன்றுதோறாடல் album selection, positioned after திருத்தணிகை but before Pancha Bhootha Sthalams.
+* **Advanced PDF Generation:** Complete redesign with portrait orientation, 16pt font sizing, reduced margins (0.5 inches), and comprehensive header inclusion displaying prayer text, function details, scheduling information, and host member details.
+* **Member Management System:** Complete member database integration with contact details, address information, and phone numbers for event coordination.
+* **Enhanced Header Display:** Playlist interface now includes comprehensive event headers displaying all selected information above the song list for complete event documentation.
+
+#### 1.5 Previous Updates (Version 2.7)
 * **PDF Readability Enhancement:** Improved PDF font sizes from 9px to 12px body text and 8px to 10px table cells for better accessibility, especially for older users. Removed 1-page restriction, allowing up to 2 A4 pages for optimal readability.
 * **Enhanced PDF Margins:** Increased margins from 0.3in to 0.5in and improved spacing for better visual comfort and reading experience.
 * **Zero Zoom Factor:** Removed aggressive 0.85 zoom factor compression, now using 1.0 for natural text sizing and improved legibility.
 
-#### 1.4 Previous Updates (Version 2.6)
+#### 1.6 Previous Updates (Version 2.6)
 * **Album Hierarchy Correction:** Fixed பொதுப் பாடல்கள் (Pothu Paadalgal) positioning from end of sequence to Step 6 (after Five Abodes, before Pancha Bhoota) as per original SRS requirements.
 * **Enhanced 16-Step Sequence:** Extended from 13-step to 16-step sequence by adding three new compulsory albums after வகுப்பு: பூஜோபசாரங்கள், ஏறுமயில், and ப்ரார்த்தனை.
 * **Missing Album Assignment Fix:** Corrected album assignments for ஏறுமயில் and ப்ரார்த்தனை songs in songs.js database.
 * **PDF Layout Optimization:** Implemented readable A4 formatting with appropriately sized fonts for accessibility, allowing up to 2 pages for better readability, especially for older users.
 * **Album Name Mapping Enhancement:** Added English-to-Tamil mappings for new compulsory albums (poojopacharangal, erumayil, prarthana) in both frontend and backend systems.
 
-#### 1.5 Previous Updates (Version 2.5)
+#### 1.7 Previous Updates (Version 2.5)
 * **PDF Export Form Button Fix:** Fixed critical issue where PDF export button was triggering new playlist generation due to missing `type="button"` attribute. Export now properly uses the existing playlist without creating a new one.
 * **Comprehensive Documentation Update:** Added missing requirements for implemented features including song search API, keyboard shortcuts, loading states, error handling, multiple LLM provider support, and database auto-initialization.
 * **Enhanced API Documentation:** Documented health check endpoint, search functionality, and environment variable requirements.
 * **Security and Performance Requirements:** Added requirements for input validation, error handling, and timeout management.
 
-#### 1.6 Previous Updates (Version 2.3)
+#### 1.8 Previous Updates (Version 2.3)
 * **Enhanced பொதுப் பாடல்கள் Requirements:** Modified the playlist generation algorithm to require a minimum of 3 songs from the "பொதுப் பாடல்கள்" album in every generated playlist. This ensures adequate representation of general devotional songs while maintaining the existing time-filling logic for additional songs beyond the minimum requirement.
 
-#### 1.7 Previous Updates (Version 2.2)
+#### 1.9 Previous Updates (Version 2.2)
 * **Enhanced AI Chatbot Interface:** Upgraded from single-line text input to multi-line textarea for improved user experience with complex commands.
 * **AI Assistant Commands Guide:** Added comprehensive user guidance including available commands, examples, and behavioral explanations.
 * **UI Reorganization:** Streamlined interface by consolidating action buttons (Export PDF, Clear Playlist) below the Generate Playlist button, removing the separate Quick Actions card.
@@ -50,7 +76,7 @@ The system will consist of a client-side web application and a server-side Node.
 * **Album-Specific Documentation:** Added specific explanations for special cases like கந்தர் அனுபூதி album containing only one comprehensive song.
 * **Replace Functionality Clarification:** Enhanced user understanding of replace operations and automatic song repositioning.
 
-#### 1.8 Previous Updates (Version 2.1)
+#### 1.10 Previous Updates (Version 2.1)
 * **Pancha Bhoota Sthalam Implementation:** Clarified and implemented the identification logic for Pancha Bhoota Sthalam albums. The system now automatically identifies albums whose names start with "பஞ்சபூதம் " prefix and includes up to 5 songs from these albums in the playlist generation sequence.
 
 ---
@@ -64,7 +90,16 @@ The application is a client-server system.
 #### 2.2 Design and Implementation Constraints
 
 **UI-C1: Styling and Technology**
-* The user interface must be styled using the Bootstrap 5 framework and custom CSS3 to achieve a clean, modern, and professional appearance.
+* The user interface must be styled using the Bootstrap 5 framework and custom CSS3 to achieve a modern glassmorphism aesthetic with professional appearance.
+* The application must implement comprehensive glassmorphism design principles including animated gradient backgrounds, backdrop blur effects, and semi-transparent layered elements.
+
+**UI-C1.1: Glassmorphism Design Requirements**
+* Animated gradient background using white, gray, and silver color transitions with CSS keyframe animations for elegant, professional appearance
+* Backdrop filter blur effects (minimum 10px) applied to all primary containers and cards for frosted glass aesthetic
+* Semi-transparent backgrounds using rgba() color values for layered depth with white/gray/silver color scheme
+* Enhanced text readability through strategic text shadows and high contrast colors optimized for accessibility
+* Interactive elements with glass-like hover effects and subtle transformations maintaining professional elegance
+* Smooth color transitions between white (#ffffff), light gray (#f8f9fa), medium gray (#e9ecef), and silver (#ced4da) tones
 
 **UI-C2: Layout and Responsiveness**
 * The main application container must be configured to occupy 98% of the browser's viewport width.
@@ -78,8 +113,9 @@ The application is a client-server system.
 
 **DEV-C2: Project File Structure**
 * The project must be composed of the following files:
-    * **Frontend:** `index.html`, `style.css`, `script.js`, `songs.js`
+    * **Frontend:** `index.html`, `style.css`, `script.js`, `songs.js`, `prarthanais.js`, `functions.js`, `members.js`
     * **Backend:** `server.js` (or similar entry point), `package.json`, `.env`
+    * **Documentation:** `Software Requirements Specification.md`, `README.md`, `SETUP_INSTRUCTIONS.md`
 
 **DEV-C3: Separation of Concerns (SoC)**
 * A strict separation between structure (HTML), presentation (CSS), and behavior (JavaScript) must be enforced.
@@ -94,7 +130,15 @@ The application is a client-server system.
 
 **DATA-C1: Data Sources**
 * The `songs.js` file is the definitive, immutable source of truth for all song data. This file is not to be modified by the running application.
+* The `prarthanais.js` file contains prayer/devotional text data with unique IDs and full Tamil text content for playlist headers.
+* The `functions.js` file contains a comprehensive list of 31 Tamil festival and ceremonial functions/occasions for event categorization.
+* The `members.js` file contains the complete member database with contact details, addresses, and phone numbers for 22 bhajan group members.
 * The MySQL database is the definitive source for playlist history. It will be read from and written to by the Node.js backend.
+
+**DATA-C3: Event Data Structure**
+* Bhajan details must support dual time fields: `startTime` and `endTime` for comprehensive event scheduling
+* Time range display shall format as "Start Time - End Time" when both times are provided
+* Application state must maintain separate fields for start and end times to support flexible event planning
 
 **DATA-C2: Data Integrity**
 * The `duration` field in `songs.js` is stored as a "minutes.seconds" string (e.g., "5.17"). The backend logic must parse this string into a numerical format (total seconds) for any duration calculations.
@@ -105,7 +149,26 @@ The application is a client-server system.
 
 #### 3.1 Functional Requirements
 
-**FR-1: Playlist Generation Engine**
+**FR-1: Event Management System**
+* **FR-1.1: Prarthanai Selector:** The system shall provide an interactive prayer selection interface with the following capabilities:
+    * **FR-1.1.1: Dynamic Loading:** Automatically load prayer data from `prarthanais.js` file containing prayer verses with unique IDs and full text content
+    * **FR-1.1.2: Preview Buttons:** Display clickable buttons showing the first 2-3 words of each prayer text (e.g., "இருநில மீதி...", "துக்கத்தே பரவாமல்...")
+    * **FR-1.1.3: Full Text Display:** Upon selection, display the complete prayer text in a dedicated area below the selection buttons
+    * **FR-1.1.4: State Management:** Store the selected prayer in application state for inclusion in playlist headers and PDF export
+* **FR-1.2: Function Selector:** The system shall provide comprehensive event occasion management with the following features:
+    * **FR-1.2.1: Function Database:** Load function/occasion data from `functions.js` containing 31 predefined Tamil festival and ceremonial functions
+    * **FR-1.2.2: Card Interface:** Display functions as scrollable, clickable cards with proper visual feedback and selection states
+    * **FR-1.2.3: Function Storage:** Store selected function details including ID and name for header generation
+* **FR-1.3: Bhajan Details Management:** The system shall provide comprehensive event scheduling capabilities:
+    * **FR-1.3.1: Date Selection:** Provide native HTML date picker with automatic day population based on selected date
+    * **FR-1.3.2: Start Time Selection:** Provide native HTML time picker for event start time scheduling
+    * **FR-1.3.3: End Time Selection:** Provide native HTML time picker for event end time scheduling
+    * **FR-1.3.4: Time Range Display:** Display time as "Start Time - End Time" format in headers when both times are provided
+    * **FR-1.3.5: Day Auto-Population:** Automatically calculate and display the day of the week when a date is selected
+    * **FR-1.3.6: Member Management:** Integrate complete member database from `members.js` with contact details, addresses, and phone numbers
+    * **FR-1.3.7: Host Selection:** Provide member selection interface with detailed contact information display upon selection
+
+**FR-2: Enhanced Playlist Generation Engine**
 * **FR-1.1: Duration Input:** The user shall be able to input a desired playlist duration in minutes on the web interface.
 * **FR-1.2: Strict 16-Step Sequence & Logic:** The playlist generation engine on the Node.js backend must follow this precise algorithm:
     1.  Select one song for each of the compulsory fixed categories (Steps 1-16 below), respecting the repetition avoidance rule (FR-4.2).
@@ -113,10 +176,11 @@ The application is a client-server system.
         2.  **விநாயகர் துதி (1 Additional Song):** The second song must be another, different song selected from the "விநாயகர் துதி" album.
         3.  **விநாயகர் நாமாவளி (1 Song):** The third song must be from the album "விநாயகர் நாமாவளி".
         4.  **குரு வணக்கம் (Compulsory):** The fourth song must be from the album "குரு வணக்கம்".
-        5.  **The Five Abodes (5 Songs):** The playlist must include one song from each of the following five albums: 'திருப்பரங்குன்றம்', 'திருசெந்தூர்', 'திருப்பழனி', 'ஸ்வாமி மலை', and 'திருத்தணிகை'.
+        5.  **The Five Abodes (2 Songs Each):** The playlist must include 2 songs from each of the following five albums: 'திருப்பரங்குன்றம்', 'திருசெந்தூர்', 'திருப்பழனி', 'ஸ்வாமி மலை', and 'திருத்தணிகை'.
+        5f. **குன்றுதோறாடல் (1 Song):** After completing the Five Abodes but before Pancha Bhoota Sthalams, the system must select exactly one song from the "குன்றுதோறாடல்" album, respecting the repetition avoidance rule.
         6.  **பொது பாடல்கள் (Step 6 - Minimum 3 Required):** Select a minimum of 3 songs from the "பொதுப் பாடல்கள்" album, respecting the repetition avoidance rule. This step ensures adequate representation of general devotional songs in the proper sequence position.
         7.  **Pancha Bhoota Sthalams (Up to 5 Songs):** Include one song from each album whose name starts with "பஞ்சபூதம் " (up to 5 such albums). The system shall automatically identify and select from albums like "பஞ்சபூதம் காஞ்சீபுரம்", "பஞ்சபூதம் திரு சிதம்பரம்", etc.
-        8.  **பழமுதிர் சோலை (Minimum 1 Song):** Include at least one song from the album "பழமுதிர் சோலை".
+        8.  **பழமுதிர் சோலை (2 Songs):** Include 2 songs from the album "பழமுதிர் சோலை".
         9.  **கந்தர் அனுபூதி (Compulsory):** One song from the album "கந்தர் அனுபூதி".
         10. **வே, ம, சே (Compulsory):** One song from the album "வே, ம, சே".
         11. **விரு (Compulsory):** One song from the album "விரு".
@@ -129,7 +193,23 @@ The application is a client-server system.
     3.  Subtract this duration from the user's total desired duration to determine the `time_to_fill`.
     4.  **Additional பொது பாடல்கள் (Filler Songs):** If the `time_to_fill` is positive after completing all 16 mandatory steps, continue to randomly select additional songs from the "பொதுப் பாடல்கள்" album until the desired duration is met or exceeded.
 
-**FR-2: AI Chatbot Operations**
+**FR-2.1: Header Data Integration:** The playlist generation engine shall collect and integrate event management data with the following requirements:
+    * **FR-2.1.1: Data Collection:** Gather selected prayer text, function details, bhajan scheduling information, and host member details from the user interface
+    * **FR-2.1.2: Header Generation:** Include comprehensive event headers in both web interface display and PDF export containing all collected event information
+    * **FR-2.1.3: State Persistence:** Maintain header data throughout the user session for consistent display and export capabilities
+
+**FR-3: Glassmorphism UI Design System**
+* **FR-3.1: Visual Aesthetic Requirements:** The system shall implement a comprehensive glassmorphism design with the following specifications:
+    * **FR-3.1.1: Animated Background:** Implement animated gradient background with shifting colors (purple, blue, pink, red) using CSS keyframe animations
+    * **FR-3.1.2: Backdrop Filters:** Apply `backdrop-filter: blur(10px)` to all primary containers and panels for frosted glass effect
+    * **FR-3.1.3: Semi-Transparent Elements:** Use `rgba()` color values with transparency for layered visual depth
+    * **FR-3.1.4: High Contrast Text:** Implement text shadows and high contrast colors to ensure readability over glass effects
+* **FR-3.2: Interactive Elements:** All interactive components shall include enhanced glassmorphism styling:
+    * **FR-3.2.1: Button Effects:** Buttons shall have glass-like appearance with hover transformations and backdrop blur
+    * **FR-3.2.2: Card Interactions:** Cards shall feature hover effects with increased transparency and subtle movement
+    * **FR-3.2.3: Form Controls:** Input fields and form elements shall have translucent backgrounds with blur effects
+
+**FR-4: AI Chatbot Operations**
 * **FR-2.1: Enhanced Input Interface:** The system shall provide a multi-line textarea input field to support complex, multi-command user requests and improve usability for longer instructions.
 * **FR-2.2: User Guidance System:** The interface shall include a comprehensive AI Assistant Commands guide featuring:
     * Available command syntax and examples
@@ -140,11 +220,15 @@ The application is a client-server system.
 * **FR-2.4: Natural Language Understanding:** The LLM is responsible for interpreting user requests and converting them into structured JSON commands that the client-side JavaScript can execute to modify the playlist.
 * **FR-2.5: Enhanced User Feedback:** The system shall provide clear, informative messages explaining the results of user commands, particularly when songs are repositioned according to the 16-step hierarchy.
 
-**FR-3: UI and Data Display**
+**FR-5: Enhanced UI and Data Display**
 * **FR-3.1: Streamlined Action Layout:** The system shall organize primary actions (Generate Playlist, Export PDF, Clear Playlist) in a single, consolidated location below the duration input for improved user workflow.
 * **FR-3.2: Playlist Table Display:** The generated playlist shall be rendered in a Bootstrap-styled table with the headers: "Sl.No", "Song Title", "Song Number 8th Ed", "Raagam", "Album", and "Alankaaram". The duration column has been removed to focus on essential song identification information and Alankaaram functionality.
-* **FR-3.3: PDF Export:** The system shall provide a function to export the current playlist as a PDF document with the same column headers as the on-screen display. The PDF shall not include duration information, total duration, or song count in the header.
-* **FR-3.4: PDF Readability Optimization:** The PDF export must prioritize readability with appropriately sized fonts (14px body, 12px table cells, 24px title) in landscape orientation, allowing up to 2 A4 pages for accessibility, especially for older users.
+* **FR-5.3: Enhanced PDF Export:** The system shall provide comprehensive PDF generation capabilities with the following specifications:
+    * **FR-5.3.1: Portrait Orientation:** PDF documents shall be generated in A4 portrait orientation with reduced margins (15mm) for maximum content utilization
+    * **FR-5.3.2: Enhanced Font Sizing:** PDF text shall use 12pt font size for optimal readability across all age groups
+    * **FR-5.3.3: Comprehensive Headers:** PDF shall include complete event headers displaying prayer text, function details, scheduling information, and host member contact details
+    * **FR-5.3.4: Header Repetition:** Event headers and table column headers shall be repeated on every page for multi-page documents
+    * **FR-5.3.5: Professional Formatting:** PDF styling shall include appropriate spacing, borders, and visual hierarchy for professional presentation
 * **FR-3.5: Alankaaram Functionality:** The system shall provide comprehensive Alankaaram support with the following capabilities:
     * **FR-3.5.1: Checkbox Selection:** Each song row shall include a checkbox in the Alankaaram column allowing users to enable/disable Alankaaram for individual songs.
     * **FR-3.5.2: Time Duration Input:** When Alankaaram is enabled for a song, a time input field shall appear with a default value of 4 minutes, allowing users to specify duration between 1-30 minutes.
@@ -159,7 +243,7 @@ The application is a client-server system.
     * Real-world usage examples that users can copy/paste
     * Contextual warnings and behavioral explanations
 
-**FR-4: Playlist History and Repetition Avoidance**
+**FR-6: Playlist History and Repetition Avoidance**
 * **FR-4.1: Persistent History:** The system shall use a MySQL database to store a history of generated songs. A table named `playlist_history` will be used with the following schema:
     * `id` INT AUTO_INCREMENT PRIMARY KEY
     * `song_id` INT NOT NULL
@@ -170,7 +254,7 @@ The application is a client-server system.
 * **FR-4.3: Saving History:** Upon successful generation of a playlist, the backend must `INSERT` the `song_id` for each song in the new playlist into the `playlist_history` table.
 * **FR-4.4: Database Auto-Initialization:** The system shall automatically create the required database tables if they do not exist upon server startup, ensuring seamless deployment.
 
-**FR-5: Song Search and Discovery**
+**FR-7: Song Search and Discovery**
 * **FR-5.1: Fuzzy Search API:** The system shall provide a `/api/search-songs` endpoint that supports fuzzy string matching for song titles and album names.
 * **FR-5.2: Search Parameters:** The search API shall accept the following parameters:
     * `query` (required): Search term for fuzzy matching
@@ -209,10 +293,43 @@ The application is a client-server system.
 * **FR-8.3: Enhanced Album Name Mapping:** The system shall support English-to-Tamil mappings for the new compulsory albums (poojopacharangal, erumayil, prarthana) in both frontend and backend components.
 * **FR-8.4: Corrected General Songs Positioning:** The system shall position General Songs at Step 6 of the sequence, immediately after the Five Abodes and before Pancha Bhoota Sthalams, correcting the previous misplacement at the end of the sequence.
 
-**FR-9: System Health and Monitoring**
-* **FR-9.1: Health Check Endpoint:** The system shall provide a `/api/health` endpoint for monitoring system status and database connectivity.
-* **FR-9.2: Error Logging:** The system shall log detailed error information including stack traces, request details, and timestamp for debugging purposes.
-* **FR-9.3: Request Timeout Handling:** API requests shall have appropriate timeout handling to prevent hanging connections.
+**FR-9: Enhanced Playlist Header Display**
+* **FR-9.1: Clean Header Format:** The system shall display playlist headers without text labels or colons for a clean, professional appearance.
+* **FR-9.2: Center Alignment:** All header content shall be horizontally center-aligned for visual balance and professional presentation.
+* **FR-9.3: Four-Line Structure:** The system shall organize header information in a structured 4-line format:
+    * Line 1: Prayer text displayed in italic formatting
+    * Line 2: Function name displayed in bold formatting
+    * Line 3: Date, day, and time range separated by pipe (|) characters
+    * Line 4: Host details including name, address, and contact information
+* **FR-9.4: Conditional Display:** The system shall only display header lines when corresponding data is available and hide empty sections gracefully.
+
+**FR-10: Improved Duration Accuracy**
+* **FR-10.1: 5% Variance Tolerance:** The playlist generation algorithm shall maintain playlist duration within 5% of the user-requested target duration.
+* **FR-10.2: Database-Driven Calculation:** The system shall use actual song durations from the database rather than estimates for precise time calculations.
+* **FR-10.3: Real-Time Feedback:** The system shall provide clear logging and feedback about duration accuracy, including:
+    * Target duration with tolerance range
+    * Actual generated duration
+    * Whether the playlist falls within acceptable variance
+    * Suggestions for adjustment when outside tolerance
+* **FR-10.4: Intelligent Album Sampling:** The system shall calculate remaining step durations by sampling actual songs from each mandatory album.
+
+**FR-11: Professional PDF Generation**
+* **FR-11.1: Enhanced Header Formatting:** PDF headers shall match playlist section formatting with center alignment and no text labels.
+* **FR-11.2: Multi-Page Header Repetition:** When content spans multiple pages, headers shall automatically repeat on every page with identical formatting.
+* **FR-11.3: Improved Table Borders:** PDF tables shall have properly closed borders preventing content spillage between pages with:
+    * 2px solid borders on table edges
+    * 1px borders between cells
+    * Proper border closure at page ends
+* **FR-11.4: Content Cleanup:** PDF generation shall exclude unnecessary elements:
+    * Generated timestamps and date information
+    * Footer text with version information
+    * Redundant title repetitions
+* **FR-11.5: Enhanced Typography:** PDF documents shall use 16pt bold fonts throughout for improved readability and professional appearance.
+
+**FR-12: System Health and Monitoring**
+* **FR-12.1: Health Check Endpoint:** The system shall provide a `/api/health` endpoint for monitoring system status and database connectivity.
+* **FR-12.2: Error Logging:** The system shall log detailed error information including stack traces, request details, and timestamp for debugging purposes.
+* **FR-12.3: Request Timeout Handling:** API requests shall have appropriate timeout handling to prevent hanging connections.
 
 #### 3.2 Non-Functional Requirements
 
@@ -220,7 +337,14 @@ The application is a client-server system.
 * **NFR-1: Response Time:** Playlist generation and UI rendering should complete within 10 seconds.
 * **NFR-2: Timeout Management:** All API requests must have configurable timeouts (45 seconds for playlist generation, 30 seconds for LLM requests).
 * **NFR-3: Database Performance:** Database queries should be optimized with appropriate indexes on `song_id` and `created_at` columns in the `playlist_history` table.
-* **NFR-4: PDF Accessibility:** PDF generation must prioritize readability and accessibility with legible font sizes, comfortable margins, and clear formatting, allowing up to 2 A4 pages when necessary to maintain optimal readability for all users, especially older users.
+* **NFR-3.1: Duration Accuracy:** Playlist generation must achieve target duration within 5% variance using database-driven calculations and intelligent album sampling for precise time estimation.
+* **NFR-4: PDF Professional Quality:** PDF generation must maintain professional standards with:
+    * 16pt bold fonts throughout for enhanced readability
+    * Portrait orientation with 0.5-inch margins for optimal layout
+    * Clean, center-aligned headers without unnecessary labels
+    * Proper table border closure preventing content spillage
+    * Header repetition on all pages for multi-page documents
+    * Removal of extraneous timestamps and footer content for clean presentation
 
 **Usability Requirements**
 * **NFR-5: Enhanced Usability:** The application must provide an intuitive and user-friendly experience including:
@@ -339,22 +463,52 @@ The following requirements represent identified gaps and potential future enhanc
 * **NFR-F7.4: Social Sharing:** Share playlists on social media platforms.
 
 ---
-### 5. Implementation Priority
+### 5. Implementation Status and Future Roadmap
 
-**High Priority (Next Version 2.7):**
+#### 5.1 Version 3.0 Completion Summary
+**Completed Major Features:**
+* ✅ **Glassmorphism UI Design System** - Complete visual redesign with animated gradients and frosted glass effects
+* ✅ **Comprehensive Event Management** - Prayer selection, function scheduling, and member coordination systems
+* ✅ **Enhanced Playlist Generation** - Added குன்றுதோறாடல் album step and comprehensive header integration
+* ✅ **Advanced PDF Generation** - Portrait orientation with headers, 12pt fonts, and professional formatting
+* ✅ **Member Database Integration** - Complete contact management with 22 bhajan group members
+* ✅ **Enhanced User Experience** - Interactive selectors, auto-population, and visual feedback systems
+
+#### 5.2 Future Implementation Priority
+
+**High Priority (Next Version 3.1):**
 1. Rate limiting implementation (NFR-F1.1)
 2. Enhanced input validation and sanitization (NFR-14)
 3. Improved error tracking and logging (NFR-F3.1)
 4. Database connection pooling (NFR-F2.2)
+5. Progressive Web App capabilities (NFR-F6.1)
 
-**Medium Priority (Version 2.8):**
-1. Playlist save/load functionality (FR-F1.1)
-2. Additional export formats (FR-F2.1)
-3. Advanced search filters (FR-F3.1)
-4. Theme support including dark mode (FR-F4.3)
+**Medium Priority (Version 3.2):**
+1. Music platform integration for audio playback (NFR-F7.1)
+2. Calendar integration for automatic scheduling (NFR-F7.2)
+3. Email distribution system (NFR-F7.3)
+4. Mobile app packaging (NFR-F6.4)
 
-**Low Priority (Future Versions):**
-1. User account system (FR-F4.1)
-2. Mobile app development (NFR-F6.4)
-3. External integrations (NFR-F7.x)
-4. Advanced customization features (FR-F4.2)
+---
+### 6. Version History Summary
+
+**Version 3.0 (January 30, 2025)** - Major Event Management Release
+- Complete glassmorphism UI redesign
+- Prayer, function, and member management systems
+- Enhanced PDF generation with comprehensive headers
+- Extended playlist generation with குன்றுதோறாடல் album
+
+**Version 2.8 (January 29, 2025)** - Alankaaram Enhancement Release
+- Comprehensive Alankaaram functionality with time customization
+- Enhanced PDF formatting and readability improvements
+- Table structure updates with 6-column layout
+
+**Previous Versions (2.1-2.7)** - Foundation and Core Features
+- 16-step playlist generation algorithm
+- AI chatbot integration with LLM support
+- PDF export capabilities and responsive design
+- Database integration and history management
+
+---
+
+**Document Status:** Version 3.0 Complete - All major event management features implemented and tested. The application now provides comprehensive bhajan event coordination capabilities with modern glassmorphism UI design and professional PDF generation with complete event documentation.

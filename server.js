@@ -266,6 +266,12 @@ async function generatePlaylist(desiredDurationMinutes) {
     const recentlyUsed = await getRecentlyUsedSongs();
     let totalDuration = 0;
 
+    // Calculate duration targets upfront
+    const desiredDurationSeconds = desiredDurationMinutes * 60;
+    const tolerance = desiredDurationSeconds * 0.05; // 5% tolerance
+    const maxDuration = desiredDurationSeconds + tolerance;
+    const minDuration = desiredDurationSeconds - tolerance;
+
     console.log('=== PLAYLIST GENERATION DEBUG ===');
     console.log('Desired duration:', desiredDurationMinutes, 'minutes');
     console.log('Recently used songs:', recentlyUsed.length);
@@ -315,8 +321,8 @@ async function generatePlaylist(desiredDurationMinutes) {
         console.log('Added:', song.title, 'from', song.album);
     }
 
-    // Step 5: The Five Abodes (5 Songs)
-    console.log('\n--- Step 5: The Five Abodes ---');
+    // Step 5: The Five Abodes (2 Songs Each)
+    console.log('\n--- Step 5: The Five Abodes (2 Songs Each) ---');
     const fiveAbodes = [
         'திருப்பரங்குன்றம்',
         'திருசெந்தூர்',
@@ -328,12 +334,31 @@ async function generatePlaylist(desiredDurationMinutes) {
     for (const abode of fiveAbodes) {
         const abodeSongs = getSongsByAlbum(abode);
         console.log(`Available ${abode} songs:`, abodeSongs.length);
-        if (abodeSongs.length > 0) {
+        
+        // Select 2 songs from each abode
+        for (let i = 0; i < 2 && abodeSongs.length > 0; i++) {
             const song = selectRandomSong(abodeSongs, recentlyUsed);
             playlist.push(song);
             totalDuration += durationToSeconds(song.duration);
-            console.log('Added:', song.title, 'from', song.album);
+            console.log(`Added (${i+1}/2):`, song.title, 'from', song.album);
+            
+            // Remove the selected song from the pool to avoid duplicates
+            const songIndex = abodeSongs.findIndex(s => s.id === song.id);
+            if (songIndex > -1) {
+                abodeSongs.splice(songIndex, 1);
+            }
         }
+    }
+
+    // Step 5f: குன்றுதோறாடல் (1 Song) - NEW STEP as requested
+    console.log('\n--- Step 5f: குன்றுதோறாடல் ---');
+    const kunruthoradalsongs = getSongsByAlbum('குன்றுதோறாடல்');
+    console.log('Available குன்றுதோறாடல் songs:', kunruthoradalsongs.length);
+    if (kunruthoradalsongs.length > 0) {
+        const song = selectRandomSong(kunruthoradalsongs, recentlyUsed);
+        playlist.push(song);
+        totalDuration += durationToSeconds(song.duration);
+        console.log('Added:', song.title, 'from', song.album);
     }
 
     // Step 6: பொதுப் பாடல்கள் (ALL Required - Including Fillers)
@@ -344,17 +369,48 @@ async function generatePlaylist(desiredDurationMinutes) {
     if (generalSongs.length === 0) {
         console.error('ERROR: No பொதுப் பாடல்கள் songs found in database!');
     } else {
-        // Estimate remaining time for Steps 7-16 (approximately 10-15 minutes based on typical patterns)
-        const estimatedRemainingStepsDuration = 12 * 60; // 12 minutes estimate
-        const desiredDurationSeconds = desiredDurationMinutes * 60;
-        const timeAvailableForGeneral = desiredDurationSeconds - totalDuration - estimatedRemainingStepsDuration;
+        // Calculate accurate remaining time for Steps 7-16 by sampling actual songs
+        // Sample one song from each remaining mandatory album to estimate actual duration
+        let estimatedRemainingStepsDuration = 0;
+        const remainingMandatoryAlbums = [
+            'பஞ்சபூதம் காஞ்சீபுரம்', 'பழமுதிர் சோலை', 'கந்தர் அனுபூதி', 
+            'வே, ம, சே', 'விரு', 'மகுடம்', 'வகுப்பு', 'பூஜோபசாரங்கள்', 
+            'ஏறுமயில்', 'ப்ரார்த்தனை'
+        ];
         
-        console.log(`Estimated remaining steps duration: ${Math.round(estimatedRemainingStepsDuration/60)} minutes`);
+        remainingMandatoryAlbums.forEach(albumName => {
+            const albumSongs = getSongsByAlbum(albumName);
+            if (albumSongs.length > 0) {
+                const avgDuration = albumSongs.reduce((sum, song) => sum + durationToSeconds(song.duration), 0) / albumSongs.length;
+                estimatedRemainingStepsDuration += avgDuration;
+            } else {
+                estimatedRemainingStepsDuration += 3.5 * 60; // Default 3.5 minutes if no songs found
+            }
+        });
+        
+        // Add time for Pancha Bhoota albums (up to 5 songs)
+        const panchaBhootaAlbums = [...new Set(songs
+            .filter(song => song.album && song.album.startsWith('பஞ்சபூதம் '))
+            .map(song => song.album)
+        )];
+        const panchaBhootaCount = Math.min(5, panchaBhootaAlbums.length);
+        if (panchaBhootaCount > 0) {
+            const panchaBhootaSongs = songs.filter(song => song.album && song.album.startsWith('பஞ்சபூதம் '));
+            const avgPanchaBhootaDuration = panchaBhootaSongs.reduce((sum, song) => sum + durationToSeconds(song.duration), 0) / panchaBhootaSongs.length;
+            estimatedRemainingStepsDuration += avgPanchaBhootaDuration * panchaBhootaCount;
+        }
+        
+        console.log(`Calculated remaining steps duration: ${Math.round(estimatedRemainingStepsDuration/60)} minutes`);
+        
+        const timeAvailableForGeneral = Math.max(0, desiredDurationSeconds - totalDuration - estimatedRemainingStepsDuration);
+        
+        console.log(`Target duration: ${Math.round(desiredDurationSeconds/60)} minutes (±${Math.round(tolerance/60)} minutes tolerance)`);
         console.log(`Time available for பொதுப் பாடல்கள்: ${Math.round(timeAvailableForGeneral/60)} minutes`);
         
-        // Calculate how many பொதுப் பாடல்கள் songs needed (minimum 3, but fill available time)
-        const avgSongDuration = 3.5 * 60; // Average 3.5 minutes per song
-        const targetGeneralSongsCount = Math.max(3, Math.floor(timeAvailableForGeneral / avgSongDuration));
+        // Calculate how many பொதுப் பாடல்கள் songs needed with more accurate duration calculation
+        const generalSongDurations = generalSongs.map(song => durationToSeconds(song.duration));
+        const avgGeneralSongDuration = generalSongDurations.reduce((sum, dur) => sum + dur, 0) / generalSongDurations.length;
+        const targetGeneralSongsCount = Math.max(3, Math.round(timeAvailableForGeneral / avgGeneralSongDuration));
         
         console.log(`Target பொதுப் பாடல்கள் songs: ${targetGeneralSongsCount}`);
         
@@ -381,8 +437,9 @@ async function generatePlaylist(desiredDurationMinutes) {
             
             if (song) {
                 const songDuration = durationToSeconds(song.duration);
-                // Check if adding this song would exceed available time (with 2-minute buffer)
-                if (generalSongsDuration + songDuration <= timeAvailableForGeneral + 120) {
+                // Check if adding this song would exceed the target duration (considering tolerance)
+                const projectedTotalDuration = totalDuration + songDuration + estimatedRemainingStepsDuration;
+                if (projectedTotalDuration <= maxDuration) {
                     playlist.push(song);
                     usedGeneralSongs.add(song.id);
                     totalDuration += songDuration;
@@ -419,15 +476,23 @@ async function generatePlaylist(desiredDurationMinutes) {
         }
     }
 
-    // Step 8: பழமுதிர் சோலை (Minimum 1 Song)
-    console.log('\n--- Step 8: பழமுதிர் சோலை ---');
+    // Step 8: பழமுதிர் சோலை (2 Songs)
+    console.log('\n--- Step 8: பழமுதிர் சோலை (2 Songs) ---');
     const pazhamuthirSongs = getSongsByAlbum('பழமுதிர் சோலை');
     console.log('Available பழமுதிர் சோலை songs:', pazhamuthirSongs.length);
-    if (pazhamuthirSongs.length > 0) {
+    
+    // Select 2 songs from பழமுதிர் சோலை
+    for (let i = 0; i < 2 && pazhamuthirSongs.length > 0; i++) {
         const song = selectRandomSong(pazhamuthirSongs, recentlyUsed);
         playlist.push(song);
         totalDuration += durationToSeconds(song.duration);
-        console.log('Added:', song.title, 'from', song.album);
+        console.log(`Added (${i+1}/2):`, song.title, 'from', song.album);
+        
+        // Remove the selected song from the pool to avoid duplicates
+        const songIndex = pazhamuthirSongs.findIndex(s => s.id === song.id);
+        if (songIndex > -1) {
+            pazhamuthirSongs.splice(songIndex, 1);
+        }
     }
 
     // Step 9: கந்தர் அனுபூதி (Compulsory)
@@ -522,14 +587,23 @@ async function generatePlaylist(desiredDurationMinutes) {
 
     // Note: பொதுப் பாடல்கள் (General Songs) are now added at Step 6 instead of as fillers
     console.log('\n--- Final Duration Check ---');
-    const desiredDurationSeconds = desiredDurationMinutes * 60;
-    const finalDuration = Math.round(totalDuration / 60);
-    const targetDuration = Math.round(desiredDurationSeconds / 60);
-    console.log(`Final playlist duration: ${finalDuration} minutes (target: ${targetDuration} minutes)`);
+    const finalDurationMinutes = Math.round(totalDuration / 60);
+    const targetDurationMinutes = Math.round(desiredDurationSeconds / 60);
+    const toleranceMinutes = Math.round(tolerance / 60);
+    const durationDifference = Math.abs(finalDurationMinutes - targetDurationMinutes);
+    const isWithinTolerance = totalDuration >= minDuration && totalDuration <= maxDuration;
     
-    if (Math.abs(finalDuration - targetDuration) > 3) {
-        console.log(`Note: Playlist duration differs from target by ${Math.abs(finalDuration - targetDuration)} minutes`);
-        console.log('This is expected since all பொதுப் பாடல்கள் are now placed at Step 6 before பஞ்சபூதம் songs');
+    console.log(`Final playlist duration: ${finalDurationMinutes} minutes (target: ${targetDurationMinutes} ± ${toleranceMinutes} minutes)`);
+    console.log(`Duration difference: ${durationDifference} minutes`);
+    console.log(`Within 5% tolerance: ${isWithinTolerance ? 'YES' : 'NO'}`);
+    
+    if (!isWithinTolerance) {
+        console.log(`Warning: Playlist duration is outside the 5% tolerance range`);
+        if (totalDuration < minDuration) {
+            console.log('Suggestion: Consider adding more பொதுப் பாடல்கள் or using AI chat to add songs');
+        } else {
+            console.log('Suggestion: Consider removing some பொதுப் பாடல்கள் or using AI chat to adjust playlist');
+        }
     }
 
     console.log('\n=== FINAL PLAYLIST ===');
@@ -550,7 +624,7 @@ async function generatePlaylist(desiredDurationMinutes) {
 // Generate playlist endpoint
 app.post('/api/generate-playlist', async (req, res) => {
     try {
-        const { duration } = req.body;
+        const { duration, headerData } = req.body;
         
         if (!duration || duration < 10 || duration > 300) {
             return res.status(400).json({ 
@@ -565,6 +639,7 @@ app.post('/api/generate-playlist', async (req, res) => {
         
         res.json({
             playlist,
+            headerData: headerData || null,
             totalDuration: playlist.reduce((sum, song) => sum + durationToSeconds(song.duration), 0),
             requestedDuration: duration * 60
         });
@@ -722,7 +797,7 @@ app.post('/api/llm-chat', async (req, res) => {
 // Server-side PDF generation endpoint
 app.post('/api/generate-pdf', (req, res) => {
     try {
-        const { playlist, alankaaramData = {} } = req.body;
+        const { playlist, alankaaramData = {}, headerData = null } = req.body;
         
         if (!playlist || playlist.length === 0) {
             return res.status(400).json({ error: 'No playlist data provided' });
@@ -750,6 +825,80 @@ app.post('/api/generate-pdf', (req, res) => {
             return `${mins}:${Math.floor(seconds % 60).toString().padStart(2, '0')}`;
         };
 
+        // Create header content if header data exists
+        let headerSection = '';
+        if (headerData) {
+            headerSection += '<div class="bhajan-header">';
+            
+            // Line 1: Prarthanai
+            if (headerData.selectedPrarthanai) {
+                headerSection += `<div class="header-line prayer-text">${headerData.selectedPrarthanai.text}</div>`;
+            }
+            
+            // Line 2: Function
+            if (headerData.selectedFunction) {
+                headerSection += `<div class="header-line function-text">${headerData.selectedFunction.name}</div>`;
+            }
+            
+            // Line 3: Date, Day, Time
+            if (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime || headerData.bhajanDetails.endTime)) {
+                let line3Content = [];
+                
+                if (headerData.bhajanDetails.date) {
+                    const dateObj = new Date(headerData.bhajanDetails.date);
+                    const formattedDate = dateObj.toLocaleDateString('en-IN');
+                    line3Content.push(formattedDate);
+                }
+                
+                if (headerData.bhajanDetails.day) {
+                    line3Content.push(headerData.bhajanDetails.day);
+                }
+                
+                if (headerData.bhajanDetails.startTime) {
+                    const startTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.startTime}`);
+                    const formattedStartTime = startTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                    
+                    if (headerData.bhajanDetails.endTime) {
+                        const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
+                        const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                        line3Content.push(`${formattedStartTime} - ${formattedEndTime}`);
+                    } else {
+                        line3Content.push(formattedStartTime);
+                    }
+                } else if (headerData.bhajanDetails.endTime) {
+                    const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
+                    const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                    line3Content.push(`Until ${formattedEndTime}`);
+                }
+                
+                if (line3Content.length > 0) {
+                    headerSection += `<div class="header-line details-text">${line3Content.join(' | ')}</div>`;
+                }
+            }
+            
+            // Line 4: Host details
+            if (headerData.selectedMember) {
+                headerSection += `
+                    <div class="header-line host-text">
+                        ${headerData.selectedMember.name}<br>
+                        <span class="host-details">
+                            ${headerData.selectedMember.address}<br>
+                            ${headerData.selectedMember.phone_numbers.join(', ')}
+                        </span>
+                    </div>
+                `;
+            }
+            
+            headerSection += '</div>';
+        }
+
+        // Split playlist into chunks for page management (approximately 20 songs per page for optimal page utilization)
+        const songsPerPage = 20;
+        const pageChunks = [];
+        for (let i = 0; i < playlist.length; i += songsPerPage) {
+            pageChunks.push(playlist.slice(i, i + songsPerPage));
+        }
+
         const htmlContent = `
         <!DOCTYPE html>
         <html>
@@ -759,45 +908,195 @@ app.post('/api/generate-pdf', (req, res) => {
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&display=swap');
                 
+                @page {
+                    size: A4 portrait;
+                    margin: 0.7in 0.5in 0.5in 0.5in;
+                    @top-center {
+                        content: element(pageHeader);
+                    }
+                }
+                
+                .page-header-repeater {
+                    position: running(pageHeader);
+                    font-size: 12pt;
+                    text-align: center;
+                    padding: 8px;
+                    border-bottom: 2px solid #333;
+                    margin-bottom: 15px;
+                    background-color: #f8f9fa;
+                }
+                
+                .force-page-break {
+                    page-break-before: always;
+                    min-height: 100px;
+                }
+                
+                .playlist-table thead {
+                    display: table-header-group !important;
+                }
+                
                 body {
                     font-family: 'Noto Sans Tamil', 'Arial Unicode MS', Arial, sans-serif;
-                    font-size: 14px;
-                    line-height: 1.5;
-                    margin: 20px;
+                    font-size: 14pt;
+                    font-weight: bold;
+                    font-style: normal;
+                    line-height: 1.4;
+                    margin: 0;
+                    padding: 0;
                     color: #333;
                 }
                 
                 .header {
                     text-align: center;
-                    margin-bottom: 20px;
+                    margin-bottom: 15px;
                     border-bottom: 2px solid #333;
-                    padding-bottom: 12px;
+                    padding-bottom: 10px;
                 }
                 
                 .title {
-                    font-size: 24px;
+                    font-size: 22pt;
                     font-weight: bold;
-                    margin-bottom: 10px;
+                    margin-bottom: 8px;
                 }
                 
                 .info {
-                    font-size: 14px;
-                    margin: 4px 0;
+                    font-size: 16pt;
+                    font-weight: bold;
+                    margin: 3px 0;
+                }
+                
+                .bhajan-header {
+                    text-align: center;
+                    margin-bottom: 15px;
+                    padding: 15px;
+                    background-color: #f8f9fa;
+                    border: 1px solid #ddd;
+                    border-radius: 3px;
+                    page-break-inside: avoid;
+                    page-break-after: avoid;
+                }
+                
+                .header-line {
+                    margin-bottom: 8px;
+                    line-height: 1.4;
+                }
+                
+                .header-line:last-child {
+                    margin-bottom: 0;
+                }
+                
+                .prayer-text {
+                    font-size: 14pt;
+                    color: #333;
+                }
+                
+                .function-text {
+                    font-weight: bold;
+                    font-size: 16pt;
+                    color: #333;
+                }
+                
+                .details-text {
+                    font-size: 14pt;
+                    color: #333;
+                }
+                
+                .host-text {
+                    font-size: 14pt;
+                    font-weight: bold;
+                    color: #333;
+                }
+                
+                .host-details {
+                    font-weight: normal;
+                    font-size: 12pt;
+                    display: block;
+                    margin-top: 4px;
+                }
+                
+                .page-break {
+                    page-break-before: always;
+                }
+                
+                .page-header {
+                    text-align: center;
+                    margin-bottom: 15px;
+                    padding: 10px;
+                    background-color: #f8f9fa;
+                    border: 1px solid #ddd;
+                    border-radius: 3px;
                 }
                 
                 .playlist-table {
                     width: 100%;
                     border-collapse: collapse;
                     margin-top: 15px;
+                    border: 2px solid #333;
+                    page-break-inside: auto;
+                }
+                
+                .playlist-table thead {
+                    display: table-header-group;
+                    background-color: #f0f0f0;
+                    page-break-inside: avoid;
+                    page-break-after: avoid;
+                }
+                
+                .playlist-table thead th {
+                    page-break-inside: avoid;
+                    border-right: 1px solid #333;
+                }
+                
+                .playlist-table thead th:last-child {
+                    border-right: 2px solid #333;
+                }
+                
+                /* Print optimization */
+                @media print {
+                    .playlist-table {
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    
+                    .page-break {
+                        page-break-before: always;
+                    }
+                    
+                    .page-header {
+                        page-break-after: avoid;
+                    }
+                    
+                    .playlist-table thead {
+                        display: table-header-group;
+                        page-break-inside: avoid;
+                        page-break-after: avoid;
+                    }
+                    
+                    .playlist-table tbody tr {
+                        page-break-inside: avoid;
+                        page-break-after: auto;
+                    }
                 }
                 
                 .playlist-table th,
                 .playlist-table td {
-                    border: 1px solid #333;
+                    border-bottom: 1px solid #333;
+                    border-right: 1px solid #333;
                     padding: 8px;
                     text-align: left;
                     vertical-align: top;
-                    font-size: 12px;
+                    font-size: 16pt;
+                    font-weight: bold;
+                    font-style: normal;
+                }
+                
+                .playlist-table td:last-child,
+                .playlist-table th:last-child {
+                    border-right: 2px solid #333;
+                }
+                
+                .playlist-table tbody tr:last-child td {
+                    border-bottom: 2px solid #333;
                 }
                 
                 .playlist-table th {
@@ -805,20 +1104,25 @@ app.post('/api/generate-pdf', (req, res) => {
                     font-weight: bold;
                     text-align: center;
                     padding: 10px 8px;
-                    font-size: 13px;
+                    font-size: 16pt;
+                    page-break-after: avoid;
+                }
+                
+                .playlist-table tr {
+                    page-break-inside: avoid;
                 }
                 
                 .playlist-table td.number {
                     text-align: center;
-                    width: 4%;
+                    width: 6%;
                 }
                 
                 .playlist-table td.song-title {
-                    width: 32%;
+                    width: 30%;
                 }
                 
                 .playlist-table td.song-number {
-                    width: 14%;
+                    width: 15%;
                     text-align: center;
                 }
                 
@@ -827,73 +1131,148 @@ app.post('/api/generate-pdf', (req, res) => {
                 }
                 
                 .playlist-table td.album {
-                    width: 20%;
+                    width: 26%;
                 }
                 
                 .playlist-table td.alankaaram {
-                    width: 12%;
+                    width: 5%;
                     text-align: center;
                     font-weight: bold;
                 }
                 
-                .footer {
-                    margin-top: 25px;
-                    text-align: center;
-                    font-size: 12px;
-                    border-top: 1px solid #333;
-                    padding-top: 10px;
+
+                
+                @media print {
+                    .playlist-table thead {
+                        display: table-header-group;
+                    }
+                    
+                    .bhajan-header {
+                        page-break-before: avoid;
+                        page-break-after: avoid;
+                    }
+                    
+                    .repeating-header {
+                        position: running(pageHeader);
+                    }
+                    
+                    .playlist-table tbody tr {
+                        page-break-inside: avoid;
+                    }
+                    
+                    .header-section {
+                        page-break-inside: avoid;
+                    }
                 }
+
             </style>
         </head>
         <body>
-            <div class="header">
-                <div class="title">Thirupugazh Playlist</div>
-                <div class="info">Generated on: ${now.toLocaleDateString('en-IN')} ${now.toLocaleTimeString('en-IN')}</div>
-            </div>
-            
-            <table class="playlist-table">
-                <thead>
-                    <tr>
-                        <th>Sl.No</th>
-                        <th>Song Title</th>
-                        <th>Song Number 8th Ed</th>
-                        <th>Raagam</th>
-                        <th>Album</th>
-                        <th>Alankaaram</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${playlist.map((song, index) => {
-                        const hasAlankaaram = alankaaramData[index] && alankaaramData[index].enabled;
-                        const alankaaramMinutes = hasAlankaaram ? alankaaramData[index].minutes || 4 : '';
-                        const alankaaramDisplay = hasAlankaaram ? `✓ ${alankaaramMinutes}min` : '';
+            ${pageChunks.map((chunk, pageIndex) => {
+                const startIndex = pageIndex * songsPerPage;
+                const pageBreakClass = pageIndex > 0 ? 'force-page-break' : '';
+                
+                // Create header for this page - appears on every page
+                let pageHeader = '';
+                if (headerData) {
+                    pageHeader = `<div class="page-header-repeater">`;
+                    
+                    if (headerData.selectedPrarthanai) {
+                        pageHeader += `<div style="margin-bottom: 4px; font-size: 14pt;">${headerData.selectedPrarthanai.text}</div>`;
+                    }
+                    
+                    if (headerData.selectedFunction) {
+                        pageHeader += `<div style="font-weight: bold; margin-bottom: 4px; font-size: 16pt;">${headerData.selectedFunction.name}</div>`;
+                    }
+                    
+                    if (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime)) {
+                        let line3Content = [];
                         
-                        return `
-                        <tr>
-                            <td class="number">${index + 1}</td>
-                            <td class="song-title">${song.title || ''}</td>
-                            <td class="song-number">${song.songNumber || ''}</td>
-                            <td class="raga">${song.raga || ''}</td>
-                            <td class="album">${song.album || ''}</td>
-                            <td class="alankaaram">${alankaaramDisplay}</td>
-                        </tr>`;
-                    }).join('')}
-                </tbody>
-            </table>
-            
-            <div class="footer">
-                Thirupugazh Song List Generator v2.8 | Following the traditional 16-step sequence | Enhanced with Alankaaram support
-            </div>
+                        if (headerData.bhajanDetails.date) {
+                            const dateObj = new Date(headerData.bhajanDetails.date);
+                            const formattedDate = dateObj.toLocaleDateString('en-IN');
+                            line3Content.push(formattedDate);
+                        }
+                        
+                        if (headerData.bhajanDetails.day) {
+                            line3Content.push(headerData.bhajanDetails.day);
+                        }
+                        
+                        if (headerData.bhajanDetails.startTime) {
+                            const startTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.startTime}`);
+                            const formattedStartTime = startTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                            
+                            if (headerData.bhajanDetails.endTime) {
+                                const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
+                                const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                                line3Content.push(`${formattedStartTime} - ${formattedEndTime}`);
+                            } else {
+                                line3Content.push(formattedStartTime);
+                            }
+                        }
+                        
+                        if (line3Content.length > 0) {
+                            pageHeader += `<div style="margin-bottom: 4px; font-size: 14pt;">${line3Content.join(' | ')}</div>`;
+                        }
+                    }
+                    
+                    if (headerData.selectedMember) {
+                        pageHeader += `<div style="font-weight: bold; font-size: 14pt;">${headerData.selectedMember.name}<br><small style="font-size: 12pt; font-weight: normal;">${headerData.selectedMember.address}<br>${headerData.selectedMember.phone_numbers.join(', ')}</small></div>`;
+                    }
+                    
+                    pageHeader += '</div>';
+                }
+                
+                // Show full header only on first page, compact header on others
+                const displayHeader = pageIndex === 0 ? (headerSection || pageHeader) : pageHeader;
+                
+                return `
+                <div class="${pageBreakClass}">
+                    ${displayHeader}
+                    
+                    <table class="playlist-table">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Song Title</th>
+                                <th>Song No.</th>
+                                <th>Raagam</th>
+                                <th>Album</th>
+                                <th>A</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${chunk.map((song, chunkIndex) => {
+                                const globalIndex = startIndex + chunkIndex;
+                                const hasAlankaaram = alankaaramData[globalIndex] && alankaaramData[globalIndex].enabled;
+                                const alankaaramDisplay = hasAlankaaram ? `✓` : '';
+                                
+                                return `
+                                <tr>
+                                    <td class="number">${globalIndex + 1}</td>
+                                    <td class="song-title">${song.title || ''}</td>
+                                    <td class="song-number">${song.songNumber || ''}</td>
+                                    <td class="raga">${song.raga || ''}</td>
+                                    <td class="album">${song.album || ''}</td>
+                                    <td class="alankaaram">${alankaaramDisplay}</td>
+                                </tr>`;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                `;
+            }).join('')}
+
         </body>
         </html>
         `;
 
-        // PDF generation options - landscape orientation for better readability
+        // PDF generation options - portrait orientation as requested
         const options = {
             format: 'A4',
-            orientation: 'landscape',
+            orientation: 'portrait',
             border: {
-                top: '0.5in',
+                top: '0.7in',
                 right: '0.5in',
                 bottom: '0.5in',
                 left: '0.5in'
@@ -902,8 +1281,8 @@ app.post('/api/generate-pdf', (req, res) => {
             quality: '100',
             renderDelay: 300,
             zoomFactor: 1.0,
-            height: '8.3in',
-            width: '11.7in'
+            height: '11.7in',
+            width: '8.3in'
         };
 
         // Generate PDF

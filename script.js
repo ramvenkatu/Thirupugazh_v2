@@ -6,7 +6,17 @@ const AppState = {
     isGenerating: false,
     connectionStatus: 'connected',
     chatHistory: [],
-    alankaaramData: {} // Stores Alankaaram checkbox states and times
+    alankaaramData: {}, // Stores Alankaaram checkbox states and times
+    selectedPrarthanai: null,
+    selectedFunction: null,
+    selectedMember: null,
+    bhajanDetails: {
+        date: '',
+        startTime: '',
+        endTime: '',
+        day: ''
+    },
+    playlistHeaderData: null
 };
 
 // API Base URL
@@ -20,6 +30,26 @@ const elements = {
     generateBtn: document.getElementById('generateBtn'),
     chatInput: document.getElementById('chatInput'),
     chatBtn: document.getElementById('chatBtn'),
+    
+    // New section elements
+    prarthanaiContainer: document.getElementById('prarthanaiContainer'),
+    selectedPrarthanaiDisplay: document.getElementById('selectedPrarthanaiDisplay'),
+    selectedPrarthanaiText: document.getElementById('selectedPrarthanaiText'),
+    
+    functionContainer: document.getElementById('functionContainer'),
+    selectedFunctionDisplay: document.getElementById('selectedFunctionDisplay'),
+    selectedFunctionText: document.getElementById('selectedFunctionText'),
+    
+    memberContainer: document.getElementById('memberContainer'),
+    selectedMemberDisplay: document.getElementById('selectedMemberDisplay'),
+    selectedMemberName: document.getElementById('selectedMemberName'),
+    selectedMemberAddress: document.getElementById('selectedMemberAddress'),
+    selectedMemberPhone: document.getElementById('selectedMemberPhone'),
+    
+    bhajanDate: document.getElementById('bhajanDate'),
+    bhajanStartTime: document.getElementById('bhajanStartTime'),
+    bhajanEndTime: document.getElementById('bhajanEndTime'),
+    bhajanDay: document.getElementById('bhajanDay'),
     
     // Status and display
     playlistStats: document.getElementById('playlistStats'),
@@ -250,10 +280,13 @@ class ApiService {
         }
     }
 
-    static async generatePlaylist(duration) {
+    static async generatePlaylist(duration, headerData) {
         return this.makeRequest('/api/generate-playlist', {
             method: 'POST',
-            body: JSON.stringify({ duration })
+            body: JSON.stringify({ 
+                duration,
+                headerData: headerData || {}
+            })
         });
     }
 
@@ -305,7 +338,8 @@ class PdfService {
                 },
                 body: JSON.stringify({ 
                     playlist,
-                    alankaaramData: AppState.alankaaramData || {}
+                    alankaaramData: AppState.alankaaramData || {},
+                    headerData: AppState.playlistHeaderData || null
                 })
             });
 
@@ -362,6 +396,7 @@ class PlaylistManager {
         }
         
         this.hideEmptyState();
+        this.renderPlaylistHeader();
         this.updatePlaylistTable(playlist);
         this.updatePlaylistStats(playlist);
         this.enableActions();
@@ -431,6 +466,108 @@ class PlaylistManager {
         elements.clearPlaylistBtn.disabled = false;
         elements.chatInput.disabled = false;
         elements.chatBtn.disabled = false;
+    }
+    
+    static renderPlaylistHeader() {
+        const headerData = AppState.playlistHeaderData;
+        
+        console.log('Rendering playlist header with data:', headerData);
+        console.log('AppState selections:', {
+            selectedPrarthanai: AppState.selectedPrarthanai,
+            selectedFunction: AppState.selectedFunction,
+            selectedMember: AppState.selectedMember,
+            bhajanDetails: AppState.bhajanDetails
+        });
+        
+        // Remove existing header if any
+        const existingHeader = document.getElementById('playlistHeader');
+        if (existingHeader) {
+            existingHeader.remove();
+        }
+        
+        // Only render header if we have data
+        const hasHeaderData = headerData && (
+            headerData.selectedPrarthanai || 
+            headerData.selectedFunction || 
+            headerData.selectedMember || 
+            (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime || headerData.bhajanDetails.endTime))
+        );
+        
+        if (!hasHeaderData) {
+            console.log('No header data to render or insufficient data');
+            return;
+        }
+        
+        const playlistContainer = elements.playlistContainer;
+        const headerDiv = document.createElement('div');
+        headerDiv.id = 'playlistHeader';
+        headerDiv.className = 'card-header bg-info text-white mb-3 text-center';
+        
+        let headerContent = '';
+        
+        // Line 1: Prarthanai
+        if (headerData.selectedPrarthanai) {
+            headerContent += `<div class="mb-2">${headerData.selectedPrarthanai.text}</div>`;
+        }
+        
+        // Line 2: Function
+        if (headerData.selectedFunction) {
+            headerContent += `<div class="mb-2 fw-bold">${headerData.selectedFunction.name}</div>`;
+        }
+        
+        // Line 3: Date, Day, Time
+        if (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime || headerData.bhajanDetails.endTime)) {
+            let line3Content = [];
+            
+            if (headerData.bhajanDetails.date) {
+                const dateObj = new Date(headerData.bhajanDetails.date);
+                const formattedDate = dateObj.toLocaleDateString('en-IN');
+                line3Content.push(formattedDate);
+            }
+            
+            if (headerData.bhajanDetails.day) {
+                line3Content.push(headerData.bhajanDetails.day);
+            }
+            
+            if (headerData.bhajanDetails.startTime) {
+                const startTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.startTime}`);
+                const formattedStartTime = startTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                
+                if (headerData.bhajanDetails.endTime) {
+                    const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
+                    const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                    line3Content.push(`${formattedStartTime} - ${formattedEndTime}`);
+                } else {
+                    line3Content.push(formattedStartTime);
+                }
+            } else if (headerData.bhajanDetails.endTime) {
+                const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
+                const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+                line3Content.push(`Until ${formattedEndTime}`);
+            }
+            
+            if (line3Content.length > 0) {
+                headerContent += `<div class="mb-2">${line3Content.join(' | ')}</div>`;
+            }
+        }
+        
+        // Line 4: Host details
+        if (headerData.selectedMember) {
+            headerContent += `
+                <div class="mb-0">
+                    ${headerData.selectedMember.name}<br>
+                    <small class="text-light">
+                        ${headerData.selectedMember.address}<br>
+                        ${headerData.selectedMember.phone_numbers.join(', ')}
+                    </small>
+                </div>
+            `;
+        }
+        
+        headerDiv.innerHTML = headerContent;
+        
+        // Insert header before the table
+        playlistContainer.insertBefore(headerDiv, playlistContainer.firstChild);
     }
     
     static disableActions() {
@@ -980,6 +1117,205 @@ class ChatManager {
 }
 
 // Event Handlers
+// Prarthanai Manager
+class PrarthanaiManager {
+    static init() {
+        if (typeof prarthanaisData === 'undefined') {
+            console.error('Prarthanais data not loaded');
+            return;
+        }
+        
+        this.renderPrarthanaiButtons();
+    }
+    
+    static renderPrarthanaiButtons() {
+        const container = elements.prarthanaiContainer;
+        container.innerHTML = '';
+        
+        prarthanaisData.verses.forEach(verse => {
+            const firstWords = this.getFirstWords(verse.text, 3);
+            const button = document.createElement('button');
+            button.className = 'btn btn-outline-primary btn-sm';
+            button.dataset.verseId = verse.id;
+            button.innerHTML = `${firstWords}...`;
+            button.title = verse.text; // Full text on hover
+            
+            button.addEventListener('click', () => this.selectPrarthanai(verse));
+            container.appendChild(button);
+        });
+    }
+    
+    static getFirstWords(text, count) {
+        return text.split(' ').slice(0, count).join(' ');
+    }
+    
+    static selectPrarthanai(verse) {
+        // Update application state
+        AppState.selectedPrarthanai = verse;
+        
+        // Update button states
+        elements.prarthanaiContainer.querySelectorAll('.btn').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
+        });
+        
+        const selectedBtn = elements.prarthanaiContainer.querySelector(`[data-verse-id="${verse.id}"]`);
+        selectedBtn.classList.remove('btn-outline-primary');
+        selectedBtn.classList.add('btn-primary');
+        
+        // Show selected prayer
+        elements.selectedPrarthanaiText.textContent = verse.text;
+        elements.selectedPrarthanaiDisplay.classList.remove('d-none');
+    }
+}
+
+// Function Manager
+class FunctionManager {
+    static init() {
+        if (typeof functionsData === 'undefined') {
+            console.error('Functions data not loaded');
+            return;
+        }
+        
+        this.renderFunctionCards();
+    }
+    
+    static renderFunctionCards() {
+        const container = elements.functionContainer;
+        container.innerHTML = '';
+        
+        functionsData.functions.forEach(func => {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'col-12';
+            
+            cardDiv.innerHTML = `
+                <div class="card function-card cursor-pointer" data-function-id="${func.id}">
+                    <div class="card-body py-2 px-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-calendar-event me-2 text-primary"></i>
+                            <span class="fw-bold">${func.name}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const card = cardDiv.querySelector('.function-card');
+            card.addEventListener('click', () => this.selectFunction(func));
+            
+            container.appendChild(cardDiv);
+        });
+    }
+    
+    static selectFunction(func) {
+        // Update application state
+        AppState.selectedFunction = func;
+        
+        // Update card states
+        elements.functionContainer.querySelectorAll('.function-card').forEach(card => {
+            card.classList.remove('border-primary', 'bg-primary', 'text-white');
+        });
+        
+        const selectedCard = elements.functionContainer.querySelector(`[data-function-id="${func.id}"]`);
+        selectedCard.classList.add('border-primary', 'bg-primary', 'text-white');
+        
+        // Show selected function
+        elements.selectedFunctionText.textContent = func.name;
+        elements.selectedFunctionDisplay.classList.remove('d-none');
+    }
+}
+
+// Member Manager
+class MemberManager {
+    static init() {
+        if (typeof membersData === 'undefined') {
+            console.error('Members data not loaded');
+            return;
+        }
+        
+        this.renderMemberCards();
+    }
+    
+    static renderMemberCards() {
+        const container = elements.memberContainer;
+        container.innerHTML = '';
+        
+        membersData.members.forEach(member => {
+            const cardDiv = document.createElement('div');
+            cardDiv.className = 'col-12';
+            
+            cardDiv.innerHTML = `
+                <div class="card member-card cursor-pointer" data-member-id="${member.id}">
+                    <div class="card-body py-2 px-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-person me-2 text-info"></i>
+                            <div class="flex-grow-1">
+                                <div class="fw-bold">${member.name}</div>
+                                <div class="text-muted small">${member.address}</div>
+                                <div class="text-muted small">${member.phone_numbers.join(', ')}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const card = cardDiv.querySelector('.member-card');
+            card.addEventListener('click', () => this.selectMember(member));
+            
+            container.appendChild(cardDiv);
+        });
+    }
+    
+    static selectMember(member) {
+        // Update application state
+        AppState.selectedMember = member;
+        
+        // Update card states
+        elements.memberContainer.querySelectorAll('.member-card').forEach(card => {
+            card.classList.remove('border-info', 'bg-info', 'text-white');
+        });
+        
+        const selectedCard = elements.memberContainer.querySelector(`[data-member-id="${member.id}"]`);
+        selectedCard.classList.add('border-info', 'bg-info', 'text-white');
+        
+        // Show selected member details
+        elements.selectedMemberName.textContent = member.name;
+        elements.selectedMemberAddress.textContent = member.address;
+        elements.selectedMemberPhone.textContent = `Phone: ${member.phone_numbers.join(', ')}`;
+        elements.selectedMemberDisplay.classList.remove('d-none');
+    }
+}
+
+// Bhajan Details Manager
+class BhajanDetailsManager {
+    static init() {
+        this.setupDateTimeHandlers();
+    }
+    
+    static setupDateTimeHandlers() {
+        // Auto-populate day when date is selected
+        elements.bhajanDate.addEventListener('change', () => {
+            const date = new Date(elements.bhajanDate.value);
+            if (!isNaN(date.getTime())) {
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                elements.bhajanDay.value = days[date.getDay()];
+                
+                // Update application state
+                AppState.bhajanDetails.date = elements.bhajanDate.value;
+                AppState.bhajanDetails.day = elements.bhajanDay.value;
+            }
+        });
+        
+        // Update start and end time in application state
+        elements.bhajanStartTime.addEventListener('change', () => {
+            AppState.bhajanDetails.startTime = elements.bhajanStartTime.value;
+        });
+        
+        elements.bhajanEndTime.addEventListener('change', () => {
+            AppState.bhajanDetails.endTime = elements.bhajanEndTime.value;
+        });
+    }
+}
+
 class EventHandlers {
     static setupEventListeners() {
         // Playlist generation form
@@ -1043,7 +1379,17 @@ class EventHandlers {
         }, 45000);
         
         try {
-            const response = await ApiService.generatePlaylist(duration);
+            // Collect header data from AppState
+            const headerData = {
+                selectedPrarthanai: AppState.selectedPrarthanai,
+                selectedFunction: AppState.selectedFunction,
+                selectedMember: AppState.selectedMember,
+                bhajanDetails: AppState.bhajanDetails
+            };
+            
+            console.log('Collected header data for playlist generation:', headerData);
+            
+            const response = await ApiService.generatePlaylist(duration, headerData);
             
             if (response.playlist && response.playlist.length > 0) {
                 // Close modal immediately on success with debugging
@@ -1069,6 +1415,9 @@ class EventHandlers {
                     console.log('No stored instance, using force close');
                     Utils.forceCloseModal();
                 }
+                
+                // Store header data for PDF generation and display
+                AppState.playlistHeaderData = response.headerData;
                 
                 PlaylistManager.renderPlaylist(response.playlist);
                 Utils.showToast('success', `Playlist generated with ${response.playlist.length} songs!`);
@@ -1212,6 +1561,12 @@ class App {
         try {
             // Setup event listeners
             EventHandlers.setupEventListeners();
+            
+            // Initialize new sections
+            PrarthanaiManager.init();
+            FunctionManager.init();
+            MemberManager.init();
+            BhajanDetailsManager.init();
             
             // Initialize UI state
             PlaylistManager.showEmptyState();

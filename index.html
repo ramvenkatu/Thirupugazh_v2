@@ -41,6 +41,103 @@
             <!-- Left Column - Control Panel (45%) -->
             <div class="col-lg-5 col-md-12 control-panel">
                 
+                <!-- Prarthanai Selector Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-book me-2"></i>
+                            Prarthanai Selector
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Select a prayer for the playlist header:</label>
+                            <div id="prarthanaiContainer" class="d-flex flex-wrap gap-2">
+                                <!-- Prayer buttons will be dynamically added here -->
+                            </div>
+                            <div class="form-text">
+                                Choose a prayer to be included in the playlist header
+                            </div>
+                        </div>
+                        <div id="selectedPrarthanaiDisplay" class="mt-3 p-3 bg-light rounded d-none">
+                            <small class="text-muted">Selected Prayer:</small>
+                            <div id="selectedPrarthanaiText" class="text-primary"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Function Selector Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Function Selector
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label">Select the occasion/function:</label>
+                            <div id="functionContainer" class="row g-2" style="max-height: 300px; overflow-y: auto;">
+                                <!-- Function cards will be dynamically added here -->
+                            </div>
+                            <div class="form-text">
+                                Choose the specific function or occasion for this bhajan
+                            </div>
+                        </div>
+                        <div id="selectedFunctionDisplay" class="mt-3 p-3 bg-light rounded d-none">
+                            <small class="text-muted">Selected Function:</small>
+                            <div id="selectedFunctionText" class="text-secondary fw-bold"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bhajan Details Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="card-title mb-0">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Bhajan Details
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="bhajanDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="bhajanDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bhajanStartTime" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="bhajanStartTime" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bhajanEndTime" class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="bhajanEndTime" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="bhajanDay" class="form-label">Day</label>
+                                <input type="text" class="form-control" id="bhajanDay" readonly placeholder="Day will auto-populate">
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <label class="form-label">Host Member Selection:</label>
+                            <div id="memberContainer" class="row g-2" style="max-height: 250px; overflow-y: auto;">
+                                <!-- Member cards will be dynamically added here -->
+                            </div>
+                            <div class="form-text">
+                                Select the member hosting this bhajan session
+                            </div>
+                        </div>
+
+                        <div id="selectedMemberDisplay" class="mt-3 p-3 bg-light rounded d-none">
+                            <small class="text-muted">Selected Host:</small>
+                            <div id="selectedMemberName" class="fw-bold"></div>
+                            <div id="selectedMemberAddress" class="text-muted small"></div>
+                            <div id="selectedMemberPhone" class="text-muted small"></div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Playlist Generation Card -->
                 <div class="card mb-4">
                     <div class="card-header bg-success text-white">
@@ -263,6 +360,11 @@
     
     <!-- Songs Database -->
     <script src="songs.js"></script>
+    
+    <!-- Prayer, Function, and Member Data -->
+    <script src="prarthanais.js"></script>
+    <script src="functions.js"></script>
+    <script src="members.js"></script>
     
     <!-- Custom JavaScript -->
     <script src="script.js"></script>
