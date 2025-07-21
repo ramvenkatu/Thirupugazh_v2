@@ -3,7 +3,7 @@ Here is the complete Software Requirements Specification (SRS) document, updated
 ***
 
 ### **Software Requirements Specification: Thirupugazh Song List Generator**
-**Version:** 3.1
+**Version:** 3.2
 **Date:** January 31, 2025
 
 ---
@@ -15,7 +15,7 @@ This document specifies the requirements for the Thirupugazh Song List Generator
 #### 1.2 Scope
 The system will consist of a client-side web application and a server-side Node.js backend. The web interface will allow users to generate playlists with comprehensive event details including prayer selection, function/occasion specification, bhajan scheduling details, and host member coordination. The backend will house a rule-based engine to construct playlists according to the strict sequence, manage persistent history in a MySQL database, and securely interact with LLM services. The scope includes glassmorphism UI design, comprehensive event management, enhanced PDF generation with headers, and robust error handling.
 
-#### 1.3 Latest Updates (Version 3.1)
+#### 1.3 Latest Updates (Version 3.2)
 * **Refined Glassmorphism Design:** Enhanced glassmorphism implementation with white, gray, and silver gradient color scheme for elegant, professional appearance with improved readability and accessibility.
 * **Enhanced Playlist Header Display:** Complete redesign of playlist section headers with the following improvements:
   - **Removed all text labels and colons** ("Prarthanai:", "Function:", etc.) for cleaner presentation
@@ -25,6 +25,12 @@ The system will consist of a client-side web application and a server-side Node.
   - **Start Time Field:** Replaced single "Time" field with "Start Time" for event beginning
   - **End Time Field:** Added new "End Time" field for event conclusion
   - **Time Range Display:** Shows time as "Start Time - End Time" format in headers (e.g., "02:30 PM - 05:00 PM")
+* **Six Main Abodes Enhancement:** Updated playlist generation algorithm for the 6 main abodes of Murugan:
+  - **Five Traditional Abodes:** Each now provides 2 songs (was 1): திருப்பரங்குன்றம், திருசெந்தூர், திருப்பழனி, ஸ்வாமி மலை, திருத்தணிகை
+  - **பழமுதிர் சோலை:** Now provides 2 songs (was 1)
+  - **Total Enhancement:** 12 songs from 6 main abodes (increased from 6 songs)
+  - **குன்றுதோறாடல்:** Continues with 1 song as before
+  - **Sequence Preservation:** Maintains identical step order and logic
 * **Improved Duration Accuracy:** Enhanced playlist generation algorithm with precision targeting:
   - **5% Variance Tolerance:** Algorithm now maintains playlist duration within 5% of requested target
   - **Intelligent Calculation:** Uses actual song durations from database for accurate time estimation
@@ -35,6 +41,7 @@ The system will consist of a client-side web application and a server-side Node.
   - **Improved Table Borders:** Properly closed table borders preventing content spillage between pages
   - **Content Cleanup:** Removed unnecessary generated timestamps and footer text for cleaner professional appearance
   - **16pt Bold Font:** Enhanced readability with larger, bold fonts throughout PDF documents
+  - **Simplified Alankaaram Display:** Alankaaram column now shows only tick mark (✓) without time duration for cleaner professional appearance
 
 #### 1.4 Major Updates (Version 3.0)
 * **Glassmorphism UI Design:** Complete visual redesign with frosted glass aesthetic, animated gradient backgrounds, backdrop filters, and enhanced visual depth throughout the application.
@@ -42,7 +49,7 @@ The system will consist of a client-side web application and a server-side Node.
   - **Prarthanai Selector:** Interactive prayer selection with preview buttons showing first 2-3 words of each prayer text
   - **Function Selector:** Comprehensive occasion/function selection from predefined list of 31 Tamil festival functions
   - **Bhajan Details Section:** Date/time selection with auto-populated day field and complete member management system
-* **Enhanced Playlist Generation Logic:** Added new Step 5f in the 16-step sequence for குன்றுதோறாடல் album selection, positioned after திருத்தணிகை but before Pancha Bhootha Sthalams.
+* **Enhanced Playlist Generation Logic:** Added new Step 5f in the 16-step sequence for குன்றுதோறாடல் album selection, positioned after திருத்தணிகை but before Pancha Bhoota Sthalams.
 * **Advanced PDF Generation:** Complete redesign with portrait orientation, 16pt font sizing, reduced margins (0.5 inches), and comprehensive header inclusion displaying prayer text, function details, scheduling information, and host member details.
 * **Member Management System:** Complete member database integration with contact details, address information, and phone numbers for event coordination.
 * **Enhanced Header Display:** Playlist interface now includes comprehensive event headers displaying all selected information above the song list for complete event documentation.
@@ -236,7 +243,7 @@ The application is a client-server system.
     * **FR-3.5.4: Data Persistence:** Alankaaram selections and time durations shall be maintained in browser memory until the playlist is cleared or regenerated.
 * **FR-3.6: Alankaaram PDF Display:** The PDF export shall include the Alankaaram column with the following specifications:
     * **FR-3.6.1: Tickmark Display:** Songs with Alankaaram enabled shall show a checkmark (✓) symbol in the Alankaaram column.
-    * **FR-3.6.2: Time Display:** The checkmark shall be followed by the specified time duration (e.g., "✓ 4min").
+    * **FR-3.6.2: Clean Display:** The checkmark displays without time duration for professional, clean appearance.
     * **FR-3.6.3: Empty State:** Songs without Alankaaram enabled shall show an empty Alankaaram column.
 * **FR-3.7: Interactive Command Reference:** The interface shall display an integrated AI Assistant Commands guide with:
     * Collapsible or always-visible command syntax reference
@@ -476,14 +483,14 @@ The following requirements represent identified gaps and potential future enhanc
 
 #### 5.2 Future Implementation Priority
 
-**High Priority (Next Version 3.1):**
+**High Priority (Next Version 3.3):**
 1. Rate limiting implementation (NFR-F1.1)
 2. Enhanced input validation and sanitization (NFR-14)
 3. Improved error tracking and logging (NFR-F3.1)
 4. Database connection pooling (NFR-F2.2)
 5. Progressive Web App capabilities (NFR-F6.1)
 
-**Medium Priority (Version 3.2):**
+**Medium Priority (Version 3.3):**
 1. Music platform integration for audio playback (NFR-F7.1)
 2. Calendar integration for automatic scheduling (NFR-F7.2)
 3. Email distribution system (NFR-F7.3)
@@ -491,6 +498,13 @@ The following requirements represent identified gaps and potential future enhanc
 
 ---
 ### 6. Version History Summary
+
+**Version 3.1 (January 31, 2025)** - Six Main Abodes & PDF Enhancement Release
+- Enhanced playlist generation: 6 main abodes now provide 2 songs each (total 12 songs)
+- Simplified PDF alankaaram display: tick mark only without time duration
+- Improved playlist duration accuracy with 5% tolerance algorithm
+- Enhanced event management with Start Time/End Time fields
+- Refined glassmorphism UI design with white/gray/silver color scheme
 
 **Version 3.0 (January 30, 2025)** - Major Event Management Release
 - Complete glassmorphism UI redesign
