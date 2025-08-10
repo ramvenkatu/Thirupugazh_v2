@@ -16,6 +16,16 @@
     --thirupugazh-maroon: #800020;
     --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --card-shadow-hover: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+    /* High-contrast theme tokens */
+    --hc-surface: #ffffff;
+    --hc-surface-alt: #f5f7fa;
+    --hc-text: #212529;            /* ~4.5:1 on white */
+    --hc-text-muted: #343a40;      /* darker than default muted */
+    --selector-bg: #0a58ca;        /* darker primary for contrast */
+    --selector-bg-hover: #084298;  /* even darker on hover */
+    --selector-border: #0a58ca;
+    --selector-text: #ffffff;
 }
 
 /* Global Styles */
@@ -82,7 +92,7 @@ body::before {
     transform: translateY(-2px);
 }
 
-.card-header {
+.card-header:not([class*="bg-"]) {
     background: rgba(248, 249, 250, 0.4);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -101,11 +111,74 @@ body::before {
 }
 
 /* Enhanced text readability */
-.card-header h5,
-.card-header .card-title {
+.card-header:not([class*="bg-"]) h5,
+.card-header:not([class*="bg-"]) .card-title {
     color: #212529;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    text-shadow: none;
     font-weight: 600;
+}
+
+/* Explicit high-contrast colors for colored headers */
+.card-header.bg-primary,
+.card-header.bg-secondary,
+.card-header.bg-success,
+.card-header.bg-info,
+.card-header.bg-danger,
+.card-header.bg-dark {
+    color: #ffffff !important;
+}
+
+.card-header.bg-warning {
+    color: #212529 !important;
+}
+
+.card-header[class*="bg-"] .card-title,
+.card-header[class*="bg-"] h5 {
+    color: inherit !important;
+    text-shadow: none !important;
+}
+
+/* Reduce smudged look: enable font smoothing and remove shadows on headings */
+body, h1, h2, h3, h4, h5, h6, .card-title {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: none;
+}
+
+/* High-visibility collapse/expand toggles */
+#prarthanaiToggle,
+#functionToggle,
+#bhajanToggle {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 2px solid #e9ecef !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    font-weight: 700;
+    padding: 0.35rem 0.6rem !important;
+    border-radius: 0.5rem !important;
+    opacity: 1 !important;
+}
+
+#prarthanaiToggle i,
+#functionToggle i,
+#bhajanToggle i {
+    font-size: 1.1rem;
+    color: inherit;
+}
+
+#prarthanaiToggle:hover,
+#functionToggle:hover,
+#bhajanToggle:hover {
+    background-color: #f1f3f5 !important;
+    border-color: #dee2e6 !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+#prarthanaiToggle:focus,
+#functionToggle:focus,
+#bhajanToggle:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.35) !important;
 }
 
 .card-body .form-label,
@@ -165,6 +238,92 @@ body::before {
 .table {
     margin-bottom: 0;
     background: transparent;
+}
+
+/* High-contrast overrides for selectors and playlist */
+/* Prarthanai selector buttons - use solid primary for clarity */
+#prarthanaiContainer .btn {
+    background-color: var(--selector-bg);
+    color: var(--selector-text);
+    border-color: var(--selector-border);
+}
+
+#prarthanaiContainer .btn:hover,
+#prarthanaiContainer .btn:focus {
+    background-color: var(--selector-bg-hover);
+    border-color: var(--selector-bg-hover);
+    color: var(--selector-text);
+}
+
+/* Selected Prarthanai display */
+#selectedPrarthanaiDisplay {
+    background-color: var(--hc-surface-alt) !important;
+    border: 1px solid #dee2e6;
+}
+
+#selectedPrarthanaiDisplay small {
+    color: var(--hc-text-muted) !important;
+}
+
+#selectedPrarthanaiText {
+    color: var(--hc-text) !important;
+}
+
+/* Function selector cards */
+.function-card {
+    border: 1px solid var(--selector-border);
+}
+
+.function-card:hover {
+    background-color: rgba(8, 66, 152, 0.08); /* subtle tint of primary */
+}
+
+.function-card .text-primary {
+    color: var(--selector-bg) !important;
+}
+
+/* Selected Function display */
+#selectedFunctionDisplay {
+    background-color: var(--hc-surface-alt) !important;
+    border: 1px solid #dee2e6;
+}
+
+#selectedFunctionDisplay small {
+    color: var(--hc-text-muted) !important;
+}
+
+#selectedFunctionText {
+    color: var(--hc-text) !important;
+}
+
+/* Playlist table body readability */
+table#playlistTable tbody td {
+    color: var(--hc-text);
+}
+
+table#playlistTable tbody tr:hover {
+    background-color: rgba(8, 66, 152, 0.06);
+}
+
+/* Standardize selector headers to primary (better contrast) */
+.card-header.bg-secondary {
+    background-color: var(--selector-bg) !important;
+    border-color: var(--selector-bg) !important;
+    color: #ffffff !important;
+}
+
+/* Selected function card should use the same high-contrast primary */
+.function-card.bg-primary {
+    background-color: var(--selector-bg) !important;
+    border-color: var(--selector-bg) !important;
+    color: #ffffff !important;
+}
+
+/* Playlist header high-contrast */
+#playlistHeader {
+    background-color: var(--selector-bg) !important;
+    border-color: var(--selector-bg) !important;
+    color: #ffffff !important;
 }
 
 .table thead th {

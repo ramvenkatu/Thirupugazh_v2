@@ -428,11 +428,17 @@ class PlaylistManager {
             const row = document.createElement('tr');
             row.className = 'fade-in';
             row.innerHTML = `
+                <td class="text-center">
+                    <button class="btn btn-sm btn-outline-danger delete-song-btn" data-song-index="${index}" title="Remove song">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
                 <td class="text-center fw-bold">${index + 1}</td>
                 <td class="text-tamil">${song.title || ''}</td>
                 <td>${song.songNumber || ''}</td>
                 <td class="text-tamil">${song.raga || ''}</td>
                 <td class="text-tamil">${song.album || ''}</td>
+                <td>${Utils.formatDuration(song.duration || '')}</td>
                 <td class="text-center">
                     <div class="alankaaram-container d-flex align-items-center justify-content-center gap-2">
                         <div class="form-check mb-0">
@@ -1441,21 +1447,42 @@ class EventHandlers {
         // Action buttons
         elements.exportPdfBtn.addEventListener('click', this.handlePdfExport);
         elements.clearPlaylistBtn.addEventListener('click', this.handleClearPlaylist);
-        
+            
         // Keyboard shortcuts
         document.addEventListener('keydown', this.handleKeyboardShortcuts);
-        
+            
         // Window events
         window.addEventListener('beforeunload', this.handleBeforeUnload);
 
         // Alankaaram checkbox functionality (event delegation)
         document.addEventListener('change', this.handleAlankaaramCheckbox);
         document.addEventListener('input', this.handleAlankaaramTimeChange);
+
+        // Playlist table actions (event delegation)
+        if (elements.playlistTableBody) {
+            elements.playlistTableBody.addEventListener('click', this.handlePlaylistClick);
+        }
     }
-    
+
+    static handlePlaylistClick(e) {
+        const deleteBtn = e.target.closest('.delete-song-btn');
+        if (!deleteBtn) return;
+        e.preventDefault();
+
+        const idx = parseInt(deleteBtn.dataset.songIndex);
+        if (Number.isNaN(idx) || idx < 0 || idx >= AppState.currentPlaylist.length) return;
+
+        const [removed] = AppState.currentPlaylist.splice(idx, 1);
+
+        // Re-render playlist (also recalculates indices and stats)
+        PlaylistManager.renderPlaylist(AppState.currentPlaylist);
+
+        Utils.showToast('success', `Removed: ${removed?.title || 'Song'}`);
+    }
+        
     static async handlePlaylistGeneration(e) {
         e.preventDefault();
-        
+            
         if (AppState.isGenerating) return;
         
         const duration = parseInt(elements.durationInput.value);
