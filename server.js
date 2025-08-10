@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 const cors = require('cors');
 const path = require('path');
 const axios = require('axios');
-const pdf = require('html-pdf');
+const puppeteer = require('puppeteer');
 
 require('dotenv').config();
 
@@ -796,7 +796,7 @@ app.post('/api/llm-chat', async (req, res) => {
 });
 
 // Server-side PDF generation endpoint
-app.post('/api/generate-pdf', (req, res) => {
+app.post('/api/generate-pdf', async (req, res) => {
     try {
         const { playlist, alankaaramData = {}, headerData = null } = req.body;
         
@@ -893,11 +893,16 @@ app.post('/api/generate-pdf', (req, res) => {
             headerSection += '</div>';
         }
 
-        // Split playlist into chunks for page management (approximately 20 songs per page for optimal page utilization)
-        const songsPerPage = 20;
+        // Implement proper pagination with manual page breaks and header repetition
+        // Use a slightly smaller first page to account for the header block height
+        const firstPageSongs = 21; // leave more room for header so table doesn't spill
         const pageChunks = [];
-        for (let i = 0; i < playlist.length; i += songsPerPage) {
-            pageChunks.push(playlist.slice(i, i + songsPerPage));
+        if (playlist.length <= firstPageSongs) {
+            pageChunks.push(playlist.slice());
+        } else {
+            pageChunks.push(playlist.slice(0, firstPageSongs));
+            // Put the rest on the next page (we currently target max 2 pages)
+            pageChunks.push(playlist.slice(firstPageSongs));
         }
 
         const htmlContent = `
@@ -907,44 +912,43 @@ app.post('/api/generate-pdf', (req, res) => {
             <meta charset="UTF-8">
             <title>Thirupugazh Playlist</title>
             <style>
-                @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&display=swap');
-                
                 @page {
                     size: A4 portrait;
                     margin: 0.7in 0.5in 0.5in 0.5in;
-                    @top-center {
-                        content: element(pageHeader);
-                    }
                 }
                 
-                .page-header-repeater {
-                    position: running(pageHeader);
-                    font-size: 12pt;
+                .page-header {
                     text-align: center;
-                    padding: 8px;
-                    border-bottom: 2px solid #333;
                     margin-bottom: 15px;
+                    padding: 10px;
                     background-color: #f8f9fa;
-                }
-                
-                .force-page-break {
-                    page-break-before: always;
-                    min-height: 100px;
+                    border: 1px solid #ddd;
+                    border-radius: 3px;
+                    page-break-inside: avoid;
+                    page-break-after: avoid;
                 }
                 
                 .playlist-table thead {
                     display: table-header-group !important;
+                    page-break-inside: avoid;
+                    page-break-after: avoid;
                 }
                 
                 body {
-                    font-family: 'Noto Sans Tamil', 'Arial Unicode MS', Arial, sans-serif;
-                    font-size: 14pt;
+                    font-family: 'Noto Sans Tamil', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-size: 11pt;
                     font-weight: bold;
                     font-style: normal;
-                    line-height: 1.4;
+                    line-height: 1.2;
                     margin: 0;
                     padding: 0;
                     color: #333;
+                    column-count: 1 !important;
+                    column-width: auto !important;
+                    columns: none !important;
+                    text-rendering: optimizeLegibility;
+                    -webkit-font-feature-settings: "liga", "kern";
+                    font-feature-settings: "liga", "kern";
                 }
                 
                 .header {
@@ -1033,7 +1037,21 @@ app.post('/api/generate-pdf', (req, res) => {
                     border-collapse: collapse;
                     margin-top: 15px;
                     border: 2px solid #333;
-                    page-break-inside: auto;
+                    page-break-inside: avoid; /* avoid splitting table across pages */
+                    table-layout: fixed;
+                    clear: both;
+                }
+                
+                .playlist-table thead {
+                    display: table-header-group;
+                    background-color: #f0f0f0;
+                    page-break-inside: avoid;
+                    page-break-after: avoid;
+                }
+                
+                .playlist-table tbody tr {
+                    page-break-inside: avoid;
+                    page-break-after: auto;
                 }
                 
                 .playlist-table thead {
@@ -1083,12 +1101,14 @@ app.post('/api/generate-pdf', (req, res) => {
                 .playlist-table td {
                     border-bottom: 1px solid #333;
                     border-right: 1px solid #333;
-                    padding: 8px;
+                    padding: 6px;
                     text-align: left;
                     vertical-align: top;
-                    font-size: 16pt;
+                    font-size: 9pt;
                     font-weight: bold;
                     font-style: normal;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
                 }
                 
                 .playlist-table td:last-child,
@@ -1104,8 +1124,8 @@ app.post('/api/generate-pdf', (req, res) => {
                     background-color: #f0f0f0;
                     font-weight: bold;
                     text-align: center;
-                    padding: 10px 8px;
-                    font-size: 16pt;
+                    padding: 8px 6px;
+                    font-size: 12pt;
                     page-break-after: avoid;
                 }
                 
@@ -1115,31 +1135,51 @@ app.post('/api/generate-pdf', (req, res) => {
                 
                 .playlist-table td.number {
                     text-align: center;
-                    width: 6%;
+                    width: 10% !important;
+                    max-width: 10% !important;
+                    min-width: 10% !important;
                 }
                 
                 .playlist-table td.song-title {
-                    width: 30%;
+                    width: 30% !important;
+                    max-width: 30% !important;
+                    min-width: 30% !important;
                 }
                 
                 .playlist-table td.song-number {
-                    width: 15%;
+                    width: 15% !important;
+                    max-width: 15% !important;
+                    min-width: 15% !important;
                     text-align: center;
                 }
                 
                 .playlist-table td.raga {
-                    width: 18%;
+                    width: 20% !important;
+                    max-width: 20% !important;
+                    min-width: 20% !important;
                 }
                 
                 .playlist-table td.album {
-                    width: 26%;
+                    width: 30% !important;
+                    max-width: 30% !important;
+                    min-width: 30% !important;
                 }
                 
                 .playlist-table td.alankaaram {
-                    width: 5%;
+                    width: 5% !important;
+                    max-width: 5% !important;
+                    min-width: 5% !important;
                     text-align: center;
                     font-weight: bold;
                 }
+                
+                /* Header column widths to match table data */
+                .playlist-table th:nth-child(1) { width: 10%; }
+                .playlist-table th:nth-child(2) { width: 30%; }
+                .playlist-table th:nth-child(3) { width: 15%; }
+                .playlist-table th:nth-child(4) { width: 20%; }
+                .playlist-table th:nth-child(5) { width: 30%; }
+                .playlist-table th:nth-child(6) { width: 5%; }
                 
 
                 
@@ -1170,71 +1210,18 @@ app.post('/api/generate-pdf', (req, res) => {
         </head>
         <body>
             ${pageChunks.map((chunk, pageIndex) => {
-                const startIndex = pageIndex * songsPerPage;
-                const pageBreakClass = pageIndex > 0 ? 'force-page-break' : '';
-                
-                // Create header for this page - appears on every page
-                let pageHeader = '';
-                if (headerData) {
-                    pageHeader = `<div class="page-header-repeater">`;
-                    
-                    if (headerData.selectedPrarthanai) {
-                        pageHeader += `<div style="margin-bottom: 4px; font-size: 14pt;">${headerData.selectedPrarthanai.text}</div>`;
-                    }
-                    
-                    if (headerData.selectedFunction) {
-                        pageHeader += `<div style="font-weight: bold; margin-bottom: 4px; font-size: 16pt;">${headerData.selectedFunction.name}</div>`;
-                    }
-                    
-                    if (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime)) {
-                        let line3Content = [];
-                        
-                        if (headerData.bhajanDetails.date) {
-                            const dateObj = new Date(headerData.bhajanDetails.date);
-                            const formattedDate = dateObj.toLocaleDateString('en-IN');
-                            line3Content.push(formattedDate);
-                        }
-                        
-                        if (headerData.bhajanDetails.day) {
-                            line3Content.push(headerData.bhajanDetails.day);
-                        }
-                        
-                        if (headerData.bhajanDetails.startTime) {
-                            const startTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.startTime}`);
-                            const formattedStartTime = startTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-                            
-                            if (headerData.bhajanDetails.endTime) {
-                                const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
-                                const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-                                line3Content.push(`${formattedStartTime} - ${formattedEndTime}`);
-                            } else {
-                                line3Content.push(formattedStartTime);
-                            }
-                        }
-                        
-                        if (line3Content.length > 0) {
-                            pageHeader += `<div style="margin-bottom: 4px; font-size: 14pt;">${line3Content.join(' | ')}</div>`;
-                        }
-                    }
-                    
-                    if (headerData.selectedMember) {
-                        pageHeader += `<div style="font-weight: bold; font-size: 14pt;">${headerData.selectedMember.name}<br><small style="font-size: 12pt; font-weight: normal;">${headerData.selectedMember.address}<br>${headerData.selectedMember.phone_numbers.join(', ')}</small></div>`;
-                    }
-                    
-                    pageHeader += '</div>';
-                }
-                
-                // Show full header only on first page, compact header on others
-                const displayHeader = pageIndex === 0 ? (headerSection || pageHeader) : pageHeader;
+                // Numbering offset: first page starts at 0, second page continues after firstPageSongs
+                const startIndex = pageIndex === 0 ? 0 : firstPageSongs;
+                const pageBreakClass = pageIndex > 0 ? 'page-break' : '';
                 
                 return `
                 <div class="${pageBreakClass}">
-                    ${displayHeader}
+                    ${pageIndex === 0 ? headerSection : ''}
                     
                     <table class="playlist-table">
                         <thead>
                             <tr>
-                                <th>Sl.No</th>
+                                <th>&nbsp;</th>
                                 <th>Song Title</th>
                                 <th>Song No.</th>
                                 <th>Raagam</th>
@@ -1268,40 +1255,40 @@ app.post('/api/generate-pdf', (req, res) => {
         </html>
         `;
 
-        // PDF generation options - portrait orientation as requested
-        const options = {
+
+
+        // Generate PDF using Puppeteer
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+        
+        const page = await browser.newPage();
+        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+        
+        const pdfBuffer = await page.pdf({
             format: 'A4',
             orientation: 'portrait',
-            border: {
+            margin: {
                 top: '0.7in',
                 right: '0.5in',
                 bottom: '0.5in',
                 left: '0.5in'
             },
-            type: 'pdf',
-            quality: '100',
-            renderDelay: 300,
-            zoomFactor: 1.0,
-            height: '11.7in',
-            width: '8.3in'
-        };
-
-        // Generate PDF
-        pdf.create(htmlContent, options).toBuffer((err, buffer) => {
-            if (err) {
-                console.error('PDF generation error:', err);
-                return res.status(500).json({ error: 'Failed to generate PDF' });
-            }
-
-            // Set response headers for PDF download
-            const filename = `thirupugazh-playlist-${now.toISOString().split('T')[0]}.pdf`;
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-            res.setHeader('Content-Length', buffer.length);
-            
-            // Send PDF buffer
-            res.send(buffer);
+            printBackground: true,
+            preferCSSPageSize: false
         });
+        
+        await browser.close();
+
+        // Set response headers for PDF download
+        const filename = `thirupugazh-playlist-${now.toISOString().split('T')[0]}.pdf`;
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Content-Length', pdfBuffer.length);
+        
+        // Send PDF buffer as binary data
+        res.end(pdfBuffer, 'binary');
 
     } catch (error) {
         console.error('PDF endpoint error:', error);

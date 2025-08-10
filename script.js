@@ -35,16 +35,22 @@ const elements = {
     prarthanaiContainer: document.getElementById('prarthanaiContainer'),
     selectedPrarthanaiDisplay: document.getElementById('selectedPrarthanaiDisplay'),
     selectedPrarthanaiText: document.getElementById('selectedPrarthanaiText'),
+    prarthanaiToggle: document.getElementById('prarthanaiToggle'),
+    prarthanaiCollapse: document.getElementById('prarthanaiCollapse'),
     
     functionContainer: document.getElementById('functionContainer'),
     selectedFunctionDisplay: document.getElementById('selectedFunctionDisplay'),
     selectedFunctionText: document.getElementById('selectedFunctionText'),
+    functionToggle: document.getElementById('functionToggle'),
+    functionCollapse: document.getElementById('functionCollapse'),
     
     memberContainer: document.getElementById('memberContainer'),
     selectedMemberDisplay: document.getElementById('selectedMemberDisplay'),
     selectedMemberName: document.getElementById('selectedMemberName'),
     selectedMemberAddress: document.getElementById('selectedMemberAddress'),
     selectedMemberPhone: document.getElementById('selectedMemberPhone'),
+    bhajanToggle: document.getElementById('bhajanToggle'),
+    bhajanCollapse: document.getElementById('bhajanCollapse'),
     
     bhajanDate: document.getElementById('bhajanDate'),
     bhajanStartTime: document.getElementById('bhajanStartTime'),
@@ -428,16 +434,12 @@ class PlaylistManager {
                 <td class="text-tamil">${song.raga || ''}</td>
                 <td class="text-tamil">${song.album || ''}</td>
                 <td class="text-center">
-                    <div class="alankaaram-container">
-                        <div class="form-check d-inline-block">
+                    <div class="alankaaram-container d-flex align-items-center justify-content-center gap-2">
+                        <div class="form-check mb-0">
                             <input class="form-check-input alankaaram-checkbox" type="checkbox" 
-                                   id="alankaaram_${song.id || index}" 
-                                   data-song-index="${index}">
-                            <label class="form-check-label" for="alankaaram_${song.id || index}">
-                                <i class="bi bi-music-note-beamed"></i>
-                            </label>
+                                   data-song-index="${index}" id="alankaaram-${index}">
                         </div>
-                        <div class="alankaaram-time-container d-none mt-1">
+                        <div class="alankaaram-time-container d-none">
                             <div class="input-group input-group-sm">
                                 <input type="number" class="form-control alankaaram-time" 
                                        value="4" min="1" max="30" 
@@ -1150,23 +1152,49 @@ class PrarthanaiManager {
     }
     
     static selectPrarthanai(verse) {
-        // Update application state
-        AppState.selectedPrarthanai = verse;
-        
-        // Update button states
-        elements.prarthanaiContainer.querySelectorAll('.btn').forEach(btn => {
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-outline-primary');
+    // Update application state
+    AppState.selectedPrarthanai = verse;
+    
+    // Update button states
+    elements.prarthanaiContainer.querySelectorAll('.btn').forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-outline-primary');
+    });
+    
+    const selectedBtn = elements.prarthanaiContainer.querySelector(`[data-verse-id="${verse.id}"]`);
+    selectedBtn.classList.remove('btn-outline-primary');
+    selectedBtn.classList.add('btn-primary');
+    
+    // Show selected prayer
+    elements.selectedPrarthanaiText.textContent = verse.text;
+    elements.selectedPrarthanaiDisplay.classList.remove('d-none');
+    
+    // Auto-collapse the selector
+    this.collapseSelector('prarthanai');
+}
+
+static collapseSelector(selectorType) {
+    const collapseElement = elements[`${selectorType}Collapse`];
+    const toggleButton = elements[`${selectorType}Toggle`];
+    
+    if (collapseElement && collapseElement.classList.contains('show')) {
+        // Use Bootstrap's collapse functionality
+        const bsCollapse = new bootstrap.Collapse(collapseElement, {
+            toggle: false
         });
+        bsCollapse.hide();
         
-        const selectedBtn = elements.prarthanaiContainer.querySelector(`[data-verse-id="${verse.id}"]`);
-        selectedBtn.classList.remove('btn-outline-primary');
-        selectedBtn.classList.add('btn-primary');
-        
-        // Show selected prayer
-        elements.selectedPrarthanaiText.textContent = verse.text;
-        elements.selectedPrarthanaiDisplay.classList.remove('d-none');
+        // Update toggle button icon
+        if (toggleButton) {
+            const icon = toggleButton.querySelector('i');
+            if (icon) {
+                icon.classList.remove('bi-chevron-up');
+                icon.classList.add('bi-chevron-down');
+            }
+        }
     }
+}
+
 }
 
 // Function Manager
@@ -1221,6 +1249,31 @@ class FunctionManager {
         // Show selected function
         elements.selectedFunctionText.textContent = func.name;
         elements.selectedFunctionDisplay.classList.remove('d-none');
+        
+        // Auto-collapse the selector
+        this.collapseSelector('function');
+    }
+
+    static collapseSelector(selectorType) {
+        const collapseElement = elements[`${selectorType}Collapse`];
+        const toggleButton = elements[`${selectorType}Toggle`];
+        
+        if (collapseElement && collapseElement.classList.contains('show')) {
+            // Use Bootstrap's collapse functionality
+            const bsCollapse = new bootstrap.Collapse(collapseElement, {
+                toggle: false
+            });
+            bsCollapse.hide();
+            
+            // Update toggle button icon
+            if (toggleButton) {
+                const icon = toggleButton.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('bi-chevron-up');
+                    icon.classList.add('bi-chevron-down');
+                }
+            }
+        }
     }
 }
 
@@ -1282,13 +1335,68 @@ class MemberManager {
         elements.selectedMemberAddress.textContent = member.address;
         elements.selectedMemberPhone.textContent = `Phone: ${member.phone_numbers.join(', ')}`;
         elements.selectedMemberDisplay.classList.remove('d-none');
+        
+        // Auto-collapse the bhajan details selector (since member is part of bhajan details)
+        this.collapseSelector('bhajan');
     }
+
+    static collapseSelector(selectorType) {
+        const collapseElement = elements[`${selectorType}Collapse`];
+        const toggleButton = elements[`${selectorType}Toggle`];
+        
+        if (collapseElement && collapseElement.classList.contains('show')) {
+            // Use Bootstrap's collapse functionality
+            const bsCollapse = new bootstrap.Collapse(collapseElement, {
+                toggle: false
+            });
+            bsCollapse.hide();
+            
+            // Update toggle button icon
+            if (toggleButton) {
+                const icon = toggleButton.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('bi-chevron-up');
+                    icon.classList.add('bi-chevron-down');
+                }
+            }
+        }
+    }
+
 }
 
 // Bhajan Details Manager
 class BhajanDetailsManager {
     static init() {
+        this.setupEventListeners();
         this.setupDateTimeHandlers();
+    }
+    
+    static setupEventListeners() {
+        // Add event listeners for toggle buttons
+        const toggleButtons = ['prarthanaiToggle', 'functionToggle', 'bhajanToggle'];
+        
+        toggleButtons.forEach(toggleId => {
+            const button = elements[toggleId];
+            if (button) {
+                button.addEventListener('click', (e) => {
+                    const icon = e.target.querySelector('i') || e.target.closest('button').querySelector('i');
+                    if (icon) {
+                        // Toggle icon based on collapse state
+                        setTimeout(() => {
+                            const targetId = button.getAttribute('data-bs-target');
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement && targetElement.classList.contains('show')) {
+                                icon.classList.remove('bi-chevron-down');
+                                icon.classList.add('bi-chevron-up');
+                            } else {
+                                icon.classList.remove('bi-chevron-up');
+                                icon.classList.add('bi-chevron-down');
+                            }
+                        }, 350); // Wait for Bootstrap animation
+                    }
+                });
+            }
+        });
     }
     
     static setupDateTimeHandlers() {

@@ -10,7 +10,7 @@ const songs = [
   },
   {
     "id": 2,
-    "title": "பக்கரை - நாட்டை",
+    "title": "பக்கரை",
     "songNumber": "2",
     "duration": "1.38",
     "raga": "நாட்டை",
@@ -19,7 +19,7 @@ const songs = [
   },
   {
     "id": 3,
-    "title": "பக்கரை-மோஹனம்",
+    "title": "பக்கரை",
     "songNumber": "2",
     "duration": "2.41",
     "raga": "மோஹனம்",
@@ -28,7 +28,7 @@ const songs = [
   },
   {
     "id": 4,
-    "title": "உம்பர் - ஹம்ஸத்வனி",
+    "title": "உம்பர்",
     "songNumber": "3",
     "duration": "1.01",
     "raga": "ஹம்ஸத்வனி",
@@ -37,7 +37,7 @@ const songs = [
   },
   {
     "id": 5,
-    "title": "உம்பர்-ஆ-பைரவி",
+    "title": "உம்பர்",
     "songNumber": "3",
     "duration": "1.39",
     "raga": "ஆனந்த பைரவி",
@@ -64,7 +64,7 @@ const songs = [
   },
   {
     "id": 8,
-    "title": "சிந்தித்தவர்-ஹம்ஸத்வனி",
+    "title": "சிந்தித்தவர்",
     "songNumber": "Pg.no-08-11",
     "duration": "3.00",
     "raga": "ஹம்ஸத்வனி",
@@ -73,7 +73,7 @@ const songs = [
   },
   {
     "id": 9,
-    "title": "சிந்தித்தவர்-ஆனந்த பைரவி",
+    "title": "சிந்தித்தவர்",
     "songNumber": "Pg.no-08-11",
     "duration": "3.00",
     "raga": "ஆனந்த பைரவி",
@@ -82,7 +82,7 @@ const songs = [
   },
   {
     "id": 10,
-    "title": "ஸித்தி விநாயகா-ஹம்ஸத்வனி",
+    "title": "ஸித்தி விநாயகா",
     "songNumber": "Pg.no-07",
     "duration": "10.00",
     "raga": "ஹம்ஸத்வனி",
@@ -91,7 +91,7 @@ const songs = [
   },
   {
     "id": 11,
-    "title": "ஸித்தி விநாயகா-ஶுப பந்து வராளி",
+    "title": "ஸித்தி விநாயகா",
     "songNumber": "Pg.no-07",
     "duration": "10.00",
     "raga": "ஶுப பந்து வராளி",
@@ -100,7 +100,7 @@ const songs = [
   },
   {
     "id": 12,
-    "title": "ஸித்தி விநாயகா-ரேவதி",
+    "title": "ஸித்தி விநாயகா",
     "songNumber": "Pg.no-07",
     "duration": "10.00",
     "raga": "ரேவதி",
@@ -109,7 +109,7 @@ const songs = [
   },
   {
     "id": 13,
-    "title": "ஸித்தி விநாயகா-மோஹனம்",
+    "title": "ஸித்தி விநாயகா",
     "songNumber": "Pg.no-07",
     "duration": "10.00",
     "raga": "மோஹனம்",
@@ -118,7 +118,7 @@ const songs = [
   },
   {
     "id": 14,
-    "title": "ஸித்தி விநாயகா-கர்ண பைரவி",
+    "title": "ஸித்தி விநாயகா",
     "songNumber": "Pg.no-07",
     "duration": "10.00",
     "raga": "கர்ண பைரவி",
@@ -145,7 +145,7 @@ const songs = [
   },
   {
     "id": 17,
-    "title": "கருவடைந்து - வராளி",
+    "title": "கருவடைந்து",
     "songNumber": "7",
     "duration": "2.49",
     "raga": "வராளி",
@@ -154,7 +154,7 @@ const songs = [
   },
   {
     "id": 18,
-    "title": "கருவடைந்து-ஹிந்தோ",
+    "title": "கருவடைந்து",
     "songNumber": "7",
     "duration": "3.29",
     "raga": "ஹிந்தோளம்",
@@ -163,7 +163,7 @@ const songs = [
   },
   {
     "id": 19,
-    "title": "கனகந்திரள் - சங்கராபரணம்",
+    "title": "கனகந்திரள்",
     "songNumber": "8",
     "duration": "3.03",
     "raga": "சங்கராபரணம்",
@@ -172,7 +172,7 @@ const songs = [
   },
   {
     "id": 20,
-    "title": "கனகந்திரள்-நீலாம்",
+    "title": "கனகந்திரள்",
     "songNumber": "8",
     "duration": "3.00",
     "raga": "நீலாம்பரி",
@@ -334,7 +334,7 @@ const songs = [
   },
   {
     "id": 38,
-    "title": "காலனார் - ஸஹானா",
+    "title": "காலனார்",
     "songNumber": "25",
     "duration": "2.44",
     "raga": "ஸஹானா",
@@ -343,7 +343,7 @@ const songs = [
   },
   {
     "id": 39,
-    "title": "காலனார்-திலங்",
+    "title": "காலனார்",
     "songNumber": "25",
     "duration": "1.24",
     "raga": "திலங்",
@@ -397,7 +397,7 @@ const songs = [
   },
   {
     "id": 45,
-    "title": "தண்டையணி-தன்யாஸி",
+    "title": "தண்டையணி",
     "songNumber": "30",
     "duration": "2.43",
     "raga": "தன்யாஸி",
@@ -442,7 +442,7 @@ const songs = [
   },
   {
     "id": 50,
-    "title": "தொந்தி சரிய-அடாணா",
+    "title": "தொந்தி சரிய",
     "songNumber": "34",
     "duration": "2.47",
     "raga": "அடாணா",
@@ -478,7 +478,7 @@ const songs = [
   },
   {
     "id": 54,
-    "title": "நிலையாப் - பாகேஸ்ரீ",
+    "title": "நிலையாப்",
     "songNumber": "38",
     "duration": "1.35",
     "raga": "பாகேஸ்ரீ",
@@ -487,7 +487,7 @@ const songs = [
   },
   {
     "id": 55,
-    "title": "நிலையாப்-வாசஸ்பதி",
+    "title": "நிலையாப்",
     "songNumber": "38",
     "duration": "1.40",
     "raga": "வாசஸ்பதி",
@@ -622,7 +622,7 @@ const songs = [
   },
   {
     "id": 70,
-    "title": "வரியார்-காம்போதி",
+    "title": "வரியார்",
     "songNumber": "53",
     "duration": "1.20",
     "raga": "காம்போதி",
@@ -631,7 +631,7 @@ const songs = [
   },
   {
     "id": 71,
-    "title": "வரியார்-ஸஹானா",
+    "title": "வரியார்",
     "songNumber": "53",
     "duration": "1.28",
     "raga": "ஸஹானா",
@@ -694,7 +694,7 @@ const songs = [
   },
   {
     "id": 78,
-    "title": "ஆறுமுகம்-மோஹனம்",
+    "title": "ஆறுமுகம்",
     "songNumber": "60",
     "duration": "2.22",
     "raga": "மோஹனம்",
@@ -703,7 +703,7 @@ const songs = [
   },
   {
     "id": 79,
-    "title": "ஆறுமுகம்-நாட்டை குறிஞ்சி",
+    "title": "ஆறுமுகம்",
     "songNumber": "60",
     "duration": "2.39",
     "raga": "நாட்டை குறிஞ்சி",
@@ -793,7 +793,7 @@ const songs = [
   },
   {
     "id": 90,
-    "title": "சிவனார் - ஜோன்புரி",
+    "title": "சிவனார்",
     "songNumber": "71",
     "duration": "3.00",
     "raga": "ஜோன்புரி",
@@ -802,7 +802,7 @@ const songs = [
   },
   {
     "id": 91,
-    "title": "சிவனார்- சங்கரா",
+    "title": "சிவனார்",
     "songNumber": "71",
     "duration": "3.00",
     "raga": "சங்கராபரணம்",
@@ -1216,7 +1216,7 @@ const songs = [
   },
   {
     "id": 137,
-    "title": "அரஹர-ஷண்முக",
+    "title": "அரஹர",
     "songNumber": "115",
     "duration": "2.00",
     "raga": "ஷண்முக ப்ரியா",
