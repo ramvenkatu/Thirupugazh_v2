@@ -3,8 +3,8 @@ Here is the complete Software Requirements Specification (SRS) document, updated
 ***
 
 ### **Software Requirements Specification: Thirupugazh Song List Generator**
-**Version:** 3.2
-**Date:** January 31, 2025
+**Version:** 3.3
+**Date:** October 26, 2025
 
 ---
 ### 1. Introduction
@@ -15,16 +15,12 @@ This document specifies the requirements for the Thirupugazh Song List Generator
 #### 1.2 Scope
 The system will consist of a client-side web application and a server-side Node.js backend. The web interface will allow users to generate playlists with comprehensive event details including prayer selection, function/occasion specification, bhajan scheduling details, and host member coordination. The backend will house a rule-based engine to construct playlists according to the strict sequence, manage persistent history in a MySQL database, and securely interact with LLM services. The scope includes glassmorphism UI design, comprehensive event management, enhanced PDF generation with headers, and robust error handling.
 
-#### 1.3 Latest Updates (Version 3.2)
-* **Refined Glassmorphism Design:** Enhanced glassmorphism implementation with white, gray, and silver gradient color scheme for elegant, professional appearance with improved readability and accessibility.
-* **Enhanced Playlist Header Display:** Complete redesign of playlist section headers with the following improvements:
-  - **Removed all text labels and colons** ("Prarthanai:", "Function:", etc.) for cleaner presentation
-  - **Center-aligned all content** horizontally for professional appearance
-  - **Implemented 4-line format:** Line 1: Prayer text (italic), Line 2: Function name (bold), Line 3: Date | Day | Time range, Line 4: Host details with contact information
-* **Enhanced Time Management:** Upgraded time input system with dual time field support:
-  - **Start Time Field:** Replaced single "Time" field with "Start Time" for event beginning
-  - **End Time Field:** Added new "End Time" field for event conclusion
-  - **Time Range Display:** Shows time as "Start Time - End Time" format in headers (e.g., "02:30 PM - 05:00 PM")
+#### 1.3 Latest Updates (Version 3.3)
+* **Header Alignment and Invocation:** Playlist header refined. Invocation spelling standardized to "ஓம் ஸ்ரீ மஹாகணபதயே நமஹ" (not மகாகணபதயே). Invocation appears left/right; Function and Date|Day|Time centered; Host details centered.
+* **Bhajan Details Layout:** Fixed grid widths (2-2-3-3-2) and input-group sizing so Date, Day, Start, End, and Duration are fully visible on one row (wraps gracefully on smaller screens).
+* **Playlist UI Columns:** Renamed "Alankaaram" column to "A". Hour label compacted to "Hr" (e.g., "1st Hr").
+* **PDF Export Overhaul:** PDF now includes only 5 columns in this order: Sl.No, Song Title, Raagam, Song No, A. Borders thinned (~0.35px). Larger bold ✓ for Alankaaram. Added centered header panel with invocation, prarthanai, function, date|day|time, and host. Repeating column headers on each page; minimized first-page whitespace.
+* **Fonts and Margins:** Uses 'Noto Sans Tamil' stack. A4 portrait with minimal margins (~5mm).
 * **Six Main Abodes Enhancement:** Updated playlist generation algorithm for the 6 main abodes of Murugan:
   - **Five Traditional Abodes:** Each now provides 2 songs (was 1): திருப்பரங்குன்றம், திருசெந்தூர், திருப்பழனி, ஸ்வாமி மலை, திருத்தணிகை
   - **பழமுதிர் சோலை:** Now provides 2 songs (was 1)
@@ -229,16 +225,18 @@ The application is a client-server system.
 
 **FR-5: Enhanced UI and Data Display**
 * **FR-3.1: Streamlined Action Layout:** The system shall organize primary actions (Generate Playlist, Export PDF, Clear Playlist) in a single, consolidated location below the duration input for improved user workflow.
-* **FR-3.2: Playlist Table Display:** The generated playlist shall be rendered in a Bootstrap-styled table with the headers: "Sl.No", "Song Title", "Song Number 8th Ed", "Raagam", "Album", and "Alankaaram". The duration column has been removed to focus on essential song identification information and Alankaaram functionality.
+* **FR-3.2: Playlist Table Display:** The generated playlist shall be rendered in a Bootstrap-styled table and include the following columns (drag and delete controls may appear as leading columns in the UI): "Sl.No", "Song Title", "Song No", "Raagam", "Album", "Duration", "Cum. Time", "Hour" (shown as e.g., "1st Hr"), and "A" (Alankaaram). The "Alankaaram" header label shall display as "A" in the UI.
 * **FR-5.3: Enhanced PDF Export:** The system shall provide comprehensive PDF generation capabilities with the following specifications:
-    * **FR-5.3.1: Portrait Orientation:** PDF documents shall be generated in A4 portrait orientation with reduced margins (15mm) for maximum content utilization
-    * **FR-5.3.2: Enhanced Font Sizing:** PDF text shall use 12pt font size for optimal readability across all age groups
-    * **FR-5.3.3: Comprehensive Headers:** PDF shall include complete event headers displaying prayer text, function details, scheduling information, and host member contact details
-    * **FR-5.3.4: Header Repetition:** Event headers and table column headers shall be repeated on every page for multi-page documents
-    * **FR-5.3.5: Professional Formatting:** PDF styling shall include appropriate spacing, borders, and visual hierarchy for professional presentation
+    * **FR-5.3.1: Portrait Orientation:** PDF documents shall be generated in A4 portrait orientation with minimal margins (~5mm) for maximum content utilization
+    * **FR-5.3.2: Font Stack:** PDF shall use the 'Noto Sans Tamil', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif stack for Tamil text fidelity
+    * **FR-5.3.3: Comprehensive Header Panel:** PDF shall include a centered header panel containing invocation (left/right), prarthanai text, function (bold), date|day|time, and host details
+    * **FR-5.3.4: Column Set and Order:** PDF table shall contain exactly 5 columns in this order: Sl.No, Song Title, Raagam, Song No, A (Alankaaram). No Duration or Cumulative Time columns in the PDF
+    * **FR-5.3.5: Alankaaram Mark:** The "A" column shall display a bold checkmark (✓) when enabled; leave empty when not
+    * **FR-5.3.6: Repeating Headers:** Column headers shall repeat on every page. If a table spans multiple pages, a column header row shall appear at the top of each page
+    * **FR-5.3.7: Borders:** Table borders shall be thin (~0.35px) for a light, professional grid
 * **FR-3.5: Alankaaram Functionality:** The system shall provide comprehensive Alankaaram support with the following capabilities:
     * **FR-3.5.1: Checkbox Selection:** Each song row shall include a checkbox in the Alankaaram column allowing users to enable/disable Alankaaram for individual songs.
-    * **FR-3.5.2: Time Duration Input:** When Alankaaram is enabled for a song, a time input field shall appear with a default value of 4 minutes, allowing users to specify duration between 1-30 minutes.
+    * **FR-3.5.2: Time Duration Input:** When Alankaaram is enabled for a song, a time input field shall appear with a default value of 5 minutes, allowing users to specify duration between 1–30 minutes.
     * **FR-3.5.3: Visual Indicators:** The checkbox shall be accompanied by a musical note icon for clear visual identification.
     * **FR-3.5.4: Data Persistence:** Alankaaram selections and time durations shall be maintained in browser memory until the playlist is cleared or regenerated.
 * **FR-3.6: Alankaaram PDF Display:** The PDF export shall include the Alankaaram column with the following specifications:
