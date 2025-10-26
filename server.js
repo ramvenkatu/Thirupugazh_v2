@@ -650,6 +650,45 @@ app.post('/api/generate-playlist', async (req, res) => {
     }
 });
 
+// Health check
+app.get('/api/health', (req, res) => {
+    res.json({ ok: true, ts: Date.now() });
+});
+
+// Search songs endpoint (used by AI Assistant and UI)
+app.get('/api/search', (req, res) => {
+    try {
+        const { query = '', albumFilter, minScore, maxResults } = req.query;
+        if (!query || !String(query).trim()) {
+            return res.status(400).json({ error: 'query parameter is required' });
+        }
+        const options = {
+            albumFilter: albumFilter ? normalizeAlbumName(albumFilter) : null,
+            minScore: isNaN(parseInt(minScore)) ? 30 : parseInt(minScore),
+            maxResults: isNaN(parseInt(maxResults)) ? 10 : parseInt(maxResults)
+        };
+        const results = searchSongs(query, options);
+        // Return array directly to match frontend expectations
+        res.json(results);
+    } catch (err) {
+        console.error('Error in /api/search:', err);
+        res.status(500).json({ error: 'Search failed' });
+    }
+});
+
+// Get songs by album endpoint
+app.get('/api/songs/:album', (req, res) => {
+    try {
+        const raw = req.params.album || '';
+        const albumName = decodeURIComponent(raw);
+        const results = getSongsByAlbum(albumName);
+        res.json(results);
+    } catch (err) {
+        console.error('Error in /api/songs/:album:', err);
+        res.status(500).json({ error: 'Failed to fetch songs by album' });
+    }
+});
+
 // LLM proxy endpoint for AI chatbot
 app.post('/api/llm-chat', async (req, res) => {
     try {
