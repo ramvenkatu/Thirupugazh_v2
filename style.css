@@ -42,6 +42,141 @@ body {
     position: relative;
 }
 
+/* Time inputs - keep native pickers visible */
+input[type="time"] {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    height: calc(1.5em + 0.5rem + 2px);
+}
+
+/* Compact form controls */
+.form-control-sm {
+    min-height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+}
+
+.form-label.small {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+    color: #6c757d;
+}
+
+/* Time range display */
+#timeRangeDisplay {
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+/* Compact date input */
+input[type="date"] {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    height: calc(1.5em + 0.5rem + 2px);
+}
+
+/* Adjust spacing in the bhajan details card */
+#bhajanCollapse .card-body {
+    padding: 1rem;
+}
+
+/* Align input-group controls in Bhajan Details row */
+#bhajanCollapse .input-group-text {
+    height: 31px;
+    padding: 0.25rem 0.5rem;
+}
+
+/* AM/PM selector sizing and alignment */
+#bhajanCollapse .input-group .form-select.form-select-sm {
+    height: 31px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+    text-align-last: center; /* center selected option in Chrome */
+    padding-right: 1.75rem; /* push text away from caret */
+    background-position: right 0.4rem center; /* move caret slightly right */
+    color: #212529; /* force visible text */
+    background-color: #ffffff; /* ensure white background */
+}
+/* Allow selects to wrap naturally if space is tight */
+#bhajanCollapse .input-group { flex-wrap: wrap; }
+
+/* Seamless join between time input and AM/PM select */
+#bhajanCollapse .input-group .form-control + .form-select,
+#bhajanCollapse .input-group select + select,
+#bhajanCollapse .input-group select + .form-select {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Make time input take remaining width and AM/PM fixed width */
+#bhajanCollapse .input-group select#startHour,
+#bhajanCollapse .input-group select#endHour { width: 64px; }
+#bhajanCollapse .input-group select#startMinute,
+#bhajanCollapse .input-group select#endMinute { width: 64px; }
+#bhajanCollapse .input-group select#startAmPm,
+#bhajanCollapse .input-group select#endAmPm {
+    width: 68px;
+}
+#bhajanCollapse .input-group .input-group-text {
+    padding-left: 6px; padding-right: 6px;
+}
+
+/* Make time input-group fill its column */
+#bhajanCollapse .col-md-3 .input-group { width: 100%; }
+
+/* Ensure disabled end time still readable */
+#bhajanCollapse .input-group .form-select.form-select-sm:disabled {
+    color: #6c757d; /* muted grey */
+    background-color: #e9ecef;
+    opacity: 1; /* prevent overly faded look */
+}
+
+/* Member container scroll area ~2 cards */
+#memberContainer {
+    max-height: 200px !important; /* ~2 cards */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: block; /* stack children */
+}
+#memberContainer > .col,
+#memberContainer > [class^="col-"] {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+/* Visible scrollbar */
+#memberContainer::-webkit-scrollbar { width: 8px; }
+#memberContainer::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 4px; }
+
+/* Let the Bhajan Details row use full width and wrap */
+#bhajanCollapse .row.g-2 {
+    flex-wrap: wrap;
+    overflow: visible;
+}
+
+/* Allow columns to shrink to fit available space */
+#bhajanCollapse .col-md-2 { min-width: 0; }
+
+/* Keep time range readable and on one line */
+#bhajanCollapse #timeRangeDisplay {
+    white-space: nowrap;
+    font-size: 0.875rem;
+}
+
+/* Ensure proper alignment of form elements */
+.row.align-items-end > [class^="col-"] {
+    margin-bottom: 0.5rem;
+}
+
+/* Adjust the day display */
+#bhajanDay {
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
 /* Animated gradient background */
 @keyframes gradientShift {
     0% { background-position: 0% 50%; }
@@ -189,23 +324,42 @@ body, h1, h2, h3, h4, h5, h6, .card-title {
 }
 
 /* Custom Button Styles - Glassmorphism */
+/* Base buttons (keep light glassmorphism elsewhere) */
 .btn {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #212529;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
-    font-weight: 600;
     border-radius: 0.5rem;
-    transition: all 0.3s ease-in-out;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
 }
 
-.btn:hover {
-    background: rgba(255, 255, 255, 0.35);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: #212529;
-    transform: translateY(-1px);
+/* Solid styles for primary action buttons in Generate Playlist */
+#playlistForm #generateBtn.btn-success,
+#playlistForm #exportPdfBtn.btn-primary,
+#playlistForm #clearPlaylistBtn.btn-danger {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    color: #fff;
+}
+
+#playlistForm #generateBtn.btn-success { background-color: #198754; border-color: #198754; }
+#playlistForm #exportPdfBtn.btn-primary { background-color: #0d6efd; border-color: #0d6efd; }
+#playlistForm #clearPlaylistBtn.btn-danger { background-color: #dc3545; border-color: #dc3545; }
+
+#playlistForm #generateBtn.btn-success:hover { background-color: #157347; border-color: #146c43; }
+#playlistForm #exportPdfBtn.btn-primary:hover { background-color: #0b5ed7; border-color: #0a58ca; }
+#playlistForm #clearPlaylistBtn.btn-danger:hover { background-color: #bb2d3b; border-color: #b02a37; }
+
+#playlistForm #generateBtn.btn-success:active,
+#playlistForm #exportPdfBtn.btn-primary:active,
+#playlistForm #clearPlaylistBtn.btn-danger:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+}
+
+#playlistForm #generateBtn.btn-success:disabled,
+#playlistForm #exportPdfBtn.btn-primary:disabled,
+#playlistForm #clearPlaylistBtn.btn-danger:disabled {
+    opacity: 0.55;
+    color: #fff;
 }
 
 .btn-lg {
@@ -370,6 +524,80 @@ table#playlistTable tbody tr:hover {
     max-height: 70vh;
     overflow-y: auto;
     border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* AI Assistant Section */
+.ai-assistant-input .form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+.ai-assistant-input .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+    transition: all 0.2s ease-in-out;
+}
+
+.ai-assistant-input .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    transform: translateY(-1px);
+}
+
+.ai-assistant-input .btn-warning:active {
+    transform: translateY(0);
+}
+
+/* Chat messages */
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ffc107;
+    border-radius: 0.5rem;
+    background-color: #fffcf5;
+}
+
+/* Make the chat input more prominent */
+#chatInput {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border: 2px solid #ffc107 !important;
+}
+
+/* Style the send button */
+#chatBtn {
+    min-width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add animation to the send button */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+#chatBtn:hover i {
+    animation: pulse 1s infinite;
+}
+
+/* Style the example commands */
+.ai-assistant-input .form-text {
+    color: #6c757d;
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+/* Add some spacing above the AI Assistant card on mobile */
+@media (max-width: 767.98px) {
+    .ai-assistant-input {
+        margin-top: 1rem;
+    }
 }
 
 /* Chat Messages Styling */

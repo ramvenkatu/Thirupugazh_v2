@@ -53,9 +53,15 @@ const elements = {
     bhajanCollapse: document.getElementById('bhajanCollapse'),
     
     bhajanDate: document.getElementById('bhajanDate'),
-    bhajanStartTime: document.getElementById('bhajanStartTime'),
-    bhajanEndTime: document.getElementById('bhajanEndTime'),
+    // Custom 12h time selectors
+    startHour: document.getElementById('startHour'),
+    startMinute: document.getElementById('startMinute'),
+    endHour: document.getElementById('endHour'),
+    endMinute: document.getElementById('endMinute'),
+    bhajanDuration: document.getElementById('bhajanDuration'),
     bhajanDay: document.getElementById('bhajanDay'),
+    startAmPm: document.getElementById('startAmPm'),
+    endAmPm: document.getElementById('endAmPm'),
     
     // Status and display
     playlistStats: document.getElementById('playlistStats'),
@@ -97,6 +103,26 @@ class Utils {
             const seconds = parseInt(parts[1]) || 0;
             return total + (minutes * 60) + seconds;
         }, 0);
+    }
+    
+    // Convert 'HH:MM' (24h) to 'h:mm am/pm'
+    static to12h(hhmm) {
+        if (!hhmm || typeof hhmm !== 'string') return '';
+        const [hStr, mStr] = hhmm.split(':');
+        let h = parseInt(hStr, 10);
+        const m = parseInt(mStr, 10) || 0;
+        if (isNaN(h)) return '';
+        const period = h >= 12 ? 'pm' : 'am';
+        h = h % 12; if (h === 0) h = 12;
+        return `${h}:${String(m).padStart(2, '0')} ${period}`;
+    }
+    
+    static formatTimeRange12h(start24, end24) {
+        const s = Utils.to12h(start24);
+        const e = Utils.to12h(end24);
+        if (!s && !e) return '';
+        if (s && e) return `${s} - ${e}`;
+        return s || e;
     }
     
     static showToast(type, message) {
@@ -311,86 +337,208 @@ class ApiService {
         const params = new URLSearchParams({ query });
         if (options.albumFilter) params.append('albumFilter', options.albumFilter);
         if (options.minScore) params.append('minScore', options.minScore.toString());
-        if (options.maxResults) params.append('maxResults', options.maxResults.toString());
-        
-        return this.makeRequest(`/api/search-songs?${params.toString()}`);
+        return this.makeRequest(`/api/search?${params.toString()}`);
     }
 
     static async checkHealth() {
         try {
-            const response = await fetch('/api/health');
-            if (response.ok) {
-                AppState.connectionStatus = 'connected';
-            } else {
-                AppState.connectionStatus = 'disconnected';
-            }
-        } catch (error) {
-            console.log('Health check failed (server may be starting):', error.message);
-            AppState.connectionStatus = 'disconnected';
+            const res = await fetch('/api/health', { cache: 'no-store' });
+            // If backend is not present, don't block the app
+            return res.ok;
+        } catch (e) {
+            // Gracefully degrade in standalone mode
+            return true;
         }
     }
 }
 
-// PDF Export Service - Server-side generation
 class PdfService {
     static async exportPlaylist(playlist) {
+        return this.exportToPdf();
+    }
+
+    static async exportToPdf() {
         try {
-            Utils.showToast('info', 'Generating PDF... Please wait.');
-            
-            const response = await fetch(`${API_BASE}/api/generate-pdf`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    playlist,
-                    alankaaramData: AppState.alankaaramData || {},
-                    headerData: AppState.playlistHeaderData || null
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (!window.html2pdf) {
+                throw new Error('html2pdf library not loaded');
             }
+            const printWrapper = document.createElement('div');
+            printWrapper.style.fontFamily = "'Noto Sans Tamil', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            printWrapper.style.padding = '0';
+            printWrapper.style.margin = '0';
+            printWrapper.style.width = '190mm'; /* keep content inside A4 minus margins */
 
-            // Get the PDF blob
-            const blob = await response.blob();
-            
-            // Create download link
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            
-            // Get filename from Content-Disposition header or use default
-            const contentDisposition = response.headers.get('content-disposition');
-            let filename = 'thirupugazh-playlist.pdf';
-            if (contentDisposition) {
-                const filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
-                if (filenameMatch) {
-                    filename = filenameMatch[1];
+            // Header panel (centered), like the old PDF
+            const hd = AppState.playlistHeaderData || {};
+            if (hd && (hd.selectedPrarthanai || hd.selectedFunction || (hd.bhajanDetails && (hd.bhajanDetails.date || hd.bhajanDetails.startTime)))) {
+                const panel = document.createElement('div');
+                panel.style.border = '0.6px solid #999';
+                panel.style.borderRadius = '6px';
+                panel.style.background = '#f8f9fa';
+                panel.style.padding = '10px 12px';
+                panel.style.margin = '0 0 8px 0';
+                panel.style.textAlign = 'center';
+                panel.style.color = '#111';
+
+                // Invocation inside panel top row
+                const invRow = document.createElement('div');
+                invRow.style.display = 'flex';
+                invRow.style.justifyContent = 'space-between';
+                invRow.style.fontWeight = '700';
+                invRow.style.marginBottom = '4px';
+                const invL = document.createElement('span'); invL.textContent = 'ஓம் ஸ்ரீ மஹாகணபதயே நமஹ';
+                const invR = document.createElement('span'); invR.textContent = 'ஓம் ஸ்ரீ குருப்யோ நமஹ';
+                invRow.appendChild(invL); invRow.appendChild(invR);
+                panel.appendChild(invRow);
+
+                // Prarthanai text (Tamil) if any
+                if (hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
+                    const p = document.createElement('div');
+                    p.textContent = hd.selectedPrarthanai.text;
+                    p.style.marginBottom = '4px';
+                    panel.appendChild(p);
                 }
+                // Function name bold
+                if (hd.selectedFunction && hd.selectedFunction.name) {
+                    const fn = document.createElement('div');
+                    fn.textContent = hd.selectedFunction.name;
+                    fn.style.fontWeight = '700';
+                    fn.style.marginBottom = '4px';
+                    panel.appendChild(fn);
+                }
+                // Date | Day | Time
+                if (hd.bhajanDetails) {
+                    const segs = [];
+                    if (hd.bhajanDetails.date) {
+                        const d = new Date(hd.bhajanDetails.date);
+                        segs.push(d.toLocaleDateString('en-IN'));
+                    }
+                    if (hd.bhajanDetails.day) segs.push(hd.bhajanDetails.day);
+                    if (hd.bhajanDetails.startTime && hd.bhajanDetails.endTime) {
+                        segs.push(Utils.formatTimeRange12h(hd.bhajanDetails.startTime, hd.bhajanDetails.endTime));
+                    }
+                    if (segs.length) {
+                        const line = document.createElement('div');
+                        line.textContent = segs.join(' | ');
+                        line.style.marginBottom = '6px';
+                        panel.appendChild(line);
+                    }
+                }
+                // Host
+                if (hd.selectedMember && (hd.selectedMember.name || hd.selectedMember.address || hd.selectedMember.phone || (hd.selectedMember.phone_numbers && hd.selectedMember.phone_numbers.length))) {
+                    const host = document.createElement('div');
+                    host.style.fontSize = '11px';
+                    host.style.color = '#333';
+                    const phone = hd.selectedMember.phone || (hd.selectedMember.phone_numbers ? hd.selectedMember.phone_numbers.join(', ') : '');
+                    host.innerHTML = `${hd.selectedMember.name || ''}<br>${hd.selectedMember.address || ''}<br>${phone || ''}`;
+                    panel.appendChild(host);
+                }
+                printWrapper.appendChild(panel);
             }
-            
-            a.download = filename;
-            
-            // Trigger download
-            document.body.appendChild(a);
-            a.click();
-            
-            // Cleanup
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(a);
-            
-            Utils.showToast('success', 'PDF exported successfully!');
+
+            // Build a clean table that contains only the required columns
+            const outTable = document.createElement('table');
+            outTable.style.width = '100%';
+            outTable.style.borderCollapse = 'collapse';
+            outTable.style.fontSize = '11px';
+            // Enable header repeat per page
+            outTable.style.pageBreakInside = 'auto';
+            outTable.style.marginTop = '6px';
+
+            const thead = document.createElement('thead');
+            thead.style.display = 'table-header-group';
+            const hr = document.createElement('tr');
+            // New PDF column set and order
+            const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'A'];
+            headers.forEach((h, i) => {
+                const th = document.createElement('th');
+                th.textContent = h;
+                th.style.border = '0.35px solid #000';
+                th.style.padding = '4px 6px';
+                th.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
+                // Column widths tuned for A4 with fewer columns
+                const widths = ['8%', '56%', '18%', '12%', '6%'];
+                th.style.width = widths[i];
+                th.style.whiteSpace = 'nowrap';
+                hr.appendChild(th);
+            });
+            thead.appendChild(hr);
+            outTable.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            tbody.style.display = 'table-row-group';
+            const rows = elements.playlistTableBody ? elements.playlistTableBody.querySelectorAll('tr') : [];
+            rows.forEach((tr, idx) => {
+                const tds = tr.querySelectorAll('td');
+                if (tds.length < 11) return; // ensure row structure present
+                // Inject a page break + header only before new pages (every ~30 data rows)
+                if (idx > 0 && idx % 30 === 0) {
+                    // Force a page break first
+                    const brTr = document.createElement('tr');
+                    const brTd = document.createElement('td');
+                    brTd.colSpan = 5;
+                    brTd.style.padding = '0';
+                    brTd.style.border = 'none';
+                    brTr.style.pageBreakBefore = 'always';
+                    brTr.style.breakBefore = 'page';
+                    brTr.appendChild(brTd);
+                    tbody.appendChild(brTr);
+
+                    // Then append a header-like row at the top of the new page
+                    const hdrRow = document.createElement('tr');
+                    const hdrs = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'A'];
+                    hdrs.forEach((txt, i) => {
+                        const td = document.createElement('td');
+                        td.textContent = txt;
+                        td.style.border = '0.35px solid #000';
+                        td.style.padding = '4px 6px';
+                        td.style.fontWeight = '700';
+                        td.style.backgroundColor = '#e9ecef';
+                        td.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
+                        hdrRow.appendChild(td);
+                    });
+                    tbody.appendChild(hdrRow);
+                }
+                const row = document.createElement('tr');
+                row.style.pageBreakInside = 'avoid';
+                row.style.breakInside = 'avoid';
+                // Map from on-screen table to export: skip drag/delete columns
+                const slno = tds[2]?.textContent.trim() || '';
+                const title = tds[3]?.textContent.trim() || '';
+                const raagam = tds[5]?.textContent.trim() || '';
+                const songNo = tds[4]?.textContent.trim() || '';
+                const alChk = tr.querySelector('.alankaaram-checkbox');
+                const al = alChk && alChk.checked ? '✓' : '';
+                [slno, title, raagam, songNo, al].forEach((val, i) => {
+                    const td = document.createElement('td');
+                    td.textContent = val;
+                    td.style.border = '0.35px solid #000';
+                    td.style.padding = '4px 6px';
+                    td.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
+                    if (i === 4) { td.style.fontWeight = '700'; td.style.fontSize = '14px'; }
+                    row.appendChild(td);
+                });
+                tbody.appendChild(row);
+            });
+            outTable.appendChild(tbody);
+            printWrapper.appendChild(outTable);
+
+            const fileName = `thirupugazh_playlist_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`;
+            await html2pdf().set({
+                margin: [5,5,5,5],
+                filename: fileName,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollY: 0 },
+                pagebreak: { mode: ['css','legacy'] },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).from(printWrapper).save();
         } catch (error) {
             console.error('PDF Export Error:', error);
-            Utils.showToast('error', 'Failed to export PDF. Please try again.');
+            Utils.showToast('error', 'Failed to export PDF');
         }
     }
 }
 
-// Playlist Manager
 class PlaylistManager {
     static renderPlaylist(playlist) {
         AppState.currentPlaylist = playlist;
@@ -402,10 +550,151 @@ class PlaylistManager {
         }
         
         this.hideEmptyState();
-        this.renderPlaylistHeader();
         this.updatePlaylistTable(playlist);
+        this.updateCumulativeDurations();
         this.updatePlaylistStats(playlist);
         this.enableActions();
+        this.renderPlaylistHeader();
+        this.setupDragAndDrop();
+    }
+    
+    static updateCumulativeDurations() {
+        const rows = elements.playlistTableBody.querySelectorAll('tr');
+        let cumulativeSeconds = 0;
+        
+        rows.forEach((row, index) => {
+            const durationCell = row.querySelector('.duration-cell');
+            const cumTimeCell = row.querySelector('.cumulative-time');
+            const hourCell = row.querySelector('.hour-cell');
+            
+            if (!durationCell || !cumTimeCell) return;
+            
+            // Get duration in seconds
+            const durationText = durationCell.textContent.trim();
+            const [minutes, seconds] = durationText.split(':').map(Number);
+            const durationInSeconds = (minutes * 60) + (seconds || 0);
+            
+            // Add alankaaram time if checked
+            const alankaaramCheckbox = row.querySelector('.alankaaram-checkbox');
+            const alankaaramTimeInput = row.querySelector('.alankaaram-time');
+            
+            if (alankaaramCheckbox && alankaaramCheckbox.checked && alankaaramTimeInput) {
+                const alankaaramMinutes = parseInt(alankaaramTimeInput.value) || 5;
+                cumulativeSeconds += alankaaramMinutes * 60;
+            }
+            
+            // Add song duration
+            cumulativeSeconds += durationInSeconds;
+            
+            // Format cumulative time
+            const hours = Math.floor(cumulativeSeconds / 3600);
+            const remainingMinutes = Math.floor((cumulativeSeconds % 3600) / 60);
+            const remainingSeconds = cumulativeSeconds % 60;
+            
+            let formattedCumTime = '';
+            if (hours > 0) {
+                formattedCumTime = `${hours}:${String(remainingMinutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+            } else {
+                formattedCumTime = `${remainingMinutes}:${String(remainingSeconds).padStart(2, '0')}`;
+            }
+            
+            // Update cumulative time cell
+            if (cumTimeCell) {
+                cumTimeCell.textContent = formattedCumTime;
+                cumTimeCell.dataset.seconds = cumulativeSeconds;
+            }
+            
+            // Calculate and update hour
+            if (hourCell) {
+                const hourNumber = Math.ceil(cumulativeSeconds / 3600);
+                hourCell.textContent = `${hourNumber}${this.getOrdinalSuffix(hourNumber)} Hr`;
+            }
+        });
+    }
+    
+    static getOrdinalSuffix(number) {
+        const j = number % 10, k = number % 100;
+        if (j === 1 && k !== 11) return 'st';
+        if (j === 2 && k !== 12) return 'nd';
+        if (j === 3 && k !== 13) return 'rd';
+        return 'th';
+    }
+    
+    static setupDragAndDrop() {
+        const tbody = elements.playlistTableBody;
+        let draggedRow = null;
+
+        // Make rows draggable
+        const makeRowsDraggable = () => {
+            const rows = tbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                row.draggable = true;
+                
+                // Add drag handle
+                if (!row.querySelector('.drag-handle')) {
+                    const dragCell = row.cells[0];
+                    dragCell.innerHTML = '<i class="bi bi-grip-vertical text-muted drag-handle"></i>';
+                    dragCell.style.cursor = 'grab';
+                }
+                
+                row.addEventListener('dragstart', (e) => {
+                    draggedRow = row;
+                    setTimeout(() => row.classList.add('dragging'), 0);
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', ''); // Required for Firefox
+                });
+                
+                row.addEventListener('dragend', () => {
+                    row.classList.remove('dragging');
+                    draggedRow = null;
+                });
+            });
+        };
+        
+        // Set up drag over and drop events
+        tbody.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            
+            const afterElement = this.getDragAfterElement(tbody, e.clientY);
+            if (afterElement) {
+                tbody.insertBefore(draggedRow, afterElement);
+            } else {
+                tbody.appendChild(draggedRow);
+            }
+            
+            // Update row numbers and cumulative times
+            this.updateRowNumbers();
+            this.updateCumulativeDurations();
+        });
+        
+        // Initialize draggable rows
+        makeRowsDraggable();
+    }
+    
+    static getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('tr:not(.dragging)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+    
+    static updateRowNumbers() {
+        const rows = elements.playlistTableBody.querySelectorAll('tr');
+        rows.forEach((row, index) => {
+            const numberCell = row.cells[2];
+            if (numberCell) {
+                numberCell.textContent = index + 1;
+            }
+        });
     }
     
     static showEmptyState() {
@@ -419,66 +708,142 @@ class PlaylistManager {
         elements.emptyState.classList.add('d-none');
         elements.playlistContainer.classList.remove('d-none');
     }
-    
+
     static updatePlaylistTable(playlist) {
         const tbody = elements.playlistTableBody;
         tbody.innerHTML = '';
-        
+
         playlist.forEach((song, index) => {
             const row = document.createElement('tr');
-            row.className = 'fade-in';
+
+            // Check if Alankaaram data exists for this song
+            const alankaaramData = AppState.alankaaramData[song.id] || {};
+            const hasAlankaaram = alankaaramData.enabled !== undefined ? alankaaramData.enabled : false;
+            const alankaaramTime = (alankaaramData.time || '5');
+
+            // Format duration as MM:SS supporting 'M.SS' notation in songs.js
+            const formattedDuration = Utils.formatDuration(song.duration);
+
             row.innerHTML = `
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center">${index + 1}</td>
+                <td>${song.title || ''}</td>
+                <td>${song.songNumber || song.songNumber8thEd || ''}</td>
+                <td>${song.raga || song.raagam || ''}</td>
+                <td>${song.album || ''}</td>
+                <td class="text-center duration-cell">${formattedDuration}</td>
+                <td class="text-center cumulative-time">00:00</td>
+                <td class="text-center hour-cell">1st Hour</td>
                 <td class="text-center">
-                    <button class="btn btn-sm btn-outline-danger delete-song-btn" data-song-index="${index}" title="Remove song">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-                <td class="text-center fw-bold">${index + 1}</td>
-                <td class="text-tamil">${song.title || ''}</td>
-                <td>${song.songNumber || ''}</td>
-                <td class="text-tamil">${song.raga || ''}</td>
-                <td class="text-tamil">${song.album || ''}</td>
-                <td>${Utils.formatDuration(song.duration || '')}</td>
-                <td class="text-center">
-                    <div class="alankaaram-container d-flex align-items-center justify-content-center gap-2">
-                        <div class="form-check mb-0">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="form-check me-2">
                             <input class="form-check-input alankaaram-checkbox" type="checkbox" 
-                                   data-song-index="${index}" id="alankaaram-${index}">
+                                   id="alankaaram-${song.id}" ${hasAlankaaram ? 'checked' : ''}>
                         </div>
-                        <div class="alankaaram-time-container d-none">
-                            <div class="input-group input-group-sm">
-                                <input type="number" class="form-control alankaaram-time" 
-                                       value="4" min="1" max="30" 
-                                       data-song-index="${index}"
-                                       style="width: 60px;">
-                                <span class="input-group-text">min</span>
-                            </div>
+                        <div class="input-group input-group-sm alankaaram-time-container" style="width: 80px; ${!hasAlankaaram ? 'display: none;' : ''}">
+                            <input type="text" class="form-control form-control-sm text-center alankaaram-time" 
+                                   value="${alankaaramTime}" placeholder="5">
+                            <span class="input-group-text">min</span>
                         </div>
                     </div>
                 </td>
             `;
+
+            // Add drag handle and delete button into their respective cells
+            const dragCell = row.cells[0];
+            dragCell.innerHTML = '<i class="bi bi-grip-vertical text-muted drag-handle"></i>';
+            dragCell.style.cursor = 'grab';
+
+            const deleteCell = row.cells[1];
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.className = 'btn btn-sm btn-link text-danger p-0 delete-song-btn';
+            deleteBtn.title = 'Remove';
+            deleteBtn.innerHTML = '<i class="bi bi-trash"></i>';
+            deleteBtn.addEventListener('click', () => this.removeSong(song.id));
+            deleteCell.appendChild(deleteBtn);
+
+            // Add event listeners for Alankaaram controls
+            const checkbox = row.querySelector(`#alankaaram-${song.id}`);
+            const timeInput = row.querySelector('.alankaaram-time');
+            const timeContainer = row.querySelector('.alankaaram-time-container');
+
+            // Update Alankaaram data when checkbox changes
+            checkbox.addEventListener('change', (e) => {
+                const isChecked = e.target.checked;
+                // Show/Hide time input
+                if (timeContainer) timeContainer.style.display = isChecked ? '' : 'none';
+                // Default to 5 when enabled
+                if (isChecked && timeInput && (!timeInput.value || isNaN(parseInt(timeInput.value)))) {
+                    timeInput.value = '5';
+                }
+
+                // Update Alankaaram data in state
+                AppState.alankaaramData[song.id] = {
+                    enabled: isChecked,
+                    time: isChecked ? (timeInput.value || '5') : '5'
+                };
+
+                // Update cumulative durations and playlist stats
+                this.updateCumulativeDurations();
+                this.updatePlaylistStats(playlist);
+            });
+
+            // Update Alankaaram time when input changes
+            timeInput.addEventListener('change', (e) => {
+                // Validate time is a number between 1 and 60
+                let minutes = parseInt(e.target.value);
+                if (isNaN(minutes) || minutes < 1) minutes = 5;
+                if (minutes > 60) minutes = 60;
+                e.target.value = minutes;
+
+                // Update Alankaaram data in state
+                AppState.alankaaramData[song.id] = {
+                    enabled: true,
+                    time: minutes.toString()
+                };
+
+                // Update cumulative durations and playlist stats
+                this.updateCumulativeDurations();
+                this.updatePlaylistStats(playlist);
+            });
+
             tbody.appendChild(row);
         });
     }
-    
+
     static updatePlaylistStats(playlist) {
-        const totalDuration = Utils.calculateTotalDuration(playlist);
+        // Recalculate total including Alankaaram to keep in sync with cumulative
+        let totalSeconds = 0;
+        const rows = elements.playlistTableBody.querySelectorAll('tr');
+        rows.forEach(row => {
+            const durationCell = row.querySelector('.duration-cell');
+            if (!durationCell) return;
+            const [mStr, sStr] = durationCell.textContent.trim().split(':');
+            const m = parseInt(mStr) || 0;
+            const s = parseInt(sStr) || 0;
+            totalSeconds += m * 60 + s;
+            const alChk = row.querySelector('.alankaaram-checkbox');
+            const alTime = row.querySelector('.alankaaram-time');
+            if (alChk && alChk.checked) {
+                const addMin = parseInt(alTime && alTime.value) || 5;
+                totalSeconds += addMin * 60;
+            }
+        });
         const songCount = playlist.length;
-        elements.playlistStats.innerHTML = `
-            ${songCount} songs • ${Utils.formatTotalDuration(totalDuration)}
-        `;
+        elements.playlistStats.innerHTML = `${songCount} songs • ${Utils.formatTotalDuration(totalSeconds)}`;
     }
-    
+
     static enableActions() {
         elements.exportPdfBtn.disabled = false;
         elements.clearPlaylistBtn.disabled = false;
-        elements.chatInput.disabled = false;
-        elements.chatBtn.disabled = false;
+        // Keep chat controls enabled at all times
     }
-    
+
     static renderPlaylistHeader() {
         const headerData = AppState.playlistHeaderData;
-        
+
         console.log('Rendering playlist header with data:', headerData);
         console.log('AppState selections:', {
             selectedPrarthanai: AppState.selectedPrarthanai,
@@ -486,88 +851,67 @@ class PlaylistManager {
             selectedMember: AppState.selectedMember,
             bhajanDetails: AppState.bhajanDetails
         });
-        
+
         // Remove existing header if any
         const existingHeader = document.getElementById('playlistHeader');
         if (existingHeader) {
             existingHeader.remove();
         }
-        
+
         // Only render header if we have data
         const hasHeaderData = headerData && (
-            headerData.selectedPrarthanai || 
-            headerData.selectedFunction || 
-            headerData.selectedMember || 
+            headerData.selectedPrarthanai ||
+            headerData.selectedFunction ||
+            headerData.selectedMember ||
             (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime || headerData.bhajanDetails.endTime))
         );
-        
+
         if (!hasHeaderData) {
             console.log('No header data to render or insufficient data');
             return;
         }
-        
+
         const playlistContainer = elements.playlistContainer;
         const headerDiv = document.createElement('div');
         headerDiv.id = 'playlistHeader';
-        headerDiv.className = 'card-header bg-info text-white mb-3 text-center';
-        
+        headerDiv.className = 'card-header bg-info text-white mb-3';
         let headerContent = '';
-        
-        // Line 1: Prarthanai
+        // Row 1: Invocation (left/right)
+        headerContent += `
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="ms-2 fw-bold">ஓம் ஸ்ரீ மஹாகணபதயே நமஹ</span>
+                <span class="me-2 fw-bold">ஓம் ஸ்ரீ குருப்யோ நமஹ</span>
+            </div>
+        `;
+        // Centered block: prarthanai, function, date|day|time
+        headerContent += `<div class="text-center">`;
         if (headerData.selectedPrarthanai) {
-            headerContent += `<div class="mb-2">${headerData.selectedPrarthanai.text}</div>`;
+            headerContent += `<div class="mb-1">${headerData.selectedPrarthanai.text}</div>`;
         }
-        
-        // Line 2: Function
         if (headerData.selectedFunction) {
-            headerContent += `<div class="mb-2 fw-bold">${headerData.selectedFunction.name}</div>`;
+            headerContent += `<div class="mb-1 fw-bold">${headerData.selectedFunction.name}</div>`;
         }
-        
-        // Line 3: Date, Day, Time
         if (headerData.bhajanDetails && (headerData.bhajanDetails.date || headerData.bhajanDetails.startTime || headerData.bhajanDetails.endTime)) {
-            let line3Content = [];
-            
+            const parts = [];
             if (headerData.bhajanDetails.date) {
-                const dateObj = new Date(headerData.bhajanDetails.date);
-                const formattedDate = dateObj.toLocaleDateString('en-IN');
-                line3Content.push(formattedDate);
+                const d = new Date(headerData.bhajanDetails.date);
+                parts.push(d.toLocaleDateString('en-IN'));
             }
-            
-            if (headerData.bhajanDetails.day) {
-                line3Content.push(headerData.bhajanDetails.day);
+            if (headerData.bhajanDetails.day) parts.push(headerData.bhajanDetails.day);
+            if (headerData.bhajanDetails.startTime && headerData.bhajanDetails.endTime) {
+                parts.push(Utils.formatTimeRange12h(headerData.bhajanDetails.startTime, headerData.bhajanDetails.endTime));
             }
-            
-            if (headerData.bhajanDetails.startTime) {
-                const startTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.startTime}`);
-                const formattedStartTime = startTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-                
-                if (headerData.bhajanDetails.endTime) {
-                    const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
-                    const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-                    line3Content.push(`${formattedStartTime} - ${formattedEndTime}`);
-                } else {
-                    line3Content.push(formattedStartTime);
-                }
-            } else if (headerData.bhajanDetails.endTime) {
-                const endTimeObj = new Date(`1970-01-01T${headerData.bhajanDetails.endTime}`);
-                const formattedEndTime = endTimeObj.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-                line3Content.push(`Until ${formattedEndTime}`);
-            }
-            
-            if (line3Content.length > 0) {
-                headerContent += `<div class="mb-2">${line3Content.join(' | ')}</div>`;
-            }
+            if (parts.length) headerContent += `<div class="mb-1">${parts.join(' | ')}</div>`;
         }
-        
-        // Line 4: Host details
+        headerContent += `</div>`;
+        // Host details centered under the block
         if (headerData.selectedMember) {
+            const phone = headerData.selectedMember.phone || (headerData.selectedMember.phone_numbers ? headerData.selectedMember.phone_numbers.join(', ') : '');
             headerContent += `
-                <div class="mb-0">
-                    ${headerData.selectedMember.name}<br>
-                    <small class="text-light">
-                        ${headerData.selectedMember.address}<br>
-                        ${headerData.selectedMember.phone_numbers.join(', ')}
-                    </small>
+                <div class="mt-2 small text-center">
+                    <div>${headerData.selectedMember.name || ''}</div>
+                    <div class="text-white-50">${headerData.selectedMember.address || ''}</div>
+                    <div class="text-white-50">${phone}</div>
                 </div>
             `;
         }
@@ -581,8 +925,7 @@ class PlaylistManager {
     static disableActions() {
         elements.exportPdfBtn.disabled = true;
         elements.clearPlaylistBtn.disabled = true;
-        elements.chatInput.disabled = true;
-        elements.chatBtn.disabled = true;
+        // Do not disable chat controls
     }
     
     static clearPlaylist() {
@@ -1406,27 +1749,122 @@ class BhajanDetailsManager {
     }
     
     static setupDateTimeHandlers() {
+        // Set default date to today if not set
+        if (!elements.bhajanDate.value) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            elements.bhajanDate.value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // Initialize day field
+        this.updateDayField();
+        
+        // Initialize default start time if empty
+        if (elements.startHour && !elements.startHour.value) elements.startHour.value = '08';
+        if (elements.startMinute && !elements.startMinute.value) elements.startMinute.value = '00';
+        if (elements.startAmPm && !elements.startAmPm.value) elements.startAmPm.value = 'AM';
+        // Initialize time display and end time
+        this.updateEndTime();
+        this.updateTimeDisplay();
+
         // Auto-populate day when date is selected
-        elements.bhajanDate.addEventListener('change', () => {
-            const date = new Date(elements.bhajanDate.value);
-            if (!isNaN(date.getTime())) {
-                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                elements.bhajanDay.value = days[date.getDay()];
-                
-                // Update application state
-                AppState.bhajanDetails.date = elements.bhajanDate.value;
-                AppState.bhajanDetails.day = elements.bhajanDay.value;
+        elements.bhajanDate.addEventListener('change', () => this.updateDayField());
+        
+        // Handle start time change (custom selects)
+        const startTimeChange = () => { this.updateEndTime(); this.updateTimeDisplay(); };
+        if (elements.startHour) elements.startHour.addEventListener('change', startTimeChange);
+        if (elements.startMinute) elements.startMinute.addEventListener('change', startTimeChange);
+        if (elements.startAmPm) elements.startAmPm.addEventListener('change', startTimeChange);
+        
+        // Handle duration change
+        elements.bhajanDuration.addEventListener('change', () => {
+            this.updateEndTime();
+            this.updateTimeDisplay();
+            
+            // Sync with playlist duration
+            if (elements.durationInput) {
+                elements.durationInput.value = elements.bhajanDuration.value;
             }
         });
         
-        // Update start and end time in application state
-        elements.bhajanStartTime.addEventListener('change', () => {
-            AppState.bhajanDetails.startTime = elements.bhajanStartTime.value;
+        // Sync with playlist duration when it changes
+        if (elements.durationInput) {
+            elements.durationInput.addEventListener('change', () => {
+                elements.bhajanDuration.value = elements.durationInput.value;
+                this.updateEndTime();
+                this.updateTimeDisplay();
+            });
+        }
+
+        // Add event delegation for time input icons
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.input-group-text')) {
+                const input = e.target.closest('.input-group').querySelector('input');
+                if (input) {
+                    input.focus();
+                    input.click();
+                }
+            }
         });
-        
-        elements.bhajanEndTime.addEventListener('change', () => {
-            AppState.bhajanDetails.endTime = elements.bhajanEndTime.value;
-        });
+    }
+    
+    // New helper method to update day field
+    static updateDayField() {
+        const date = new Date(elements.bhajanDate.value);
+        if (!isNaN(date.getTime())) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = days[date.getDay()];
+            elements.bhajanDay.textContent = dayName;
+            
+            // Update application state
+            AppState.bhajanDetails.date = elements.bhajanDate.value;
+            AppState.bhajanDetails.day = dayName;
+        }
+    }
+    
+    static updateEndTime() {
+        if (!elements.startHour || !elements.startMinute) return;
+        const duration = parseInt(elements.bhajanDuration.value) || 60;
+        // Convert start selectors + AM/PM to minutes
+        let sH = parseInt(elements.startHour.value, 10) || 8;
+        const sM = parseInt(elements.startMinute.value, 10) || 0;
+        const ampm = elements.startAmPm ? elements.startAmPm.value : 'AM';
+        let startH24 = sH % 12;
+        if (ampm === 'PM') startH24 += 12;
+        const startTotal = startH24 * 60 + sM;
+        const endTotal = (startTotal + duration) % (24 * 60);
+        const endH24 = Math.floor(endTotal / 60);
+        const endM = endTotal % 60;
+        const endAmPm = endH24 >= 12 ? 'PM' : 'AM';
+        const endH12 = (endH24 % 12) || 12;
+        if (elements.endHour) elements.endHour.value = String(endH12).padStart(2, '0');
+        if (elements.endMinute) elements.endMinute.value = String(endM).padStart(2, '0');
+        if (elements.endAmPm) elements.endAmPm.value = endAmPm;
+        // Update application state (store 24h strings)
+        AppState.bhajanDetails.startTime = `${String(startH24).padStart(2,'0')}:${String(sM).padStart(2,'0')}`;
+        AppState.bhajanDetails.endTime = `${String(endH24).padStart(2,'0')}:${String(endM).padStart(2,'0')}`;
+        AppState.bhajanDetails.duration = duration;
+    }
+    
+    static updateTimeDisplay() {
+        if (!elements.startHour || !elements.endHour) return;
+        const to12h = (h24, m) => {
+            const period = h24 >= 12 ? 'PM' : 'AM';
+            const h12 = (h24 % 12) || 12;
+            return `${h12}:${String(m).padStart(2,'0')} ${period}`;
+        };
+        let sH = parseInt(elements.startHour.value, 10) || 8;
+        const sM = parseInt(elements.startMinute.value, 10) || 0;
+        let sH24 = sH % 12; if (elements.startAmPm && elements.startAmPm.value === 'PM') sH24 += 12;
+        const eH12 = parseInt(elements.endHour.value || '12', 10) || 12;
+        const eM = parseInt(elements.endMinute.value || '0', 10) || 0;
+        const eH24 = (elements.endAmPm && elements.endAmPm.value === 'PM') ? ((eH12 % 12) + 12) : (eH12 % 12);
+        const startStr = to12h(sH24, sM||0);
+        const endStr = to12h(eH24, eM||0);
+        const label = document.getElementById('timeRangeDisplay');
+        if (label) label.textContent = `${startStr} - ${endStr}`;
     }
 }
 
