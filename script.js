@@ -934,6 +934,18 @@ class PlaylistManager {
         this.showEmptyState();
         Utils.showToast('success', 'Playlist cleared successfully!');
     }
+
+    static removeSong(songId) {
+        const index = AppState.currentPlaylist.findIndex(song => song.id === songId);
+        if (index !== -1) {
+            const removedSong = AppState.currentPlaylist.splice(index, 1)[0];
+            this.renderPlaylist(AppState.currentPlaylist);
+            Utils.showToast('success', `Removed: ${removedSong.title}`);
+        } else {
+            Utils.showToast('warning', 'Song not found in playlist');
+        }
+    }
+
     
 
 }
@@ -941,29 +953,127 @@ class PlaylistManager {
 // Album Order Hierarchy - Following 13-step sequence from SRS
 class PlaylistOrder {
     static albumHierarchy = [
-        'விநாயகர் துதி',           // Steps 1-2: கைத்தலம் + additional
-        'விநாயகர் நாமாவளி',         // Step 3
-        'குரு வணக்கம்',             // Step 4
-        'திருப்பரங்குன்றம்',          // Step 5a
-        'திருசெந்தூர்',              // Step 5b
-        'திருப்பழனி',               // Step 5c
-        'ஸ்வாமி மலை',              // Step 5d
-        'திருத்தணிகை',              // Step 5e
-        'பொதுப் பாடல்கள்',           // Step 6 (Minimum 3 Required) - ALL பொதுப் பாடல்கள் come here
-        'பஞ்சபூதம் காஞ்சீபுரம்',     // Step 7a (moved after பொதுப் பாடல்கள்)
-        'பஞ்சபூதம் திரு ஆனைகாவல்', // Step 7b
-        'பஞ்சபூதம் திரு அருணை',    // Step 7c
-        'பஞ்சபூதம் திருக் காளஹஸ்தி', // Step 7d
-        'பஞ்சபூதம் திரு சிதம்பரம்',  // Step 7e
-        'பழமுதிர் சோலை',            // Step 8
-        'கந்தர் அனுபூதி',            // Step 9
-        'வே, ம, சே',                // Step 10
-        'விரு',                      // Step 11
-        'மகுடம்',                    // Step 12
-        'வகுப்பு',                   // Step 13
-        'பூஜோபசாரங்கள்',           // Step 14 (Compulsory)
-        'ஏறுமயில்',                // Step 15 (Compulsory)
-        'ப்ரார்த்தனை'              // Step 16 (Compulsory)
+        'விநாயகர் துதி',
+        'விநாயகர் நாமாவளி',
+        'குரு வணக்கம்',
+        'திருப்பரங்குன்றம்',
+        'திருசெந்தூர்',
+        'திருப்பழனி',
+        'ஸ்வாமி மலை',
+        'திருத்தணிகை',
+        'ஆறு திருப்பதி',
+        'ரத்னகிரி',
+        'ஊதிமலை',
+        'கதிர்காமம்',
+        'கரகமலை',
+        'கயிலைமலை',
+        'ரசதகிரி',
+        'குன்றுதோறாடல்',
+        'கொங்கணகிரி',
+        'கொல்லிமலை',
+        'ஞானமலை',
+        'திருக்கழுக்குன்றம்',
+        'திருக்கோணமலை',
+        'திருச்சிராப்பள்ளி',
+        'திருச்செங்கோடு',
+        'ஸ்ரீசைலம்',
+        'திருவேங்கடம்',
+        'தீர்த்தமலை',
+        'வள்ளிமலை',
+        'வள்ளியூர்',
+        'விநாயகமலை ( பிள்ளையார்பட்டி )',
+        'விராலிமலை',
+        'அத்திப்பட்டு',
+        'அவிநாசி',
+        'ஆய்க்குடி',
+        'இராமேஸ்வரம்',
+        'உத்தரமேரூர்',
+        'எட்டுகுடி',
+        'எண்கண்',
+        'எழுகரைநாடு',
+        'கந்தனூர்',
+        'கந்தன்குடி',
+        'கருவூர்',
+        'காசி',
+        'கும்பகோணம்',
+        'கூந்தலூர்',
+        'கோடிநகர் ( குழகர் கோயில் )',
+        'சிக்கல்',
+        'சிவபுரம்',
+        'சிறுவை',
+        'சீகாழி',
+        'சேலம்',
+        'சோமநாதன் மடம்',
+        'சோமீஸ்வரம்',
+        'திருக்கடவூர்',
+        'திருக்குடவாயில்',
+        'திருகுரங்காடுதுறை',
+        'திருக்குற்றாலம்',
+        'திருச்செங்காட்டங்குடி',
+        'திருநள்ளாறு',
+        'திருநாகேஸ்வரம்',
+        'திருநெல்வாயில்',
+        'திருப்பந்தணை நல்லூர்',
+        'திருப்பாதிரிப்புலியூர்',
+        'திருப்புக்கொளியூர்',
+        'திருப்பெருந்துரை',
+        'திருப்போரூர்',
+        'திருமயிலை',
+        'திருமாந்துரை',
+        'திருமுருகன்பூண்டி',
+        'திருவக்கரை',
+        'திருவலிதாயம்',
+        'திருவாஞ்சியம்',
+        'திருவாடானை',
+        'திருவாரூர்',
+        'திருவான்மியூர்',
+        'திருவிடைக்கழி',
+        'திருவீழிமிழலை',
+        'திருவெஞ்சமாகூடல்',
+        'திருவேட்களம்',
+        'திருவேற்காடு',
+        'திருவொற்றியூர்',
+        'திருவோத்தூர்',
+        'திலதைப்பதி',
+        'தேவனூர்',
+        'நாகபட்டினம்',
+        'நிம்பபுரம்',
+        'பாகை',
+        'புனவாயில்',
+        'பெருங்குடி',
+        'பேரூர்',
+        'மதுராந்தகம்',
+        'மதுரை',
+        'மாயாபுரி',
+        'வடதிருமுல்லைவாயில்',
+        'வடுகூர்',
+        'வயலூர்',
+        'வயிரவிவனம்',
+        'வாலிகொண்டபுரம்',
+        'விஜயபுரம்',
+        'விரிஞ்சிபுரம்',
+        'வ்ருத்தாசலம்',
+        'வெள்ளிகரம்',
+        'வேதாரண்யம்',
+        'வேப்பூர்',
+        'வைத்தீஸ்வரன் கோயில்',
+        'ஸ்ரீமுஷ்டம்',
+        'க்ஷேத்ரகோவை',
+        'பொதுப் பாடல்கள்',
+        'பஞ்சபூதம் காஞ்சீபுரம்',
+        'பஞ்சபூதம் திரு ஆனைகாவல்',
+        'பஞ்சபூதம் திரு அருணை',
+        'பஞ்சபூதம் திருக் காளஹஸ்தி',
+        'பஞ்சபூதம் திரு சிதம்பரம்',
+        'பழமுதிர் சோலை',
+        'கந்தர் அனுபூதி',
+        'வே, ம, சே',
+        'விரு',
+        'மகுடம்',
+        'வகுப்பு',
+        'பூஜோபசாரங்கள்',
+        'ஏறுமயில்',
+        'ப்ரார்த்தனை'
     ];
 
     static normalizeAlbumName(albumName) {
@@ -1084,8 +1194,22 @@ class PlaylistOrder {
         return [...playlist].sort((a, b) => {
             const orderA = this.getAlbumOrder(a.album);
             const orderB = this.getAlbumOrder(b.album);
-            return orderA - orderB;
+
+            if (orderA !== orderB) {
+                return orderA - orderB;
+            }
+
+            const songNumberA = this.parseSongNumber(a.songNumber);
+            const songNumberB = this.parseSongNumber(b.songNumber);
+
+            return songNumberA - songNumberB;
         });
+    }
+
+    static parseSongNumber(songNumber) {
+        if (!songNumber) return 0;
+        const match = songNumber.match(/(\d+)/);
+        return match ? parseInt(match[1], 10) : 0;
     }
 }
 
@@ -1219,7 +1343,9 @@ class ChatManager {
                 case 'replace':
                     await this.executeReplaceCommand(command);
                     break;
-                    
+                case 'remove_from_album':
+                    this.executeRemoveFromAlbumCommand(command);
+                    break;
                 default:
                     Utils.showToast('warning', `Unknown command action: ${command.action}`);
             }
@@ -1228,6 +1354,39 @@ class ChatManager {
             Utils.showToast('error', 'Failed to execute AI command');
         }
     }
+
+    static executeRemoveFromAlbumCommand(command) {
+        const { albumName, count = 1 } = command;
+
+        if (!albumName) {
+            Utils.showToast('error', 'Album name is required for remove_from_album command');
+            return;
+        }
+
+        const normalizedAlbumName = PlaylistOrder.normalizeAlbumName(albumName);
+        const songsToRemove = AppState.currentPlaylist.filter(song => song.album === normalizedAlbumName);
+
+        if (songsToRemove.length === 0) {
+            Utils.showToast('warning', `No songs from ${normalizedAlbumName} found in the playlist`);
+            return;
+        }
+
+        const songsActuallyRemoved = [];
+        for (let i = 0; i < count && songsToRemove.length > 0; i++) {
+            const songToRemove = songsToRemove.pop();
+            const index = AppState.currentPlaylist.findIndex(song => song.id === songToRemove.id);
+            if (index !== -1) {
+                AppState.currentPlaylist.splice(index, 1);
+                songsActuallyRemoved.push(songToRemove);
+            }
+        }
+
+        AppState.currentPlaylist = PlaylistOrder.sortPlaylist(AppState.currentPlaylist);
+        PlaylistManager.renderPlaylist(AppState.currentPlaylist);
+        const removedSongTitles = songsActuallyRemoved.map(song => song.title).join(', ');
+        Utils.showToast('success', `Removed ${songsActuallyRemoved.length} song(s) from ${normalizedAlbumName}: ${removedSongTitles}`);
+    }
+
     
     static async executeAddCommand(command) {
         const { albumName, count = 1 } = command;
@@ -1352,12 +1511,13 @@ class ChatManager {
     
     static executeRemoveCommand(command) {
         const { songId, position } = command;
-        
+
         if (songId) {
             // Remove by song ID
             const index = AppState.currentPlaylist.findIndex(song => song.id === songId);
             if (index !== -1) {
                 const removedSong = AppState.currentPlaylist.splice(index, 1)[0];
+                AppState.currentPlaylist = PlaylistOrder.sortPlaylist(AppState.currentPlaylist);
                 PlaylistManager.renderPlaylist(AppState.currentPlaylist);
                 Utils.showToast('success', `Removed: ${removedSong.title}`);
             } else {
@@ -1368,6 +1528,7 @@ class ChatManager {
             const index = position - 1;
             if (index >= 0 && index < AppState.currentPlaylist.length) {
                 const removedSong = AppState.currentPlaylist.splice(index, 1)[0];
+                AppState.currentPlaylist = PlaylistOrder.sortPlaylist(AppState.currentPlaylist);
                 PlaylistManager.renderPlaylist(AppState.currentPlaylist);
                 Utils.showToast('success', `Removed: ${removedSong.title}`);
             } else {

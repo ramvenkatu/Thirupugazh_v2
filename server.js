@@ -740,20 +740,20 @@ app.post('/api/llm-chat', async (req, res) => {
         RESPONSE FORMAT: Provide a brief user-friendly explanation followed by the JSON command(s).
         
         EXAMPLES:
-        User: "Add more songs from podhu paadalgal"
-        Response: "I'll add more general songs to your playlist. {"action": "add", "albumName": "பொதுப் பாடல்கள்"}"
-        
-        User: "Add song oruvarai oruvar from pazhani"
-        Response: "I'll search for the song 'oruvarai oruvar' from திருப்பழனி. {"action": "search_and_add", "songTitle": "oruvarai oruvar", "albumHint": "திருப்பழனி"}"
-        
+        User: "Add 5 songs from tiruchendur"
+        Response: "I'll add 5 songs from the திருசெந்தூர் album. {"action": "add", "albumName": "திருசெந்தூர்", "count": 5}"
+
         User: "Remove the first song"
         Response: "I'll remove the first song from your playlist. {"action": "remove", "position": 1}"
-        
         User: "Replace the first song with one from pazhani"
         Response: "I'll replace the first song with one from திருப்பழனி. Note that the new song will be positioned according to the 16-step sequence, not at position 1. {"action": "replace", "position": 1, "newAlbumName": "திருப்பழனி"}"
+
+        User: "Remove 5 songs from podhu paadalgal"
+        Response: "I'll remove 5 songs from the பொதுப் பாடல்கள் album. {"action": "remove_from_album", "albumName": "பொதுப் பாடல்கள்", "count": 5}"
         
         Available commands:
         - {"action": "remove", "songId": number} - Remove a song by its ID
+        - {"action": "remove_from_album", "albumName": "string", "count": number} - Remove a specified number of songs from an album.
         - {"action": "add", "albumName": "string"} - Add a song from specified album (position ignored, uses hierarchy)
         - {"action": "search_and_add", "songTitle": "string", "albumHint": "string"} - Search for specific song and add it
         - {"action": "move", "songId": number} - Move a song (will be repositioned according to hierarchy)
