@@ -1,0 +1,156 @@
+/* Senior-Friendly Stylesheet */
+
+/* General accessibility improvements */
+body {
+    font-size: 1.2rem; /* Increase base font size */
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.5em; /* Increase heading sizes */
+}
+
+/* Make buttons and other interactive elements larger */
+.btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 2rem;
+    border-radius: 0.5rem;
+}
+
+.form-control {
+    font-size: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+}
+
+.form-select {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.25rem;
+}
+
+/* Improve contrast for better readability */
+.text-muted {
+    color: #495057 !important;
+}
+
+.card {
+    border: 1px solid #dee2e6;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+/* Make the prayer and function selectors larger */
+#prarthanaiContainer {
+    gap: 0 !important; /* Override Bootstrap's gap */
+    padding: 0; /* Remove any padding that might affect width calculations */
+}
+
+#prarthanaiContainer .btn {
+    flex-grow: 1; /* Allow buttons to grow and fill the space */
+    width: 45%; /* Set a base width */
+    margin: 10px 2.5%; /* Set vertical and horizontal margins */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+#functionContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 !important;
+    padding: 0;
+}
+
+#functionContainer .col-12 {
+    width: 45% !important;
+    margin: 10px 2.5% !important;
+    flex: none !important;
+}
+
+
+
+/* Larger Fonts and Widgets */
+#bhajanCollapse .card-body {
+    font-size: 1.5rem;
+}
+
+#bhajanCollapse .form-label.small {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important; /* Restore some margin for labels */
+}
+
+#bhajanDate,
+#bhajanCollapse .input-group .form-select,
+#bhajanDuration {
+    font-size: 1.5rem !important;
+    padding: 1rem !important;
+    height: auto !important;
+}
+
+#bhajanCollapse .input-group-text { /* For the ':' in time input */
+    font-size: 1.25rem !important;
+    padding: 1rem !important;
+    height: auto !important;
+}
+
+#bhajanCollapse .form-select.form-select-sm {
+    font-size: 1.5rem !important; /* Specific font size for select elements */
+}
+
+/* Host Member Selection - Larger fonts and thicker scrollbar */
+#memberContainer {
+    font-size: 1.4rem;
+}
+
+#memberContainer::-webkit-scrollbar {
+    width: 12px;
+}
+
+#memberContainer::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+
+
+/* Make the playlist table more readable */
+#playlistTable th,
+#playlistTable td {
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+#playlistTable th {
+    font-size: 1.2rem;
+}
+
+/* Make the AI assistant input larger */
+#chatInput {
+    font-size: 1.1rem;
+    padding: 0.75rem;
+}
+
+/* Media queries for desktop and iPad */
+
+/* For desktops */
+@media (min-width: 992px) {
+    .main-container {
+        font-size: 1.1rem;
+    }
+}
+
+/* For iPads (portrait and landscape) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .main-container {
+        font-size: 1.2rem;
+    }
+
+    .control-panel, .results-panel {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .col-lg-5, .col-lg-7 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
