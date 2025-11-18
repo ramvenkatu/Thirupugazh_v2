@@ -691,9 +691,9 @@ app.get('/api/songs/:album', (req, res) => {
 
 // LLM proxy endpoint for AI chatbot
 app.post('/api/llm-chat', async (req, res) => {
+    const { message, playlist } = req.body;
+    
     try {
-        const { message, playlist } = req.body;
-        
         if (!process.env.LLM_API_KEY) {
             return res.status(500).json({ error: 'LLM API key not configured' });
         }
@@ -733,6 +733,11 @@ app.post('/api/llm-chat', async (req, res) => {
         - "poojopacharangal" or "pooja" → "பூஜோபசாரங்கள்"
         - "erumayil" → "ஏறுமயில்"
         - "prarthana" or "prarthanai" → "ப்ரார்த்தனை"
+        - "ve ma se" or "vemase" → "வே, ம, சே"
+        
+        CRITICAL: When generating JSON commands with album names containing commas (like "வே, ம, சே"), 
+        the JSON MUST be properly formatted with the album name as a string value in quotes.
+        Example: {"action": "add", "albumName": "வே, ம, சே", "count": 1}
         
         HANDLING SPECIFIC SONG REQUESTS:
         When users ask for specific songs by title (e.g., "add song oruvarai oruvar"), use the search command to find the exact song.
@@ -827,9 +832,12 @@ app.post('/api/llm-chat', async (req, res) => {
     } catch (error) {
         console.error('Error with LLM request:', error);
         console.error('Error details:', error.response?.data || error.message);
+        console.error('Original user message:', message);
+        console.error('Stack trace:', error.stack);
         res.status(500).json({ 
             error: 'Failed to process LLM request',
-            details: error.response?.data?.error?.message || error.message
+            details: error.response?.data?.error?.message || error.message,
+            userMessage: message
         });
     }
 });
