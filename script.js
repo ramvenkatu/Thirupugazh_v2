@@ -449,15 +449,15 @@ class PdfService {
             thead.style.display = 'table-header-group';
             const hr = document.createElement('tr');
             // New PDF column set and order
-            const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'A'];
+            const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
             headers.forEach((h, i) => {
                 const th = document.createElement('th');
                 th.textContent = h;
                 th.style.border = '0.35px solid #000';
                 th.style.padding = '4px 6px';
                 th.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
-                // Column widths tuned for A4 with fewer columns
-                const widths = ['8%', '56%', '18%', '12%', '6%'];
+                // Column widths tuned for A4 with Hour column included
+                const widths = ['8%', '50%', '16%', '10%', '10%', '6%'];
                 th.style.width = widths[i];
                 th.style.whiteSpace = 'nowrap';
                 hr.appendChild(th);
@@ -476,7 +476,7 @@ class PdfService {
                     // Force a page break first
                     const brTr = document.createElement('tr');
                     const brTd = document.createElement('td');
-                    brTd.colSpan = 5;
+                    brTd.colSpan = 6;
                     brTd.style.padding = '0';
                     brTd.style.border = 'none';
                     brTr.style.pageBreakBefore = 'always';
@@ -486,7 +486,7 @@ class PdfService {
 
                     // Then append a header-like row at the top of the new page
                     const hdrRow = document.createElement('tr');
-                    const hdrs = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'A'];
+                    const hdrs = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
                     hdrs.forEach((txt, i) => {
                         const td = document.createElement('td');
                         td.textContent = txt;
@@ -507,15 +507,16 @@ class PdfService {
                 const title = tds[3]?.textContent.trim() || '';
                 const raagam = tds[5]?.textContent.trim() || '';
                 const songNo = tds[4]?.textContent.trim() || '';
+                const hour = tds[9]?.textContent.trim() || '';
                 const alChk = tr.querySelector('.alankaaram-checkbox');
                 const al = alChk && alChk.checked ? '✓' : '';
-                [slno, title, raagam, songNo, al].forEach((val, i) => {
+                [slno, title, raagam, songNo, hour, al].forEach((val, i) => {
                     const td = document.createElement('td');
                     td.textContent = val;
                     td.style.border = '0.35px solid #000';
                     td.style.padding = '4px 6px';
                     td.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
-                    if (i === 4) { td.style.fontWeight = '700'; td.style.fontSize = '14px'; }
+                    if (i === 5) { td.style.fontWeight = '700'; td.style.fontSize = '14px'; }
                     row.appendChild(td);
                 });
                 tbody.appendChild(row);
