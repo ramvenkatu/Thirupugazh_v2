@@ -1,44 +1,134 @@
-/* Senior-Friendly Stylesheet */
+/* Senior-Friendly Stylesheet with Cohesive Color Scheme */
+
+/* Senior-friendly color palette */
+:root {
+    --senior-navy: #2c3e50;        /* Dark blue-gray for headers */
+    --senior-light-blue: #ecf0f1;  /* Very light blue-gray for backgrounds */
+    --senior-cream: #f8f9fa;       /* Warm cream for cards */
+    --senior-sage: #95a5a6;        /* Muted sage green for accents */
+    --senior-dark-text: #2c3e50;   /* Dark text for high contrast */
+    --senior-success: #27ae60;     /* Calm green for success states */
+    --senior-warning: #f39c12;     /* Warm orange for warnings */
+    --senior-border: #bdc3c7;      /* Soft gray for borders */
+    --senior-hover: #dde4e6;       /* Light hover state */
+}
 
 /* General accessibility improvements */
 body {
     font-size: 1.2rem; /* Increase base font size */
     line-height: 1.6;
+    background: var(--senior-light-blue) !important;
+    color: var(--senior-dark-text) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-size: 1.5em; /* Increase heading sizes */
+    color: var(--senior-dark-text) !important;
 }
 
-/* Make buttons and other interactive elements larger */
+/* Make buttons and other interactive elements larger with senior-friendly colors */
 .btn {
     padding: 0.75rem 1.25rem;
     font-size: 2rem;
     border-radius: 0.5rem;
+    font-weight: 600 !important;
+}
+
+.btn-primary {
+    background-color: var(--senior-navy) !important;
+    border-color: var(--senior-navy) !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background-color: #34495e !important;
+    border-color: #34495e !important;
+}
+
+.btn-success {
+    background-color: var(--senior-success) !important;
+    border-color: var(--senior-success) !important;
+    color: white !important;
+}
+
+.btn-success:hover {
+    background-color: #229954 !important;
+    border-color: #229954 !important;
+}
+
+.btn-warning {
+    background-color: var(--senior-warning) !important;
+    border-color: var(--senior-warning) !important;
+    color: white !important;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22 !important;
+    border-color: #e67e22 !important;
 }
 
 .form-control {
     font-size: 1.5rem;
     padding: 0.75rem 1.25rem;
     border-radius: 0.5rem;
+    background: white !important;
+    border: 2px solid var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
+}
+
+.form-control:focus {
+    border-color: var(--senior-navy) !important;
+    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25) !important;
 }
 
 .form-select {
     font-size: 1.1rem;
     padding: 0.75rem 1.25rem;
+    background: white !important;
+    border: 2px solid var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
 }
 
-/* Improve contrast for better readability */
+.form-select:focus {
+    border-color: var(--senior-navy) !important;
+    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25) !important;
+}
+
+/* Cohesive color scheme for cards and headers */
 .text-muted {
-    color: #495057 !important;
+    color: var(--senior-sage) !important;
 }
 
 .card {
-    border: 1px solid #dee2e6;
+    border: 2px solid var(--senior-border) !important;
+    background: var(--senior-cream) !important;
 }
 
 .card-header {
     font-weight: bold;
+    background: var(--senior-navy) !important;
+    color: white !important;
+    border-bottom: 2px solid var(--senior-border) !important;
+}
+
+/* Override all colored headers with consistent senior-friendly colors */
+.card-header.bg-primary,
+.card-header.bg-secondary,
+.card-header.bg-success,
+.card-header.bg-info,
+.card-header.bg-warning,
+.card-header.bg-danger,
+.card-header.bg-dark,
+.card-header[style*="background-color"] {
+    background: var(--senior-navy) !important;
+    color: white !important;
+}
+
+/* Ensure all card header text is visible */
+.card-header h5,
+.card-header .card-title {
+    color: white !important;
+    font-weight: bold !important;
 }
 
 /* Make the prayer and function selectors larger */
@@ -127,6 +217,172 @@ h1, h2, h3, h4, h5, h6 {
 #chatInput {
     font-size: 1.1rem;
     padding: 0.75rem;
+}
+
+/* Senior-friendly card styling with cohesive colors */
+.card {
+    background: var(--senior-cream) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 2px solid var(--senior-border) !important;
+    box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1) !important;
+}
+
+.card:hover {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15) !important;
+    transform: none !important;
+    border-color: var(--senior-navy) !important;
+}
+
+.card-header:not([class*="bg-"]) {
+    background: var(--senior-navy) !important;
+    color: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 2px solid var(--senior-border) !important;
+}
+
+.card-body {
+    background: var(--senior-cream) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    color: var(--senior-dark-text) !important;
+}
+
+/* Senior-friendly form controls with consistent colors */
+.form-control {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 2px solid var(--senior-border) !important;
+}
+
+.form-control:focus {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: var(--senior-navy) !important;
+    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25) !important;
+}
+
+/* Senior-friendly table styling */
+.table thead th {
+    background: var(--senior-navy) !important;
+    color: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 2px solid var(--senior-border) !important;
+}
+
+.table tbody tr {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px solid var(--senior-border) !important;
+}
+
+.table tbody tr:hover {
+    background: var(--senior-hover) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+}
+
+.table tbody td {
+    color: var(--senior-dark-text) !important;
+    border-color: var(--senior-border) !important;
+}
+
+/* Senior-friendly interactive cards */
+.function-card, .member-card {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 2px solid var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
+}
+
+.function-card:hover, .member-card:hover {
+    background: var(--senior-hover) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: var(--senior-navy) !important;
+}
+
+.function-card.bg-primary, .function-card.border-primary {
+    background: var(--senior-navy) !important;
+    border-color: var(--senior-navy) !important;
+    color: white !important;
+}
+
+.member-card.border-info {
+    border-color: var(--senior-navy) !important;
+}
+
+/* Senior-friendly header */
+header {
+    background: var(--senior-navy) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    color: white !important;
+}
+
+header h1, header small {
+    color: white !important;
+    text-shadow: none !important;
+}
+
+/* Senior-friendly alankaaram controls */
+.alankaaram-time-container .form-control {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 2px solid var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
+}
+
+.alankaaram-time-container .form-control:focus {
+    background: white !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: var(--senior-navy) !important;
+    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25) !important;
+}
+
+.alankaaram-time-container .input-group-text {
+    background: var(--senior-cream) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 2px solid var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
+}
+
+/* Senior-friendly selected displays */
+#selectedPrarthanaiDisplay, #selectedFunctionDisplay, #selectedMemberDisplay {
+    background: var(--senior-hover) !important;
+    border: 2px solid var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
+}
+
+/* Senior-friendly badges and alerts */
+.badge {
+    background-color: var(--senior-navy) !important;
+    color: white !important;
+}
+
+.alert-info {
+    background-color: var(--senior-light-blue) !important;
+    border-color: var(--senior-border) !important;
+    color: var(--senior-dark-text) !important;
+}
+
+.alert-warning {
+    background-color: #fef9e7 !important;
+    border-color: var(--senior-warning) !important;
+    color: var(--senior-dark-text) !important;
 }
 
 /* Media queries for desktop and iPad */

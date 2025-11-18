@@ -65,7 +65,6 @@
                     <div class="collapse show" id="prarthanaiCollapse">
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label">Select a prayer for the playlist header:</label>
                                 <div id="prarthanaiContainer" class="d-flex flex-wrap gap-2">
                                     <!-- Prayer buttons will be dynamically added here -->
                                 </div>
@@ -94,7 +93,6 @@
                     <div class="collapse show" id="functionCollapse">
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label">Select the occasion/function:</label>
                                 <div id="functionContainer" class="row g-2" style="max-height: 300px; overflow-y: auto;">
                                     <!-- Function cards will be dynamically added here -->
                                 </div>
@@ -253,8 +251,7 @@
                                 </button>
                             </div>
                             <div class="form-text mt-2">
-                                <small>Try: "Add song 1-5", "Remove song 3", "Replace song 2 with a different song"</small>
-                                Generate a playlist first to enable AI assistance
+                                <small>Type your command above</small>
                             </div>
                         </div>
                         
@@ -265,39 +262,23 @@
                     </div>
                 </div>
 
-                <!-- Chatbot Tips Card -->
+                <!-- Prompt Help Card -->
                 <div class="card mb-4">
-                    <div class="card-header bg-warning text-dark">
+                    <div class="card-header bg-info text-white">
                         <h5 class="card-title mb-0">
-                            <i class="bi bi-lightbulb me-2"></i>
-                            AI Assistant Commands
+                            <i class="bi bi-question-circle me-2"></i>
+                            Prompt Help
                         </h5>
                     </div>
                     <div class="card-body">
-                        <h6 class="fw-bold">Available Commands:</h6>
-                        <ul class="list-unstyled">
-                            <li><code>Add [album name]</code> - Add songs from an album</li>
-                            <li><code>Remove song [position]</code> - Remove song at position</li>
-                            <li><code>Replace song [position] with [album]</code> - Replace with song from album</li>
-                            <li><code>Add song [title]</code> - Search and add specific song</li>
-                        </ul>
-                        
-                        <h6 class="fw-bold mt-3">Examples:</h6>
-                        <ul class="list-unstyled text-muted small">
-                            <li><em>"Add more songs from thiruchendur"</em></li>
-                            <li><em>"Remove the first song"</em></li>
-                            <li><em>"Replace song 3 with pazhani"</em></li>
-                            <li><em>"Add song oruvarai oruvar"</em></li>
-                        </ul>
-                        
-                        <div class="alert alert-info small mb-2">
-                            <i class="bi bi-info-circle me-1"></i>
-                            <strong>Note:</strong> Songs are automatically positioned according to the 13-step sequence hierarchy, not your requested position.
-                        </div>
-                        
-                        <div class="alert alert-warning small mb-0">
-                            <i class="bi bi-music-note me-1"></i>
-                            <strong>கந்தர் அனுபூதி Album:</strong> Contains only one comprehensive song "கந்தர் அனுபூதி - அனைத்தும்" which includes the complete கந்தர் அனுபூதி content.
+                        <div class="fs-5 text-center p-3">
+                            <p class="mb-2"><strong>Try commands like:</strong></p>
+                            <p class="text-primary mb-2">"Add 2 songs from Tiruchendur"</p>
+                            <p class="text-primary mb-2">"Add 10 songs from Pazhani"</p>
+                            <p class="text-primary mb-2">"Remove 10 songs from Podhu Paadalgal"</p>
+                            <p class="text-primary mb-2">"Remove song இருளுமோர்"</p>
+                            <p class="text-primary mb-3">"Add song எலுப்புத் தோல்"</p>
+                            <p class="text-muted"><em>Generate a playlist first to enable AI assistance</em></p>
                         </div>
                     </div>
                 </div>
