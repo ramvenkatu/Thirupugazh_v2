@@ -362,8 +362,18 @@ class PdfService {
             if (!window.html2pdf) {
                 throw new Error('html2pdf library not loaded');
             }
+            
+            // Add a style element to ensure Tamil font consistency
+            const styleEl = document.createElement('style');
+            styleEl.textContent = `
+                body, div, span, table, td, th {
+                    font-family: 'Noto Sans Tamil', 'Noto Serif Tamil', 'Lohit Tamil', 'Samyak Tamil', 'Tamil MN', 'Tamil Sangam MN', 'Arial Unicode MS', sans-serif;
+                }
+            `;
+            
             const printWrapper = document.createElement('div');
-            printWrapper.style.fontFamily = "'Noto Sans Tamil', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+            printWrapper.appendChild(styleEl);
+            printWrapper.style.fontFamily = "'Noto Sans Tamil', 'Noto Serif Tamil', 'Lohit Tamil', 'Samyak Tamil', 'Tamil MN', 'Tamil Sangam MN', 'Arial Unicode MS', sans-serif";
             printWrapper.style.padding = '0';
             printWrapper.style.margin = '0';
             printWrapper.style.width = '190mm'; /* keep content inside A4 minus margins */
@@ -393,10 +403,15 @@ class PdfService {
 
                 // Prarthanai text (Tamil) if any
                 if (hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
-                    const p = document.createElement('div');
+                    const prarthanaiDiv = document.createElement('div');
+                    prarthanaiDiv.style.marginBottom = '6px';
+                    prarthanaiDiv.style.whiteSpace = 'pre-wrap'; // Allow text wrapping but preserve spaces
+                    
+                    const p = document.createElement('span');
                     p.textContent = hd.selectedPrarthanai.text;
-                    p.style.marginBottom = '4px';
-                    panel.appendChild(p);
+                    // Use exact same styling approach as invocation spans - no custom font styling
+                    prarthanaiDiv.appendChild(p);
+                    panel.appendChild(prarthanaiDiv);
                 }
                 // Function name bold
                 if (hd.selectedFunction && hd.selectedFunction.name) {
@@ -468,11 +483,60 @@ class PdfService {
             const tbody = document.createElement('tbody');
             tbody.style.display = 'table-row-group';
             const rows = elements.playlistTableBody ? elements.playlistTableBody.querySelectorAll('tr') : [];
+            
+            // Calculate rows per page based on header content
+            let rowsPerPage = 30; // default
+            
+            // Estimate header lines to adjust rows per page
+            let headerLines = 2; // Base: invocation row + minimum spacing
+            
+            if (hd && hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
+                // Estimate lines for prarthanai (assume ~80 chars per line at 11px font)
+                const prarthanaiLength = hd.selectedPrarthanai.text.length;
+                headerLines += Math.ceil(prarthanaiLength / 80);
+            }
+            
+            if (hd && hd.selectedFunction && hd.selectedFunction.name) {
+                headerLines += 1; // Function name
+            }
+            
+            if (hd && hd.bhajanDetails && (hd.bhajanDetails.date || hd.bhajanDetails.startTime)) {
+                headerLines += 1; // Date/time line
+            }
+            
+            if (hd && hd.selectedMember && (hd.selectedMember.name || hd.selectedMember.address)) {
+                headerLines += 1; // Member name
+                if (hd.selectedMember.address) {
+                    // Estimate address lines (assume ~60 chars per line for smaller font)
+                    const addressLength = hd.selectedMember.address.length;
+                    headerLines += Math.ceil(addressLength / 60);
+                }
+                if (hd.selectedMember.phone || (hd.selectedMember.phone_numbers && hd.selectedMember.phone_numbers.length)) {
+                    headerLines += 1; // Phone line
+                }
+            }
+            
+            // Adjust rows per page based on header size
+            // Each header line takes roughly the space of 1 table row
+            // First page: reduce by header lines + 2 for safety margin
+            // Subsequent pages: can fit more rows (no header box, just table header)
+            const firstPageRows = Math.max(15, 32 - headerLines); // Minimum 15 rows, adjust from 32 baseline
+            const subsequentPageRows = 35; // More rows on pages without the header box
+            
             rows.forEach((tr, idx) => {
                 const tds = tr.querySelectorAll('td');
                 if (tds.length < 11) return; // ensure row structure present
-                // Inject a page break + header only before new pages (every ~30 data rows)
-                if (idx > 0 && idx % 30 === 0) {
+                
+                // Determine if we need a page break
+                let needsPageBreak = false;
+                if (idx === firstPageRows) {
+                    needsPageBreak = true; // First page break
+                } else if (idx > firstPageRows && (idx - firstPageRows) % subsequentPageRows === 0) {
+                    needsPageBreak = true; // Subsequent page breaks
+                }
+                
+                // Inject a page break + header only before new pages
+                if (needsPageBreak && idx > 0) {
                     // Force a page break first
                     const brTr = document.createElement('tr');
                     const brTd = document.createElement('td');
@@ -523,6 +587,9 @@ class PdfService {
             });
             outTable.appendChild(tbody);
             printWrapper.appendChild(outTable);
+
+            // Wait a bit to ensure fonts are loaded
+            await new Promise(resolve => setTimeout(resolve, 500));
 
             const fileName = `thirupugazh_playlist_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`;
             await html2pdf().set({
