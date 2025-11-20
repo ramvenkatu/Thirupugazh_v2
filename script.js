@@ -395,6 +395,7 @@ class PdfService {
                 invRow.style.display = 'flex';
                 invRow.style.justifyContent = 'space-between';
                 invRow.style.fontWeight = '700';
+                invRow.style.fontSize = '0.7em'; // Reduced by 30%
                 invRow.style.marginBottom = '4px';
                 const invL = document.createElement('span'); invL.textContent = 'ஓம் ஸ்ரீ மஹாகணபதயே நமஹ';
                 const invR = document.createElement('span'); invR.textContent = 'ஓம் ஸ்ரீ குருப்யோ நமஹ';
@@ -405,6 +406,7 @@ class PdfService {
                 if (hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
                     const prarthanaiDiv = document.createElement('div');
                     prarthanaiDiv.style.marginBottom = '6px';
+                    prarthanaiDiv.style.fontSize = '0.7em'; // Reduced by 30%
                     prarthanaiDiv.style.whiteSpace = 'pre-wrap'; // Allow text wrapping but preserve spaces
                     
                     const p = document.createElement('span');
@@ -442,7 +444,7 @@ class PdfService {
                 // Host
                 if (hd.selectedMember && (hd.selectedMember.name || hd.selectedMember.address || hd.selectedMember.phone || (hd.selectedMember.phone_numbers && hd.selectedMember.phone_numbers.length))) {
                     const host = document.createElement('div');
-                    host.style.fontSize = '11px';
+                    host.style.fontSize = '13.2px'; // Increased by 20% from 11px
                     host.style.color = '#333';
                     const phone = hd.selectedMember.phone || (hd.selectedMember.phone_numbers ? hd.selectedMember.phone_numbers.join(', ') : '');
                     host.innerHTML = `${hd.selectedMember.name || ''}<br>${hd.selectedMember.address || ''}<br>${phone || ''}`;
@@ -520,7 +522,8 @@ class PdfService {
             // Each header line takes roughly the space of 1 table row
             // First page: reduce by header lines + 2 for safety margin
             // Subsequent pages: can fit more rows (no header box, just table header)
-            const firstPageRows = Math.max(15, 32 - headerLines); // Minimum 15 rows, adjust from 32 baseline
+            // Updated baseline to 38 from 32 to account for 30% smaller header fonts (invocation/prarthanai)
+            const firstPageRows = Math.max(15, 38 - headerLines); // Minimum 15 rows, adjust from 38 baseline
             const subsequentPageRows = 35; // More rows on pages without the header box
             
             rows.forEach((tr, idx) => {
