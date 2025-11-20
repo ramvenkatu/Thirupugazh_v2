@@ -43,9 +43,60 @@ async function initializeDatabase() {
             CREATE TABLE IF NOT EXISTS playlist_history (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 song_id INT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                INDEX idx_song_id (song_id),
+                INDEX idx_created_at (created_at)
             )
         `);
+        
+        // Create saved_playlists table for current working playlist
+        await db.execute(`
+            CREATE TABLE IF NOT EXISTS saved_playlists (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                playlist_name VARCHAR(255) DEFAULT 'Current Playlist',
+                duration_minutes INT,
+                total_songs INT,
+                is_current BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            )
+        `);
+        
+        // Create playlist_songs table
+        await db.execute(`
+            CREATE TABLE IF NOT EXISTS playlist_songs (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                playlist_id INT NOT NULL,
+                song_id INT NOT NULL,
+                position INT NOT NULL,
+                alankaaram_enabled BOOLEAN DEFAULT FALSE,
+                alankaaram_time INT DEFAULT 5,
+                FOREIGN KEY (playlist_id) REFERENCES saved_playlists(id) ON DELETE CASCADE,
+                INDEX idx_playlist_position (playlist_id, position)
+            )
+        `);
+        
+        // Create playlist_headers table
+        await db.execute(`
+            CREATE TABLE IF NOT EXISTS playlist_headers (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                playlist_id INT NOT NULL UNIQUE,
+                prarthanai_id INT,
+                prarthanai_text TEXT,
+                function_id INT,
+                function_name VARCHAR(255),
+                member_id INT,
+                member_name VARCHAR(255),
+                member_address TEXT,
+                member_phone VARCHAR(255),
+                bhajan_date DATE,
+                bhajan_day VARCHAR(50),
+                bhajan_start_time TIME,
+                bhajan_end_time TIME,
+                FOREIGN KEY (playlist_id) REFERENCES saved_playlists(id) ON DELETE CASCADE
+            )
+        `);
+        
         console.log('Database tables initialized');
     } catch (error) {
         console.error('Database connection failed:', error);
@@ -209,10 +260,22 @@ function getSongsByAlbum(albumName) {
 // Get recently used songs from database
 async function getRecentlyUsedSongs(daysBack = 30) {
     try {
-        const [rows] = await db.execute(
-            'SELECT DISTINCT song_id FROM playlist_history WHERE created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)',
-            [daysBack]
-        );
+        // Get songs from the last 6 completed playlists (using distinct timestamps)
+        const [rows] = await db.execute(`
+            SELECT DISTINCT song_id 
+            FROM playlist_history 
+            WHERE created_at >= (
+                SELECT created_at 
+                FROM (
+                    SELECT DISTINCT created_at 
+                    FROM playlist_history 
+                    ORDER BY created_at DESC 
+                    LIMIT 6
+                ) AS last_six
+                ORDER BY created_at ASC
+                LIMIT 1
+            )
+        `);
         return rows.map(row => row.song_id);
     } catch (error) {
         console.error('Error fetching recently used songs:', error);
@@ -229,16 +292,33 @@ function durationToSeconds(durationStr) {
     return minutes * 60 + seconds;
 }
 
-// Save playlist to history
+// Save playlist to history and clean up old entries
 async function savePlaylistToHistory(playlist) {
     try {
+        // Insert all songs from the playlist with the current timestamp
+        // (they will all have the same created_at, marking them as one playlist)
         for (const song of playlist) {
             await db.execute(
                 'INSERT INTO playlist_history (song_id) VALUES (?)',
                 [song.id]
             );
         }
-        console.log('Playlist saved to history');
+        
+        // Clean up: Keep only the last 6 playlists
+        // Delete songs from playlists older than the 6th most recent
+        await db.execute(`
+            DELETE FROM playlist_history 
+            WHERE created_at < (
+                SELECT created_at FROM (
+                    SELECT DISTINCT created_at 
+                    FROM playlist_history 
+                    ORDER BY created_at DESC 
+                    LIMIT 1 OFFSET 5
+                ) AS sixth_playlist
+            )
+        `);
+        
+        console.log('Playlist saved to history and old playlists cleaned up');
     } catch (error) {
         console.error('Error saving playlist to history:', error);
     }
@@ -1402,6 +1482,269 @@ app.get('/api/test-general-songs', (req, res) => {
     } catch (error) {
         console.error('Error in test endpoint:', error);
         res.status(500).json({ error: 'Failed to fetch general songs' });
+    }
+});
+
+// ============ PLAYLIST SAVE/LOAD ENDPOINTS ============
+
+// Get current working playlist
+app.get('/api/playlists/current', async (req, res) => {
+    try {
+        // Get current playlist
+        const [playlists] = await db.execute(
+            'SELECT * FROM saved_playlists WHERE is_current = TRUE LIMIT 1'
+        );
+        
+        if (playlists.length === 0) {
+            return res.json({ playlist: null });
+        }
+        
+        const playlistId = playlists[0].id;
+        
+        // Get songs in order
+        const [playlistSongs] = await db.execute(
+            `SELECT ps.*, ps.song_id as id
+             FROM playlist_songs ps
+             WHERE ps.playlist_id = ?
+             ORDER BY ps.position ASC`,
+            [playlistId]
+        );
+        
+        // Enrich with full song data
+        const enrichedSongs = playlistSongs.map(ps => {
+            const fullSong = songs.find(s => s.id === ps.song_id);
+            return {
+                ...fullSong,
+                alankaaramEnabled: ps.alankaaram_enabled,
+                alankaaramTime: ps.alankaaram_time
+            };
+        });
+        
+        // Get header data
+        const [headers] = await db.execute(
+            'SELECT * FROM playlist_headers WHERE playlist_id = ?',
+            [playlistId]
+        );
+        
+        const headerData = headers.length > 0 ? {
+            selectedPrarthanai: headers[0].prarthanai_text ? {
+                id: headers[0].prarthanai_id,
+                text: headers[0].prarthanai_text
+            } : null,
+            selectedFunction: headers[0].function_name ? {
+                id: headers[0].function_id,
+                name: headers[0].function_name
+            } : null,
+            selectedMember: headers[0].member_name ? {
+                id: headers[0].member_id,
+                name: headers[0].member_name,
+                address: headers[0].member_address,
+                phone: headers[0].member_phone
+            } : null,
+            bhajanDetails: {
+                date: headers[0].bhajan_date,
+                day: headers[0].bhajan_day,
+                startTime: headers[0].bhajan_start_time,
+                endTime: headers[0].bhajan_end_time
+            }
+        } : null;
+        
+        res.json({
+            playlist: enrichedSongs,
+            headerData: headerData,
+            metadata: {
+                playlistName: playlists[0].playlist_name,
+                lastSaved: playlists[0].updated_at
+            }
+        });
+    } catch (error) {
+        console.error('Error loading current playlist:', error);
+        res.status(500).json({ error: 'Failed to load playlist' });
+    }
+});
+
+// Save/Update current working playlist
+app.post('/api/playlists/save', async (req, res) => {
+    try {
+        const { playlist, headerData, alankaaramData } = req.body;
+        
+        if (!playlist || !Array.isArray(playlist)) {
+            return res.status(400).json({ error: 'Invalid playlist data' });
+        }
+        
+        // Start transaction
+        await db.query('START TRANSACTION');
+        
+        try {
+            // Check if current playlist exists
+            const [existing] = await db.execute(
+                'SELECT id FROM saved_playlists WHERE is_current = TRUE LIMIT 1'
+            );
+            
+            let playlistId;
+            
+            if (existing.length > 0) {
+                // Update existing
+                playlistId = existing[0].id;
+                await db.execute(
+                    `UPDATE saved_playlists 
+                     SET total_songs = ?, updated_at = CURRENT_TIMESTAMP 
+                     WHERE id = ?`,
+                    [playlist.length, playlistId]
+                );
+                
+                // Delete old songs
+                await db.execute('DELETE FROM playlist_songs WHERE playlist_id = ?', [playlistId]);
+                await db.execute('DELETE FROM playlist_headers WHERE playlist_id = ?', [playlistId]);
+            } else {
+                // Create new
+                const [result] = await db.execute(
+                    `INSERT INTO saved_playlists (playlist_name, total_songs, is_current) 
+                     VALUES (?, ?, TRUE)`,
+                    ['Current Playlist', playlist.length]
+                );
+                playlistId = result.insertId;
+            }
+            
+            // Insert songs
+            for (let i = 0; i < playlist.length; i++) {
+                const song = playlist[i];
+                const alankaaramInfo = alankaaramData?.[song.id] || { enabled: false, time: 5 };
+                
+                await db.execute(
+                    `INSERT INTO playlist_songs 
+                     (playlist_id, song_id, position, alankaaram_enabled, alankaaram_time) 
+                     VALUES (?, ?, ?, ?, ?)`,
+                    [
+                        playlistId,
+                        song.id,
+                        i + 1,
+                        alankaaramInfo.enabled ? 1 : 0,
+                        parseInt(alankaaramInfo.time) || 5
+                    ]
+                );
+            }
+            
+            // Insert header data if provided
+            if (headerData) {
+                // Normalize phone number (could be array or string)
+                let phoneValue = null;
+                if (headerData.selectedMember?.phone) {
+                    phoneValue = Array.isArray(headerData.selectedMember.phone) 
+                        ? headerData.selectedMember.phone.join(', ') 
+                        : headerData.selectedMember.phone;
+                } else if (headerData.selectedMember?.phone_numbers) {
+                    phoneValue = Array.isArray(headerData.selectedMember.phone_numbers)
+                        ? headerData.selectedMember.phone_numbers.join(', ')
+                        : headerData.selectedMember.phone_numbers;
+                }
+                
+                await db.execute(
+                    `INSERT INTO playlist_headers 
+                     (playlist_id, prarthanai_id, prarthanai_text, function_id, function_name,
+                      member_id, member_name, member_address, member_phone,
+                      bhajan_date, bhajan_day, bhajan_start_time, bhajan_end_time)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    [
+                        playlistId,
+                        headerData.selectedPrarthanai?.id || null,
+                        headerData.selectedPrarthanai?.text || null,
+                        headerData.selectedFunction?.id || null,
+                        headerData.selectedFunction?.name || null,
+                        headerData.selectedMember?.id || null,
+                        headerData.selectedMember?.name || null,
+                        headerData.selectedMember?.address || null,
+                        phoneValue,
+                        headerData.bhajanDetails?.date || null,
+                        headerData.bhajanDetails?.day || null,
+                        headerData.bhajanDetails?.startTime || null,
+                        headerData.bhajanDetails?.endTime || null
+                    ]
+                );
+            }
+            
+            await db.query('COMMIT');
+            
+            res.json({ 
+                success: true, 
+                message: 'Playlist saved successfully',
+                lastSaved: new Date().toISOString()
+            });
+        } catch (error) {
+            await db.query('ROLLBACK');
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error saving playlist:', error);
+        res.status(500).json({ error: 'Failed to save playlist' });
+    }
+});
+
+// Mark current playlist as complete and move to history
+app.post('/api/playlists/mark-complete', async (req, res) => {
+    try {
+        // Get current playlist songs
+        const [playlists] = await db.execute(
+            'SELECT id FROM saved_playlists WHERE is_current = TRUE LIMIT 1'
+        );
+        
+        if (playlists.length === 0) {
+            return res.json({ success: true, message: 'No current playlist to complete' });
+        }
+        
+        const playlistId = playlists[0].id;
+        
+        // Get all songs from current playlist
+        const [playlistSongs] = await db.execute(
+            'SELECT song_id FROM playlist_songs WHERE playlist_id = ?',
+            [playlistId]
+        );
+        
+        // Start transaction
+        await db.query('START TRANSACTION');
+        
+        try {
+            // Add songs to history
+            for (const song of playlistSongs) {
+                await db.execute(
+                    'INSERT INTO playlist_history (song_id) VALUES (?)',
+                    [song.song_id]
+                );
+            }
+            
+            // Keep only last 6 playlists worth of history
+            // (Delete songs older than the 6th most recent playlist)
+            await db.execute(`
+                DELETE FROM playlist_history 
+                WHERE created_at < (
+                    SELECT created_at FROM (
+                        SELECT DISTINCT created_at 
+                        FROM playlist_history 
+                        ORDER BY created_at DESC 
+                        LIMIT 1 OFFSET 5
+                    ) AS sixth_playlist
+                )
+            `);
+            
+            // Mark current playlist as not current (archive it)
+            await db.execute(
+                'UPDATE saved_playlists SET is_current = FALSE WHERE id = ?',
+                [playlistId]
+            );
+            
+            await db.query('COMMIT');
+            
+            res.json({ 
+                success: true, 
+                message: 'Playlist marked as complete and moved to history' 
+            });
+        } catch (error) {
+            await db.query('ROLLBACK');
+            throw error;
+        }
+    } catch (error) {
+        console.error('Error completing playlist:', error);
+        res.status(500).json({ error: 'Failed to complete playlist' });
     }
 });
 

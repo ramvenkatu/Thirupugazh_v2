@@ -1009,6 +1009,9 @@ class PlaylistManager {
             const removedSong = AppState.currentPlaylist.splice(index, 1)[0];
             this.renderPlaylist(AppState.currentPlaylist);
             Utils.showToast('success', `Removed: ${removedSong.title}`);
+            
+            // Auto-save after deletion
+            PlaylistStorage.debouncedAutoSave();
         } else {
             Utils.showToast('warning', 'Song not found in playlist');
         }
@@ -1453,6 +1456,9 @@ class ChatManager {
         PlaylistManager.renderPlaylist(AppState.currentPlaylist);
         const removedSongTitles = songsActuallyRemoved.map(song => song.title).join(', ');
         Utils.showToast('success', `Removed ${songsActuallyRemoved.length} song(s) from ${normalizedAlbumName}: ${removedSongTitles}`);
+        
+        // Auto-save after modification
+        PlaylistStorage.debouncedAutoSave();
     }
 
     
@@ -1516,6 +1522,9 @@ class ChatManager {
             const songNames = songsToAdd.map(song => song.title).join(', ');
             Utils.showToast('success', `Added ${songsToAdd.length} song(s) from ${normalizedAlbumName}: ${songNames}`);
             
+            // Auto-save after modification
+            PlaylistStorage.debouncedAutoSave();
+            
         } catch (error) {
             console.error('Error adding songs:', error);
             Utils.showToast('error', `Failed to add songs from ${albumName}`);
@@ -1571,6 +1580,9 @@ class ChatManager {
             
             Utils.showToast('success', `Added "${songToAdd.title}" from ${songToAdd.album}`);
             
+            // Auto-save after modification
+            PlaylistStorage.debouncedAutoSave();
+            
         } catch (error) {
             console.error('Error searching and adding song:', error);
             Utils.showToast('error', `Failed to search for song "${songTitle}"`);
@@ -1588,6 +1600,7 @@ class ChatManager {
                 AppState.currentPlaylist = PlaylistOrder.sortPlaylist(AppState.currentPlaylist);
                 PlaylistManager.renderPlaylist(AppState.currentPlaylist);
                 Utils.showToast('success', `Removed: ${removedSong.title}`);
+                PlaylistStorage.debouncedAutoSave();
             } else {
                 Utils.showToast('warning', 'Song not found in playlist');
             }
@@ -1599,6 +1612,7 @@ class ChatManager {
                 AppState.currentPlaylist = PlaylistOrder.sortPlaylist(AppState.currentPlaylist);
                 PlaylistManager.renderPlaylist(AppState.currentPlaylist);
                 Utils.showToast('success', `Removed: ${removedSong.title}`);
+                PlaylistStorage.debouncedAutoSave();
             } else {
                 Utils.showToast('warning', 'Invalid position specified');
             }
@@ -1640,6 +1654,7 @@ class ChatManager {
         
         PlaylistManager.renderPlaylist(AppState.currentPlaylist);
         Utils.showToast('success', `Moved: ${songToMove.title} (positioned according to album hierarchy)`);
+        PlaylistStorage.debouncedAutoSave();
     }
     
     static async executeReplaceCommand(command) {
@@ -1688,6 +1703,9 @@ class ChatManager {
             
             PlaylistManager.renderPlaylist(AppState.currentPlaylist);
             Utils.showToast('success', `Replaced "${oldSong.title}" with "${randomSong.title}" from ${newAlbumName}. Song repositioned according to 13-step sequence.`);
+            
+            // Auto-save after modification
+            PlaylistStorage.debouncedAutoSave();
             
         } catch (error) {
             console.error('Error replacing song:', error);
@@ -1772,7 +1790,24 @@ static collapseSelector(selectorType) {
         }
     }
 }
-
+    
+    static updateSelectedDisplay(prarthanai) {
+        if (!prarthanai) return;
+        
+        // Update card states
+        elements.prarthanaiContainer.querySelectorAll('.prarthanai-card').forEach(card => {
+            card.classList.remove('border-success', 'bg-success', 'text-white');
+        });
+        
+        const selectedCard = elements.prarthanaiContainer.querySelector(`[data-prarthanai-id="${prarthanai.id}"]`);
+        if (selectedCard) {
+            selectedCard.classList.add('border-success', 'bg-success', 'text-white');
+        }
+        
+        // Show selected prarthanai
+        elements.selectedPrarthanaiText.textContent = prarthanai.text;
+        elements.selectedPrarthanaiDisplay.classList.remove('d-none');
+    }
 }
 
 // Function Manager
@@ -1852,6 +1887,24 @@ class FunctionManager {
                 }
             }
         }
+    }
+    
+    static updateSelectedDisplay(func) {
+        if (!func) return;
+        
+        // Update card states
+        elements.functionContainer.querySelectorAll('.function-card').forEach(card => {
+            card.classList.remove('border-primary', 'bg-primary', 'text-white');
+        });
+        
+        const selectedCard = elements.functionContainer.querySelector(`[data-function-id="${func.id}"]`);
+        if (selectedCard) {
+            selectedCard.classList.add('border-primary', 'bg-primary', 'text-white');
+        }
+        
+        // Show selected function
+        elements.selectedFunctionText.textContent = func.name;
+        elements.selectedFunctionDisplay.classList.remove('d-none');
     }
 }
 
@@ -1938,6 +1991,26 @@ class MemberManager {
                 }
             }
         }
+    }
+    
+    static updateSelectedDisplay(member) {
+        if (!member) return;
+        
+        // Update card states
+        elements.memberContainer.querySelectorAll('.member-card').forEach(card => {
+            card.classList.remove('border-info', 'bg-info', 'text-white');
+        });
+        
+        const selectedCard = elements.memberContainer.querySelector(`[data-member-id="${member.id}"]`);
+        if (selectedCard) {
+            selectedCard.classList.add('border-info', 'bg-info', 'text-white');
+        }
+        
+        // Show selected member details
+        elements.selectedMemberName.textContent = member.name;
+        elements.selectedMemberAddress.textContent = member.address || '';
+        elements.selectedMemberPhone.textContent = member.phone ? `Phone: ${member.phone}` : '';
+        elements.selectedMemberDisplay.classList.remove('d-none');
     }
 
 }
@@ -2095,6 +2168,46 @@ class BhajanDetailsManager {
         const label = document.getElementById('timeRangeDisplay');
         if (label) label.textContent = `${startStr} - ${endStr}`;
     }
+    
+    // Restore bhajan details from saved data
+    static restoreBhajanDetails(details) {
+        if (!details) return;
+        
+        // Restore date (extract date part if ISO string)
+        if (details.date && elements.bhajanDate) {
+            const dateValue = details.date.split('T')[0]; // Extract yyyy-MM-dd from ISO
+            elements.bhajanDate.value = dateValue;
+            this.updateDayField();
+        }
+        
+        // Restore start time
+        if (details.startTime && elements.startHour && elements.startMinute && elements.startAmPm) {
+            const [h24Str, mStr] = details.startTime.split(':');
+            const h24 = parseInt(h24Str, 10);
+            const m = parseInt(mStr, 10);
+            const ampm = h24 >= 12 ? 'PM' : 'AM';
+            const h12 = (h24 % 12) || 12;
+            
+            elements.startHour.value = String(h12).padStart(2, '0');
+            elements.startMinute.value = String(m).padStart(2, '0');
+            elements.startAmPm.value = ampm;
+        }
+        
+        // Restore end time
+        if (details.endTime && elements.endHour && elements.endMinute && elements.endAmPm) {
+            const [h24Str, mStr] = details.endTime.split(':');
+            const h24 = parseInt(h24Str, 10);
+            const m = parseInt(mStr, 10);
+            const ampm = h24 >= 12 ? 'PM' : 'AM';
+            const h12 = (h24 % 12) || 12;
+            
+            elements.endHour.value = String(h12).padStart(2, '0');
+            elements.endMinute.value = String(m).padStart(2, '0');
+            elements.endAmPm.value = ampm;
+        }
+        
+        this.updateTimeDisplay();
+    }
 }
 
 class EventHandlers {
@@ -2145,6 +2258,10 @@ class EventHandlers {
         PlaylistManager.renderPlaylist(AppState.currentPlaylist);
 
         Utils.showToast('success', `Removed: ${removed?.title || 'Song'}`);
+        
+        // Auto-save after deletion
+        console.log('Delete button clicked - triggering auto-save');
+        PlaylistStorage.debouncedAutoSave();
     }
         
     static async handlePlaylistGeneration(e) {
@@ -2223,6 +2340,9 @@ class EventHandlers {
                 
                 PlaylistManager.renderPlaylist(response.playlist);
                 Utils.showToast('success', `Playlist generated with ${response.playlist.length} songs!`);
+                
+                // Auto-save the generated playlist
+                await PlaylistStorage.autoSave();
                 
                 // Verify modal is closed after a short delay
                 setTimeout(() => {
@@ -2336,6 +2456,9 @@ class EventHandlers {
                     AppState.alankaaramData[songIndex].enabled = false;
                 }
             }
+            
+            // Auto-save after alankaaram change
+            PlaylistStorage.debouncedAutoSave();
         }
     }
 
@@ -2351,8 +2474,188 @@ class EventHandlers {
                 AppState.alankaaramData[songIndex] = { enabled: true };
             }
             AppState.alankaaramData[songIndex].minutes = minutes;
+            
+            // Auto-save after time change
+            PlaylistStorage.debouncedAutoSave();
         }
     }
+}
+
+// Playlist Storage Service - Auto-save/Load functionality
+class PlaylistStorage {
+    static lastSaveTime = null;
+    static saveInProgress = false;
+    
+    // Auto-save current playlist
+    static async autoSave() {
+        if (this.saveInProgress) return;
+        if (AppState.currentPlaylist.length === 0) return;
+        
+        try {
+            this.saveInProgress = true;
+            this.updateSaveStatus('Saving...');
+            
+            const response = await fetch(`${API_BASE}/api/playlists/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    playlist: AppState.currentPlaylist,
+                    headerData: AppState.playlistHeaderData,
+                    alankaaramData: AppState.alankaaramData
+                })
+            });
+            
+            if (!response.ok) throw new Error('Failed to save playlist');
+            
+            const data = await response.json();
+            this.lastSaveTime = new Date(data.lastSaved);
+            this.updateSaveStatus(`Saved at ${this.formatSaveTime(this.lastSaveTime)}`);
+            
+            console.log('Playlist auto-saved successfully');
+        } catch (error) {
+            console.error('Auto-save failed:', error);
+            this.updateSaveStatus('Save failed');
+        } finally {
+            this.saveInProgress = false;
+        }
+    }
+    
+    // Load current playlist on page load
+    static async loadCurrent() {
+        try {
+            const response = await fetch(`${API_BASE}/api/playlists/current`);
+            if (!response.ok) throw new Error('Failed to load playlist');
+            
+            const data = await response.json();
+            
+            if (!data.playlist || data.playlist.length === 0) {
+                console.log('No saved playlist found');
+                return false;
+            }
+            
+            // Restore playlist
+            AppState.currentPlaylist = data.playlist;
+            
+            // Restore alankaaram data
+            AppState.alankaaramData = {};
+            data.playlist.forEach(song => {
+                if (song.alankaaramEnabled) {
+                    AppState.alankaaramData[song.id] = {
+                        enabled: song.alankaaramEnabled,
+                        time: song.alankaaramTime
+                    };
+                }
+            });
+            
+            // Restore header data
+            if (data.headerData) {
+                AppState.playlistHeaderData = data.headerData;
+                
+                // Restore Prarthanai
+                if (data.headerData.selectedPrarthanai) {
+                    AppState.selectedPrarthanai = data.headerData.selectedPrarthanai;
+                    PrarthanaiManager.updateSelectedDisplay(data.headerData.selectedPrarthanai);
+                }
+                
+                // Restore Function
+                if (data.headerData.selectedFunction) {
+                    AppState.selectedFunction = data.headerData.selectedFunction;
+                    FunctionManager.updateSelectedDisplay(data.headerData.selectedFunction);
+                }
+                
+                // Restore Member
+                if (data.headerData.selectedMember) {
+                    AppState.selectedMember = data.headerData.selectedMember;
+                    MemberManager.updateSelectedDisplay(data.headerData.selectedMember);
+                }
+                
+                // Restore Bhajan Details
+                if (data.headerData.bhajanDetails) {
+                    AppState.bhajanDetails = data.headerData.bhajanDetails;
+                    BhajanDetailsManager.restoreBhajanDetails(data.headerData.bhajanDetails);
+                }
+            }
+            
+            // Update UI
+            PlaylistManager.renderPlaylist(AppState.currentPlaylist);
+            
+            // Update save time
+            if (data.metadata?.lastSaved) {
+                this.lastSaveTime = new Date(data.metadata.lastSaved);
+                this.updateSaveStatus(`Saved at ${this.formatSaveTime(this.lastSaveTime)}`);
+            }
+            
+            console.log('Playlist loaded successfully:', data.playlist.length, 'songs');
+            Utils.showToast('success', `Loaded playlist with ${data.playlist.length} songs`);
+            return true;
+        } catch (error) {
+            console.error('Failed to load playlist:', error);
+            return false;
+        }
+    }
+    
+    // Mark current playlist as complete (moves to history)
+    static async markComplete() {
+        try {
+            const response = await fetch(`${API_BASE}/api/playlists/mark-complete`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            
+            if (!response.ok) throw new Error('Failed to mark playlist as complete');
+            
+            console.log('Playlist marked as complete');
+            Utils.showToast('success', 'Playlist completed and moved to history');
+        } catch (error) {
+            console.error('Failed to mark playlist as complete:', error);
+            Utils.showToast('error', 'Failed to complete playlist');
+        }
+    }
+    
+    // Update save status UI
+    static updateSaveStatus(message) {
+        const statusElement = document.getElementById('saveStatus');
+        if (statusElement) {
+            statusElement.textContent = message;
+            statusElement.style.opacity = '1';
+            
+            // Fade out after 3 seconds if success
+            if (message.startsWith('Saved')) {
+                setTimeout(() => {
+                    statusElement.style.opacity = '0.6';
+                }, 3000);
+            }
+        }
+    }
+    
+    // Format save time nicely
+    static formatSaveTime(date) {
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        
+        if (minutes < 1) return 'just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours}h ago`;
+        
+        return date.toLocaleString('en-IN', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    
+    // Debounced auto-save (waits 2 seconds after last change)
+    static debouncedAutoSave = (() => {
+        let timeout;
+        return () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => this.autoSave(), 2000);
+        };
+    })();
 }
 
 // Application Initialization
@@ -2373,9 +2676,13 @@ class App {
             // Initialize UI state
             PlaylistManager.showEmptyState();
             
+            // Load saved playlist if exists
+            const loaded = await PlaylistStorage.loadCurrent();
+            if (!loaded) {
+                PlaylistManager.showEmptyState();
+            }
+            
             // Start time updates
-
-
             
             // Check initial connection status
             await ApiService.checkHealth();
