@@ -2661,6 +2661,981 @@ class PlaylistStorage {
     })();
 }
 
+// ============================================================================
+// Master Song List Manager - CRUD Operations for Song Database
+// ============================================================================
+class MasterSongListManager {
+    static currentEditRow = null;
+    static allSongs = [];
+    static filteredSongs = [];
+    
+    static init() {
+        console.log('Initializing Master Song List Manager...');
+        
+        // Load songs from the global songs array
+        this.allSongs = [...songs];
+        this.filteredSongs = [...this.allSongs];
+        
+        // Setup event listeners
+        const masterBtn = document.getElementById('masterSongListBtn');
+        const modal = document.getElementById('masterSongListModal');
+        const searchInput = document.getElementById('songSearchInput');
+        
+        if (masterBtn) {
+            masterBtn.addEventListener('click', () => this.openMasterList());
+        }
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+        }
+        
+        // Close edit mode when modal is hidden
+        if (modal) {
+            modal.addEventListener('hidden.bs.modal', () => {
+                this.cancelEdit();
+            });
+        }
+        
+        console.log(`Master Song List initialized with ${this.allSongs.length} songs`);
+    }
+    
+    static openMasterList() {
+        // Reload songs to get any updates
+        this.allSongs = [...songs];
+        this.filteredSongs = [...this.allSongs];
+        
+        // Reset search
+        const searchInput = document.getElementById('songSearchInput');
+        if (searchInput) searchInput.value = '';
+        
+        // Render table
+        this.renderTable();
+        
+        // Update count
+        document.getElementById('totalSongsCount').textContent = this.allSongs.length;
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('masterSongListModal'));
+        modal.show();
+    }
+    
+    static renderTable() {
+        const tbody = document.getElementById('masterSongTableBody');
+        tbody.innerHTML = '';
+        
+        // Update search results status
+        this.updateSearchStatus();
+        
+        if (this.filteredSongs.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td colspan="9" class="text-center text-muted py-5">
+                    <i class="bi bi-search fs-1 d-block mb-3"></i>
+                    <h5>No songs found</h5>
+                    <p>Try adjusting your search criteria</p>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            return;
+        }
+        
+        this.filteredSongs.forEach(song => {
+            const tr = this.createSongRow(song);
+            tbody.appendChild(tr);
+        });
+    }
+    
+    static createSongRow(song) {
+        const tr = document.createElement('tr');
+        tr.dataset.songId = song.id;
+        tr.classList.add('song-row');
+        
+        tr.innerHTML = `
+            <td class="text-center">
+                <div class="btn-group-vertical">
+                    <button class="btn btn-primary btn-sm edit-btn mb-1" data-song-id="${song.id}">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm delete-btn" data-song-id="${song.id}">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </div>
+            </td>
+            <td class="text-center song-id">${song.id}</td>
+            <td class="song-title">${this.escapeHtml(song.title)}</td>
+            <td class="text-center song-number">${this.escapeHtml(song.songNumber)}</td>
+            <td class="text-center song-duration">${this.escapeHtml(song.duration)}</td>
+            <td class="song-raga">${this.escapeHtml(song.raga)}</td>
+            <td class="song-album">${this.escapeHtml(song.album)}</td>
+            <td class="text-center song-taught">
+                <span class="badge ${song.taught === 'Yes' ? 'bg-success' : 'bg-secondary'}">
+                    ${song.taught}
+                </span>
+            </td>
+            <td class="song-notes">${this.escapeHtml(song.notes)}</td>
+        `;
+        
+        // Add edit button click handler
+        const editBtn = tr.querySelector('.edit-btn');
+        editBtn.addEventListener('click', () => this.enterEditMode(song.id, tr));
+        
+        // Add delete button click handler
+        const deleteBtn = tr.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', () => this.confirmDeleteSong(song.id, song.title));
+        
+        return tr;
+    }
+    
+    static enterEditMode(songId, row) {
+        // Cancel any existing edit
+        if (this.currentEditRow) {
+            this.cancelEdit();
+        }
+        
+        const song = this.allSongs.find(s => s.id === songId);
+        if (!song) return;
+        
+        this.currentEditRow = row;
+        row.classList.add('editing');
+        
+        // Replace row content with editable form
+        row.innerHTML = `
+            <td class="text-center">
+                <div class="btn-group-vertical">
+                    <button class="btn btn-success btn-sm save-btn mb-1" data-song-id="${song.id}">
+                        <i class="bi bi-check-circle"></i> Save
+                    </button>
+                    <button class="btn btn-secondary btn-sm cancel-btn" data-song-id="${song.id}">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+                </div>
+            </td>
+            <td class="text-center align-middle">
+                <strong>${song.id}</strong>
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-lg" id="edit-title-${song.id}" value="${this.escapeHtml(song.title)}">
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-lg text-center" id="edit-songNumber-${song.id}" value="${this.escapeHtml(song.songNumber)}">
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-lg text-center" id="edit-duration-${song.id}" value="${this.escapeHtml(song.duration)}">
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-lg" id="edit-raga-${song.id}" value="${this.escapeHtml(song.raga)}">
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-lg" id="edit-album-${song.id}" value="${this.escapeHtml(song.album)}">
+            </td>
+            <td>
+                <div class="btn-group w-100 taught-btn-group" role="group" id="edit-taught-${song.id}" data-taught="${song.taught}">
+                    <button type="button" class="btn btn-outline-success taught-yes-btn ${song.taught === 'Yes' ? 'active' : ''}" data-value="Yes">
+                        <i class="bi bi-check-circle"></i> Yes
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary taught-no-btn ${song.taught === 'No' ? 'active' : ''}" data-value="No">
+                        <i class="bi bi-x-circle"></i> No
+                    </button>
+                </div>
+            </td>
+            <td>
+                <textarea class="form-control form-control-lg" id="edit-notes-${song.id}" rows="2">${this.escapeHtml(song.notes)}</textarea>
+            </td>
+        `;
+        
+        // Add event listeners
+        const saveBtn = row.querySelector('.save-btn');
+        const cancelBtn = row.querySelector('.cancel-btn');
+        
+        // Taught button handlers
+        const taughtBtnGroup = row.querySelector('.taught-btn-group');
+        const yesBtn = row.querySelector('.taught-yes-btn');
+        const noBtn = row.querySelector('.taught-no-btn');
+        
+        yesBtn.addEventListener('click', () => {
+            yesBtn.classList.add('active');
+            noBtn.classList.remove('active');
+            taughtBtnGroup.dataset.taught = 'Yes';
+        });
+        
+        noBtn.addEventListener('click', () => {
+            noBtn.classList.add('active');
+            yesBtn.classList.remove('active');
+            taughtBtnGroup.dataset.taught = 'No';
+        });
+        
+        saveBtn.addEventListener('click', () => this.saveSong(songId));
+        cancelBtn.addEventListener('click', () => this.cancelEdit());
+    }
+    
+    static cancelEdit() {
+        if (!this.currentEditRow) return;
+        
+        const songId = parseInt(this.currentEditRow.dataset.songId);
+        const song = this.allSongs.find(s => s.id === songId);
+        
+        if (song) {
+            const newRow = this.createSongRow(song);
+            this.currentEditRow.replaceWith(newRow);
+        }
+        
+        this.currentEditRow = null;
+    }
+    
+    static handleSearch(searchTerm) {
+        searchTerm = searchTerm.toLowerCase().trim();
+        
+        if (!searchTerm) {
+            this.filteredSongs = [...this.allSongs];
+        } else {
+            this.filteredSongs = this.allSongs.filter(song => {
+                return (
+                    song.title.toLowerCase().includes(searchTerm) ||
+                    song.raga.toLowerCase().includes(searchTerm) ||
+                    song.album.toLowerCase().includes(searchTerm) ||
+                    song.songNumber.toLowerCase().includes(searchTerm) ||
+                    song.notes.toLowerCase().includes(searchTerm)
+                );
+            });
+        }
+        
+        // Cancel edit if active
+        this.cancelEdit();
+        
+        // Re-render table with filtered results
+        this.renderTable();
+    }
+    
+    static confirmDeleteSong(songId, songTitle) {
+        // Cancel any existing edit
+        if (this.currentEditRow) {
+            this.cancelEdit();
+        }
+        
+        // Create a custom confirmation modal
+        const confirmMessage = `
+            <div class="text-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 4rem;"></i>
+                <h3 class="mt-3 mb-3">Confirm Delete</h3>
+                <p class="fs-5">Are you sure you want to delete this song?</p>
+                <div class="alert alert-danger mt-3 mb-3">
+                    <strong>Song:</strong> ${this.escapeHtml(songTitle)}<br>
+                    <strong>ID:</strong> ${songId}
+                </div>
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Warning:</strong> Once deleted, this song cannot be retrieved!
+                </div>
+            </div>
+        `;
+        
+        // Create modal HTML
+        const modalHtml = `
+            <div class="modal fade" id="deleteSongConfirmModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h4 class="modal-title">Delete Song</h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-4">
+                            ${confirmMessage}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </button>
+                            <button type="button" class="btn btn-danger btn-lg" id="confirmDeleteBtn">
+                                <i class="bi bi-trash me-2"></i>Yes, Delete Song
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Remove any existing confirm modal
+        const existingModal = document.getElementById('deleteSongConfirmModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // Add modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('deleteSongConfirmModal'));
+        modal.show();
+        
+        // Add event listener to confirm button
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+            modal.hide();
+            this.deleteSong(songId);
+        });
+        
+        // Clean up modal after it's hidden
+        document.getElementById('deleteSongConfirmModal').addEventListener('hidden.bs.modal', function() {
+            this.remove();
+        });
+    }
+    
+    static async deleteSong(songId) {
+        try {
+            // Show loading toast
+            Utils.showToast('info', 'Deleting song...');
+            
+            // Send delete request to server
+            const response = await fetch('/api/songs/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: songId })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to delete song');
+            }
+            
+            const result = await response.json();
+            
+            // Remove from local arrays
+            this.allSongs = this.allSongs.filter(s => s.id !== songId);
+            this.filteredSongs = this.filteredSongs.filter(s => s.id !== songId);
+            
+            // Remove from global songs array
+            const globalIndex = songs.findIndex(s => s.id === songId);
+            if (globalIndex !== -1) {
+                songs.splice(globalIndex, 1);
+            }
+            
+            // Re-render table
+            this.renderTable();
+            
+            // Update total count
+            document.getElementById('totalSongsCount').textContent = this.allSongs.length;
+            
+            Utils.showToast('success', 'Song deleted successfully');
+            
+        } catch (error) {
+            console.error('Error deleting song:', error);
+            Utils.showToast('error', 'Failed to delete song: ' + error.message);
+        }
+    }
+    
+    static escapeHtml(text) {
+        if (text === null || text === undefined) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+    
+    static updateSearchStatus() {
+        const statusDiv = document.getElementById('searchResultsStatus');
+        const statusText = document.getElementById('searchResultsText');
+        
+        if (!statusDiv || !statusText) return;
+        
+        const searchInput = document.getElementById('songSearchInput');
+        const isSearching = searchInput && searchInput.value.trim() !== '';
+        
+        if (isSearching) {
+            statusDiv.classList.remove('d-none');
+            const count = this.filteredSongs.length;
+            const total = this.allSongs.length;
+            statusText.innerHTML = `<strong>Showing ${count} of ${total} songs</strong> based on your search`;
+        } else {
+            statusDiv.classList.add('d-none');
+        }
+    }
+    
+    static async saveSong(songId) {
+        const song = this.allSongs.find(s => s.id === songId);
+        if (!song) return;
+        
+        // Get updated values from form inputs
+        const taughtBtnGroup = document.getElementById(`edit-taught-${songId}`);
+        const updatedSong = {
+            id: song.id,
+            title: document.getElementById(`edit-title-${songId}`).value.trim(),
+            songNumber: document.getElementById(`edit-songNumber-${songId}`).value.trim(),
+            duration: document.getElementById(`edit-duration-${songId}`).value.trim(),
+            raga: document.getElementById(`edit-raga-${songId}`).value.trim(),
+            album: document.getElementById(`edit-album-${songId}`).value.trim(),
+            taught: taughtBtnGroup ? taughtBtnGroup.dataset.taught : 'Yes',
+            notes: document.getElementById(`edit-notes-${songId}`).value.trim()
+        };
+        
+        // Validate required fields
+        if (!updatedSong.title) {
+            Utils.showToast('error', 'Song title is required');
+            return;
+        }
+        
+        try {
+            // Show saving indicator
+            const saveBtn = this.currentEditRow.querySelector('.save-btn');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
+            saveBtn.disabled = true;
+            
+            // Send update to server
+            const response = await fetch('/api/songs/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedSong)
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to save song');
+            }
+            
+            const result = await response.json();
+            
+            // Update local data
+            Object.assign(song, updatedSong);
+            
+            // Update the global songs array
+            const globalSongIndex = songs.findIndex(s => s.id === songId);
+            if (globalSongIndex !== -1) {
+                Object.assign(songs[globalSongIndex], updatedSong);
+            }
+            
+            // Exit edit mode and re-render row
+            const row = this.currentEditRow;
+            this.currentEditRow = null;
+            
+            const newRow = this.createSongRow(song);
+            row.replaceWith(newRow);
+            
+            // Show success animation
+            newRow.classList.add('just-saved');
+            setTimeout(() => newRow.classList.remove('just-saved'), 2000);
+            
+            Utils.showToast('success', 'Song updated successfully');
+            
+        } catch (error) {
+            console.error('Error saving song:', error);
+            Utils.showToast('error', 'Failed to save song: ' + error.message);
+            
+            // Reset button state
+            const saveBtn = this.currentEditRow?.querySelector('.save-btn');
+            if (saveBtn) {
+                saveBtn.innerHTML = '<i class="bi bi-check-circle"></i> Save';
+                saveBtn.disabled = false;
+            }
+        }
+    }
+}
+
+// ============================================================================
+// Host Member Manager - CRUD Operations for Member Database
+// ============================================================================
+class HostMemberManager {
+    static currentEditRow = null;
+    static allMembers = [];
+    static filteredMembers = [];
+    
+    static init() {
+        console.log('Initializing Host Member Manager...');
+        
+        // Load members from the global membersData
+        this.allMembers = [...membersData.members];
+        this.filteredMembers = [...this.allMembers];
+        
+        // Setup event listeners
+        const hostBtn = document.getElementById('hostMemberDetailsBtn');
+        const modal = document.getElementById('hostMemberModal');
+        const searchInput = document.getElementById('memberSearchInput');
+        const createBtn = document.getElementById('createNewMemberBtn');
+        
+        if (hostBtn) {
+            hostBtn.addEventListener('click', () => this.openMemberList());
+        }
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+        }
+        
+        if (createBtn) {
+            createBtn.addEventListener('click', () => this.createNewMember());
+        }
+        
+        // Close edit mode when modal is hidden
+        if (modal) {
+            modal.addEventListener('hidden.bs.modal', () => {
+                this.cancelEdit();
+            });
+        }
+        
+        console.log(`Host Member Manager initialized with ${this.allMembers.length} members`);
+    }
+    
+    static openMemberList() {
+        // Reload members to get any updates
+        this.allMembers = [...membersData.members];
+        this.filteredMembers = [...this.allMembers];
+        
+        // Reset search
+        const searchInput = document.getElementById('memberSearchInput');
+        if (searchInput) searchInput.value = '';
+        
+        // Render table
+        this.renderTable();
+        
+        // Update count
+        document.getElementById('totalMembersCount').textContent = this.allMembers.length;
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('hostMemberModal'));
+        modal.show();
+    }
+    
+    static renderTable() {
+        const tbody = document.getElementById('masterMemberTableBody');
+        tbody.innerHTML = '';
+        
+        // Update search results status
+        this.updateSearchStatus();
+        
+        if (this.filteredMembers.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td colspan="5" class="text-center text-muted py-5">
+                    <i class="bi bi-search fs-1 d-block mb-3"></i>
+                    <h5>No members found</h5>
+                    <p>Try adjusting your search criteria</p>
+                </td>
+            `;
+            tbody.appendChild(tr);
+            return;
+        }
+        
+        this.filteredMembers.forEach(member => {
+            const tr = this.createMemberRow(member);
+            tbody.appendChild(tr);
+        });
+    }
+    
+    static createMemberRow(member) {
+        const tr = document.createElement('tr');
+        tr.dataset.memberId = member.id;
+        tr.classList.add('member-row');
+        
+        const phoneNumbers = Array.isArray(member.phone_numbers) ? member.phone_numbers.join(', ') : member.phone_numbers || '';
+        
+        tr.innerHTML = `
+            <td class="text-center">
+                <div class="btn-group-vertical">
+                    <button class="btn btn-primary btn-sm edit-member-btn mb-1" data-member-id="${member.id}">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm delete-member-btn" data-member-id="${member.id}">
+                        <i class="bi bi-trash"></i> Delete
+                    </button>
+                </div>
+            </td>
+            <td class="text-center member-id">${member.id}</td>
+            <td class="member-name">${this.escapeHtml(member.name)}</td>
+            <td class="member-phone">${this.escapeHtml(phoneNumbers)}</td>
+            <td class="member-address">${this.escapeHtml(member.address)}</td>
+        `;
+        
+        // Add event handlers
+        const editBtn = tr.querySelector('.edit-member-btn');
+        const deleteBtn = tr.querySelector('.delete-member-btn');
+        
+        editBtn.addEventListener('click', () => this.enterEditMode(member.id, tr));
+        deleteBtn.addEventListener('click', () => this.confirmDeleteMember(member.id, member.name));
+        
+        return tr;
+    }
+    
+    static enterEditMode(memberId, row) {
+        // Cancel any existing edit
+        if (this.currentEditRow) {
+            this.cancelEdit();
+        }
+        
+        const member = this.allMembers.find(m => m.id === memberId);
+        if (!member) return;
+        
+        this.currentEditRow = row;
+        row.classList.add('editing');
+        
+        const phoneNumbers = Array.isArray(member.phone_numbers) ? member.phone_numbers.join(', ') : member.phone_numbers || '';
+        
+        // Replace row content with editable form
+        row.innerHTML = `
+            <td class="text-center">
+                <div class="btn-group-vertical">
+                    <button class="btn btn-success btn-sm save-member-btn mb-1" data-member-id="${member.id}">
+                        <i class="bi bi-check-circle"></i> Save
+                    </button>
+                    <button class="btn btn-secondary btn-sm cancel-member-btn" data-member-id="${member.id}">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+                </div>
+            </td>
+            <td class="text-center align-middle">
+                <strong>${member.id}</strong>
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-lg" id="edit-member-name-${member.id}" value="${this.escapeHtml(member.name)}">
+            </td>
+            <td>
+                <textarea class="form-control form-control-lg" id="edit-member-phone-${member.id}" rows="2" placeholder="Enter phone numbers separated by commas">${this.escapeHtml(phoneNumbers)}</textarea>
+            </td>
+            <td>
+                <textarea class="form-control form-control-lg" id="edit-member-address-${member.id}" rows="3">${this.escapeHtml(member.address)}</textarea>
+            </td>
+        `;
+        
+        // Add event listeners
+        const saveBtn = row.querySelector('.save-member-btn');
+        const cancelBtn = row.querySelector('.cancel-member-btn');
+        
+        saveBtn.addEventListener('click', () => this.saveMember(memberId));
+        cancelBtn.addEventListener('click', () => this.cancelEdit());
+    }
+    
+    static async saveMember(memberId) {
+        const member = this.allMembers.find(m => m.id === memberId);
+        const isNewMember = member && member.isNew === true;
+        
+        // Get updated values from form inputs
+        const name = document.getElementById(`edit-member-name-${memberId}`).value.trim();
+        const phoneInput = document.getElementById(`edit-member-phone-${memberId}`).value.trim();
+        const address = document.getElementById(`edit-member-address-${memberId}`).value.trim();
+        
+        // Parse phone numbers
+        const phoneNumbers = phoneInput.split(',').map(p => p.trim()).filter(p => p);
+        
+        const updatedMember = {
+            id: memberId,
+            name: name,
+            phone_numbers: phoneNumbers,
+            address: address
+        };
+        
+        // Validate required fields
+        if (!updatedMember.name) {
+            Utils.showToast('error', 'Member name is required');
+            return;
+        }
+        
+        try {
+            // Show saving indicator
+            const saveBtn = this.currentEditRow.querySelector('.save-member-btn');
+            saveBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
+            saveBtn.disabled = true;
+            
+            // Determine endpoint
+            const endpoint = isNewMember ? '/api/members/create' : '/api/members/update';
+            
+            // Send to server
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedMember)
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to save member');
+            }
+            
+            const result = await response.json();
+            
+            // Update local data
+            if (isNewMember) {
+                // Remove the isNew flag and update the member in place
+                delete updatedMember.isNew;
+                Object.assign(member, updatedMember);
+                
+                // Also update in the global membersData
+                const globalMember = membersData.members.find(m => m.id === memberId);
+                if (globalMember) {
+                    Object.assign(globalMember, updatedMember);
+                    delete globalMember.isNew;
+                } else {
+                    // If not in global, add it
+                    membersData.members.unshift(updatedMember);
+                }
+            } else {
+                Object.assign(member, updatedMember);
+                const globalIndex = membersData.members.findIndex(m => m.id === memberId);
+                if (globalIndex !== -1) {
+                    Object.assign(membersData.members[globalIndex], updatedMember);
+                }
+            }
+            
+            // Exit edit mode and re-render row
+            const row = this.currentEditRow;
+            this.currentEditRow = null;
+            
+            const newRow = this.createMemberRow(updatedMember);
+            row.replaceWith(newRow);
+            
+            // Show success animation
+            newRow.classList.add('just-saved');
+            setTimeout(() => newRow.classList.remove('just-saved'), 2000);
+            
+            // Update total count
+            document.getElementById('totalMembersCount').textContent = this.allMembers.length;
+            
+            Utils.showToast('success', isNewMember ? 'New member created successfully' : 'Member updated successfully');
+            
+        } catch (error) {
+            console.error('Error saving member:', error);
+            Utils.showToast('error', 'Failed to save member: ' + error.message);
+            
+            // Reset button state
+            const saveBtn = this.currentEditRow?.querySelector('.save-member-btn');
+            if (saveBtn) {
+                saveBtn.innerHTML = '<i class="bi bi-check-circle"></i> Save';
+                saveBtn.disabled = false;
+            }
+        }
+    }
+    
+    static cancelEdit() {
+        if (!this.currentEditRow) return;
+        
+        const memberId = parseInt(this.currentEditRow.dataset.memberId);
+        const member = this.allMembers.find(m => m.id === memberId);
+        
+        // If it's a new member being cancelled, remove it from arrays
+        if (member && member.isNew) {
+            const allIndex = this.allMembers.findIndex(m => m.id === memberId);
+            if (allIndex !== -1) this.allMembers.splice(allIndex, 1);
+            
+            const filteredIndex = this.filteredMembers.findIndex(m => m.id === memberId);
+            if (filteredIndex !== -1) this.filteredMembers.splice(filteredIndex, 1);
+            
+            // Remove the row
+            this.currentEditRow.remove();
+            this.currentEditRow = null;
+            
+            // Update count
+            document.getElementById('totalMembersCount').textContent = this.allMembers.length;
+            return;
+        }
+        
+        if (member) {
+            const newRow = this.createMemberRow(member);
+            this.currentEditRow.replaceWith(newRow);
+        }
+        
+        this.currentEditRow = null;
+    }
+    
+    static createNewMember() {
+        // Cancel any existing edit
+        if (this.currentEditRow) {
+            this.cancelEdit();
+        }
+        
+        // Find the next available ID
+        const maxId = Math.max(...this.allMembers.map(m => m.id), 0);
+        const newId = maxId + 1;
+        
+        // Create a temporary new member object
+        const newMember = {
+            id: newId,
+            name: '',
+            phone_numbers: [],
+            address: '',
+            isNew: true
+        };
+        
+        // Add to both arrays
+        this.allMembers.unshift(newMember);
+        this.filteredMembers.unshift(newMember);
+        
+        // Re-render table
+        this.renderTable();
+        
+        // Scroll to top
+        const tableContainer = document.querySelector('#hostMemberModal .table-responsive');
+        if (tableContainer) {
+            tableContainer.scrollTop = 0;
+        }
+        
+        // Enter edit mode for the new member
+        const tbody = document.getElementById('masterMemberTableBody');
+        const newRow = tbody.querySelector(`tr[data-member-id="${newId}"]`);
+        if (newRow) {
+            newRow.classList.add('new-member-row');
+            this.enterEditMode(newId, newRow);
+            
+            // Focus on name field
+            setTimeout(() => {
+                const nameInput = document.getElementById(`edit-member-name-${newId}`);
+                if (nameInput) nameInput.focus();
+            }, 100);
+        }
+    }
+    
+    static confirmDeleteMember(memberId, memberName) {
+        // Cancel any existing edit
+        if (this.currentEditRow) {
+            this.cancelEdit();
+        }
+        
+        const confirmMessage = `
+            <div class="text-center">
+                <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 4rem;"></i>
+                <h3 class="mt-3 mb-3">Confirm Delete</h3>
+                <p class="fs-5">Are you sure you want to delete this member?</p>
+                <div class="alert alert-danger mt-3 mb-3">
+                    <strong>Member:</strong> ${this.escapeHtml(memberName)}<br>
+                    <strong>ID:</strong> ${memberId}
+                </div>
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Warning:</strong> Once deleted, this member cannot be retrieved!
+                </div>
+            </div>
+        `;
+        
+        const modalHtml = `
+            <div class="modal fade" id="deleteMemberConfirmModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h4 class="modal-title">Delete Member</h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-4">
+                            ${confirmMessage}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </button>
+                            <button type="button" class="btn btn-danger btn-lg" id="confirmDeleteMemberBtn">
+                                <i class="bi bi-trash me-2"></i>Yes, Delete Member
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        const existingModal = document.getElementById('deleteMemberConfirmModal');
+        if (existingModal) existingModal.remove();
+        
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+        
+        const modal = new bootstrap.Modal(document.getElementById('deleteMemberConfirmModal'));
+        modal.show();
+        
+        document.getElementById('confirmDeleteMemberBtn').addEventListener('click', () => {
+            modal.hide();
+            this.deleteMember(memberId);
+        });
+        
+        document.getElementById('deleteMemberConfirmModal').addEventListener('hidden.bs.modal', function() {
+            this.remove();
+        });
+    }
+    
+    static async deleteMember(memberId) {
+        try {
+            Utils.showToast('info', 'Deleting member...');
+            
+            const response = await fetch('/api/members/delete', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: memberId })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to delete member');
+            }
+            
+            // Remove from local arrays
+            this.allMembers = this.allMembers.filter(m => m.id !== memberId);
+            this.filteredMembers = this.filteredMembers.filter(m => m.id !== memberId);
+            
+            // Remove from global array
+            const globalIndex = membersData.members.findIndex(m => m.id === memberId);
+            if (globalIndex !== -1) {
+                membersData.members.splice(globalIndex, 1);
+            }
+            
+            // Re-render table
+            this.renderTable();
+            
+            // Update total count
+            document.getElementById('totalMembersCount').textContent = this.allMembers.length;
+            
+            Utils.showToast('success', 'Member deleted successfully');
+            
+        } catch (error) {
+            console.error('Error deleting member:', error);
+            Utils.showToast('error', 'Failed to delete member: ' + error.message);
+        }
+    }
+    
+    static handleSearch(searchTerm) {
+        searchTerm = searchTerm.toLowerCase().trim();
+        
+        if (!searchTerm) {
+            this.filteredMembers = [...this.allMembers];
+        } else {
+            this.filteredMembers = this.allMembers.filter(member => {
+                const phoneStr = Array.isArray(member.phone_numbers) ? member.phone_numbers.join(' ') : member.phone_numbers || '';
+                return (
+                    member.name.toLowerCase().includes(searchTerm) ||
+                    phoneStr.toLowerCase().includes(searchTerm) ||
+                    member.address.toLowerCase().includes(searchTerm)
+                );
+            });
+        }
+        
+        // Cancel edit if active
+        this.cancelEdit();
+        
+        // Re-render table
+        this.renderTable();
+    }
+    
+    static updateSearchStatus() {
+        const statusDiv = document.getElementById('memberSearchResultsStatus');
+        const statusText = document.getElementById('memberSearchResultsText');
+        
+        if (!statusDiv || !statusText) return;
+        
+        const searchInput = document.getElementById('memberSearchInput');
+        const isSearching = searchInput && searchInput.value.trim() !== '';
+        
+        if (isSearching) {
+            statusDiv.classList.remove('d-none');
+            const count = this.filteredMembers.length;
+            const total = this.allMembers.length;
+            statusText.innerHTML = `<strong>Showing ${count} of ${total} members</strong> based on your search`;
+        } else {
+            statusDiv.classList.add('d-none');
+        }
+    }
+    
+    static escapeHtml(text) {
+        if (text === null || text === undefined) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+}
+
 // Application Initialization
 class App {
     static async init() {
@@ -2675,6 +3650,8 @@ class App {
             FunctionManager.init();
             MemberManager.init();
             BhajanDetailsManager.init();
+            MasterSongListManager.init();
+            HostMemberManager.init();
             
             // Initialize UI state
             PlaylistManager.showEmptyState();

@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const axios = require('axios');
 const puppeteer = require('puppeteer');
+const fs = require('fs').promises;
 
 require('dotenv').config();
 
@@ -1748,6 +1749,374 @@ app.post('/api/playlists/mark-complete', async (req, res) => {
     }
 });
 
+// ============================================================================
+// Update Song in songs.js file
+// ============================================================================
+app.post('/api/songs/update', async (req, res) => {
+    try {
+        const updatedSong = req.body;
+        
+        // Validate required fields
+        if (!updatedSong.id || !updatedSong.title) {
+            return res.status(400).json({ error: 'Song ID and title are required' });
+        }
+        
+        console.log(`Updating song ID ${updatedSong.id}: ${updatedSong.title}`);
+        
+        // Read the current songs.js file
+        const songsFilePath = path.join(__dirname, 'songs.js');
+        let fileContent = await fs.readFile(songsFilePath, 'utf-8');
+        
+        // Find the song in the in-memory array
+        const songIndex = songs.findIndex(s => s.id === updatedSong.id);
+        if (songIndex === -1) {
+            return res.status(404).json({ error: 'Song not found' });
+        }
+        
+        // Update the in-memory song
+        songs[songIndex] = {
+            id: updatedSong.id,
+            title: updatedSong.title,
+            songNumber: updatedSong.songNumber || '',
+            duration: updatedSong.duration || '',
+            raga: updatedSong.raga || '',
+            album: updatedSong.album || '',
+            notes: updatedSong.notes || '',
+            taught: updatedSong.taught || 'Yes'
+        };
+        
+        // Create the new songs array content
+        const songsArrayString = JSON.stringify(songs, null, 2);
+        
+        // Build the complete file content with module exports
+        const newFileContent = `const songs = ${songsArrayString};
+
+// Export for use in the application
+if (typeof window !== 'undefined') {
+  window.songDatabase = songs;
+}
+
+// Export for Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = songs;
+}
+`;
+        
+        // Write the updated content back to songs.js
+        await fs.writeFile(songsFilePath, newFileContent, 'utf-8');
+        
+        console.log(`Successfully updated song ID ${updatedSong.id} in songs.js`);
+        
+        res.json({ 
+            success: true, 
+            message: 'Song updated successfully',
+            song: songs[songIndex]
+        });
+        
+    } catch (error) {
+        console.error('Error updating song:', error);
+        console.error('Error stack:', error.stack);
+        res.status(500).json({ 
+            error: 'Failed to update song',
+            details: error.message 
+        });
+    }
+});
+
+// ============================================================================
+// Delete Song from songs.js file
+// ============================================================================
+app.post('/api/songs/delete', async (req, res) => {
+    try {
+        const { id } = req.body;
+        
+        // Validate required field
+        if (!id) {
+            return res.status(400).json({ error: 'Song ID is required' });
+        }
+        
+        console.log(`Deleting song ID ${id}`);
+        
+        // Find the song in the in-memory array
+        const songIndex = songs.findIndex(s => s.id === id);
+        if (songIndex === -1) {
+            return res.status(404).json({ error: 'Song not found' });
+        }
+        
+        // Remove from the in-memory array
+        const deletedSong = songs.splice(songIndex, 1)[0];
+        
+        // Create the new songs array content
+        const songsArrayString = JSON.stringify(songs, null, 2);
+        
+        // Build the complete file content with module exports
+        const newFileContent = `const songs = ${songsArrayString};
+
+// Export for use in the application
+if (typeof window !== 'undefined') {
+  window.songDatabase = songs;
+}
+
+// Export for Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = songs;
+}
+`;
+        
+        // Write the updated content back to songs.js
+        const songsFilePath = path.join(__dirname, 'songs.js');
+        await fs.writeFile(songsFilePath, newFileContent, 'utf-8');
+        
+        console.log(`Successfully deleted song ID ${id} from songs.js`);
+        
+        res.json({ 
+            success: true, 
+            message: 'Song deleted successfully',
+            deletedSong: deletedSong
+        });
+        
+    } catch (error) {
+        console.error('Error deleting song:', error);
+        res.status(500).json({ 
+            error: 'Failed to delete song',
+            details: error.message 
+        });
+    }
+});
+
+// ============================================================================
+// Create Member in members.js file
+// ============================================================================
+app.post('/api/members/create', async (req, res) => {
+    try {
+        const newMember = req.body;
+        
+        // Validate required fields
+        if (!newMember.name) {
+            return res.status(400).json({ error: 'Member name is required' });
+        }
+        
+        console.log(`Creating new member: ${newMember.name}`);
+        
+        // Read the current members.js file
+        const membersFilePath = path.join(__dirname, 'members.js');
+        let fileContent = await fs.readFile(membersFilePath, 'utf-8');
+        
+        // Load the current members data
+        const membersData = require('./members.js');
+        const members = membersData.members;
+        
+        // Generate new ID (max existing ID + 1)
+        const maxId = members.reduce((max, m) => Math.max(max, m.id || 0), 0);
+        const newId = maxId + 1;
+        
+        // Create the new member object
+        const memberToAdd = {
+            id: newId,
+            name: newMember.name,
+            phone_numbers: Array.isArray(newMember.phone_numbers) ? newMember.phone_numbers : [],
+            address: newMember.address || ''
+        };
+        
+        // Add to the beginning of the array
+        members.unshift(memberToAdd);
+        
+        // Create the new members array content
+        const membersArrayString = JSON.stringify(members, null, 2);
+        
+        // Build the complete file content
+        const newFileContent = `const membersData = {
+  members: ${membersArrayString}
+};
+
+// Export for use in the application
+if (typeof window !== 'undefined') {
+  window.membersData = membersData;
+}
+
+// Export for Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = membersData;
+}
+`;
+        
+        // Write the updated content back to members.js
+        await fs.writeFile(membersFilePath, newFileContent, 'utf-8');
+        
+        console.log(`Successfully created member ID ${newId} in members.js`);
+        
+        // Clear the require cache to reload the updated file
+        delete require.cache[require.resolve('./members.js')];
+        
+        res.json({ 
+            success: true, 
+            message: 'Member created successfully',
+            member: memberToAdd
+        });
+        
+    } catch (error) {
+        console.error('Error creating member:', error);
+        console.error('Error stack:', error.stack);
+        res.status(500).json({ 
+            error: 'Failed to create member',
+            details: error.message 
+        });
+    }
+});
+
+// ============================================================================
+// Update Member in members.js file
+// ============================================================================
+app.post('/api/members/update', async (req, res) => {
+    try {
+        const updatedMember = req.body;
+        
+        // Validate required fields
+        if (!updatedMember.id || !updatedMember.name) {
+            return res.status(400).json({ error: 'Member ID and name are required' });
+        }
+        
+        console.log(`Updating member ID ${updatedMember.id}: ${updatedMember.name}`);
+        
+        // Read the current members.js file
+        const membersFilePath = path.join(__dirname, 'members.js');
+        let fileContent = await fs.readFile(membersFilePath, 'utf-8');
+        
+        // Load the current members data
+        const membersData = require('./members.js');
+        const members = membersData.members;
+        
+        // Find the member in the array
+        const memberIndex = members.findIndex(m => m.id === updatedMember.id);
+        if (memberIndex === -1) {
+            return res.status(404).json({ error: 'Member not found' });
+        }
+        
+        // Update the member
+        members[memberIndex] = {
+            id: updatedMember.id,
+            name: updatedMember.name,
+            phone_numbers: Array.isArray(updatedMember.phone_numbers) ? updatedMember.phone_numbers : [],
+            address: updatedMember.address || ''
+        };
+        
+        // Create the new members array content
+        const membersArrayString = JSON.stringify(members, null, 2);
+        
+        // Build the complete file content
+        const newFileContent = `const membersData = {
+  members: ${membersArrayString}
+};
+
+// Export for use in the application
+if (typeof window !== 'undefined') {
+  window.membersData = membersData;
+}
+
+// Export for Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = membersData;
+}
+`;
+        
+        // Write the updated content back to members.js
+        await fs.writeFile(membersFilePath, newFileContent, 'utf-8');
+        
+        console.log(`Successfully updated member ID ${updatedMember.id} in members.js`);
+        
+        // Clear the require cache to reload the updated file
+        delete require.cache[require.resolve('./members.js')];
+        
+        res.json({ 
+            success: true, 
+            message: 'Member updated successfully',
+            member: members[memberIndex]
+        });
+        
+    } catch (error) {
+        console.error('Error updating member:', error);
+        console.error('Error stack:', error.stack);
+        res.status(500).json({ 
+            error: 'Failed to update member',
+            details: error.message 
+        });
+    }
+});
+
+// ============================================================================
+// Delete Member from members.js file
+// ============================================================================
+app.post('/api/members/delete', async (req, res) => {
+    try {
+        const { id } = req.body;
+        
+        // Validate required field
+        if (!id) {
+            return res.status(400).json({ error: 'Member ID is required' });
+        }
+        
+        console.log(`Deleting member ID ${id}`);
+        
+        // Read the current members.js file
+        const membersFilePath = path.join(__dirname, 'members.js');
+        let fileContent = await fs.readFile(membersFilePath, 'utf-8');
+        
+        // Load the current members data
+        const membersData = require('./members.js');
+        const members = membersData.members;
+        
+        // Find the member in the array
+        const memberIndex = members.findIndex(m => m.id === id);
+        if (memberIndex === -1) {
+            return res.status(404).json({ error: 'Member not found' });
+        }
+        
+        // Remove from the array
+        const deletedMember = members.splice(memberIndex, 1)[0];
+        
+        // Create the new members array content
+        const membersArrayString = JSON.stringify(members, null, 2);
+        
+        // Build the complete file content
+        const newFileContent = `const membersData = {
+  members: ${membersArrayString}
+};
+
+// Export for use in the application
+if (typeof window !== 'undefined') {
+  window.membersData = membersData;
+}
+
+// Export for Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = membersData;
+}
+`;
+        
+        // Write the updated content back to members.js
+        await fs.writeFile(membersFilePath, newFileContent, 'utf-8');
+        
+        console.log(`Successfully deleted member ID ${id} from members.js`);
+        
+        // Clear the require cache to reload the updated file
+        delete require.cache[require.resolve('./members.js')];
+        
+        res.json({ 
+            success: true, 
+            message: 'Member deleted successfully',
+            deletedMember: deletedMember
+        });
+        
+    } catch (error) {
+        console.error('Error deleting member:', error);
+        console.error('Error stack:', error.stack);
+        res.status(500).json({ 
+            error: 'Failed to delete member',
+            details: error.message 
+        });
+    }
+});
+
 // Serve the frontend
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
@@ -1771,5 +2140,15 @@ async function startServer() {
         console.log('- LLM_API_KEY (for AI chatbot functionality)');
     });
 }
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    console.error('Stack:', error.stack);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
 
 startServer().catch(console.error); 

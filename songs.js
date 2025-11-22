@@ -6,7 +6,8 @@ const songs = [
     "duration": "5.17",
     "raga": "நாட்டை",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@ const songs = [
     "duration": "1.38",
     "raga": "நாட்டை",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@ const songs = [
     "duration": "2.41",
     "raga": "மோஹனம்",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 4,
@@ -33,7 +36,8 @@ const songs = [
     "duration": "1.01",
     "raga": "ஹம்ஸத்வனி",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 5,
@@ -42,7 +46,8 @@ const songs = [
     "duration": "1.39",
     "raga": "ஆனந்த பைரவி",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 6,
@@ -51,7 +56,8 @@ const songs = [
     "duration": "3.03",
     "raga": "ஹம்ஸத்வனி",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 7,
@@ -60,7 +66,8 @@ const songs = [
     "duration": "1.12",
     "raga": "அடாணா",
     "album": "விநாயகர் துதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 8,
@@ -69,7 +76,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஹம்ஸத்வனி",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 9,
@@ -78,7 +86,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஆனந்த பைரவி",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 10,
@@ -87,7 +96,8 @@ const songs = [
     "duration": "10.00",
     "raga": "ஹம்ஸத்வனி",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 11,
@@ -96,7 +106,8 @@ const songs = [
     "duration": "10.00",
     "raga": "ஶுப பந்து வராளி",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 12,
@@ -105,7 +116,8 @@ const songs = [
     "duration": "10.00",
     "raga": "ரேவதி",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 13,
@@ -114,7 +126,8 @@ const songs = [
     "duration": "10.00",
     "raga": "மோஹனம்",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 14,
@@ -123,7 +136,8 @@ const songs = [
     "duration": "10.00",
     "raga": "கர்ண பைரவி",
     "album": "விநாயகர் நாமாவளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 15,
@@ -132,7 +146,8 @@ const songs = [
     "duration": "2.25",
     "raga": "கெளளை",
     "album": "குரு வணக்கம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 16,
@@ -141,7 +156,8 @@ const songs = [
     "duration": "4.07",
     "raga": "ஸாவேரி",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 17,
@@ -150,7 +166,8 @@ const songs = [
     "duration": "2.49",
     "raga": "வராளி",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 18,
@@ -159,7 +176,8 @@ const songs = [
     "duration": "3.29",
     "raga": "ஹிந்தோளம்",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 19,
@@ -168,7 +186,8 @@ const songs = [
     "duration": "3.03",
     "raga": "சங்கராபரணம்",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 20,
@@ -177,7 +196,8 @@ const songs = [
     "duration": "3.00",
     "raga": "நீலாம்பரி",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 21,
@@ -186,7 +206,8 @@ const songs = [
     "duration": "1.17",
     "raga": "ஹிந்தோளம்",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 22,
@@ -195,7 +216,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஆனந்த பைரவி",
     "album": "திருப்பரங்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 23,
@@ -204,7 +226,8 @@ const songs = [
     "duration": "3.47",
     "raga": "ஹிந்தோளம்",
     "album": "திருசெந்தூர்",
-    "notes": "46 Songs"
+    "notes": "46 Songs",
+    "taught": "Yes"
   },
   {
     "id": 24,
@@ -213,7 +236,8 @@ const songs = [
     "duration": "4.44",
     "raga": "கல்யாணி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 25,
@@ -222,7 +246,8 @@ const songs = [
     "duration": "3.16",
     "raga": "புன்னாக வராளி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 26,
@@ -231,7 +256,8 @@ const songs = [
     "duration": "3.24",
     "raga": "கமாஸ்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 27,
@@ -240,7 +266,8 @@ const songs = [
     "duration": "3.14",
     "raga": "காம்போதி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 28,
@@ -249,7 +276,8 @@ const songs = [
     "duration": "3.00",
     "raga": "மோஹனம்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 29,
@@ -258,7 +286,8 @@ const songs = [
     "duration": "1.48",
     "raga": "ஹுஸேனி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 30,
@@ -267,7 +296,8 @@ const songs = [
     "duration": "4.34",
     "raga": "சுத்த தன்யாஸி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 31,
@@ -276,7 +306,8 @@ const songs = [
     "duration": "3.04",
     "raga": "கீரவாணி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 32,
@@ -285,7 +316,8 @@ const songs = [
     "duration": "2.00",
     "raga": "வலஜி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 33,
@@ -294,7 +326,8 @@ const songs = [
     "duration": "2.09",
     "raga": "பந்து வராளி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 34,
@@ -303,7 +336,8 @@ const songs = [
     "duration": "2.05",
     "raga": "பிலஹரி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 35,
@@ -312,7 +346,8 @@ const songs = [
     "duration": "1.05",
     "raga": "மனோலயம்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 36,
@@ -321,7 +356,8 @@ const songs = [
     "duration": "3.08",
     "raga": "காவடிசிந்து",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 37,
@@ -330,7 +366,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஆனந்த பைரவி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 38,
@@ -339,7 +376,8 @@ const songs = [
     "duration": "2.44",
     "raga": "ஸஹானா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 39,
@@ -348,7 +386,8 @@ const songs = [
     "duration": "1.24",
     "raga": "திலங்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 40,
@@ -357,7 +396,8 @@ const songs = [
     "duration": "1.45",
     "raga": "குந்தல வராளி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 41,
@@ -366,7 +406,8 @@ const songs = [
     "duration": "3.28",
     "raga": "கரஹரப்ரியா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 42,
@@ -375,7 +416,8 @@ const songs = [
     "duration": "1.38",
     "raga": "சுருட்டி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 43,
@@ -384,7 +426,8 @@ const songs = [
     "duration": "1.50",
     "raga": "பீம்பளாஸ்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 44,
@@ -393,7 +436,8 @@ const songs = [
     "duration": "2.18",
     "raga": "ஸி.மத்யமம்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 45,
@@ -402,7 +446,8 @@ const songs = [
     "duration": "2.43",
     "raga": "தன்யாஸி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 46,
@@ -411,7 +456,8 @@ const songs = [
     "duration": "2.00",
     "raga": "தன்யாஸி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 47,
@@ -420,7 +466,8 @@ const songs = [
     "duration": "1.00",
     "raga": "ஆபோகி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 48,
@@ -429,7 +476,8 @@ const songs = [
     "duration": "2.00",
     "raga": "பைரவி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 49,
@@ -438,7 +486,8 @@ const songs = [
     "duration": "4.00",
     "raga": "தோடி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 50,
@@ -447,7 +496,8 @@ const songs = [
     "duration": "2.47",
     "raga": "அடாணா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 51,
@@ -456,7 +506,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஜோன்புரி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 52,
@@ -465,7 +516,8 @@ const songs = [
     "duration": "3.00",
     "raga": "கேதார கெளளை",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 53,
@@ -474,7 +526,8 @@ const songs = [
     "duration": "2.39",
     "raga": "தன்யாஸி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 54,
@@ -483,7 +536,8 @@ const songs = [
     "duration": "1.35",
     "raga": "பாகேஸ்ரீ",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 55,
@@ -492,7 +546,8 @@ const songs = [
     "duration": "1.40",
     "raga": "வாசஸ்பதி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 56,
@@ -501,7 +556,8 @@ const songs = [
     "duration": "3.10",
     "raga": "ஸி.மத்யமம்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 57,
@@ -510,7 +566,8 @@ const songs = [
     "duration": "3.31",
     "raga": "பந்து வராளி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 58,
@@ -519,7 +576,8 @@ const songs = [
     "duration": "2.00",
     "raga": "தேவ காந்தாரி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 59,
@@ -528,7 +586,8 @@ const songs = [
     "duration": "1.45",
     "raga": "ரஞ்சனி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 60,
@@ -537,7 +596,8 @@ const songs = [
     "duration": "5.08",
     "raga": "சங்கராநந்தனப்ரியா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 61,
@@ -546,7 +606,8 @@ const songs = [
     "duration": "1.29",
     "raga": "ஹம்ஸாநந்தி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 62,
@@ -555,7 +616,8 @@ const songs = [
     "duration": "3.46",
     "raga": "பேகடா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 63,
@@ -564,7 +626,8 @@ const songs = [
     "duration": "3.15",
     "raga": "செஞ்சுருட்டி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 64,
@@ -573,7 +636,8 @@ const songs = [
     "duration": "2.00",
     "raga": "காபி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 65,
@@ -582,7 +646,8 @@ const songs = [
     "duration": "1.26",
     "raga": "மா.மா.கெளளை",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 66,
@@ -591,7 +656,8 @@ const songs = [
     "duration": "5.17",
     "raga": "சங்கராநந்தனப்ரியா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 67,
@@ -600,7 +666,8 @@ const songs = [
     "duration": "4.00",
     "raga": "பூர்வி கல்யாணி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 68,
@@ -609,7 +676,8 @@ const songs = [
     "duration": "1.33",
     "raga": "மனோலயம்",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 69,
@@ -618,7 +686,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஸிந்து பைரவி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 70,
@@ -627,7 +696,8 @@ const songs = [
     "duration": "1.20",
     "raga": "காம்போதி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 71,
@@ -636,7 +706,8 @@ const songs = [
     "duration": "1.28",
     "raga": "ஸஹானா",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 72,
@@ -645,7 +716,8 @@ const songs = [
     "duration": "2.00",
     "raga": "யமுனா கல்யாணி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 73,
@@ -654,7 +726,8 @@ const songs = [
     "duration": "1.42",
     "raga": "மாண்டு",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 74,
@@ -663,7 +736,8 @@ const songs = [
     "duration": "1.20",
     "raga": "ஜோன்புரி",
     "album": "திருசெந்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 75,
@@ -672,7 +746,8 @@ const songs = [
     "duration": "1.47",
     "raga": "சக்ரவாஹம்",
     "album": "திருப்பழனி",
-    "notes": "36 Songs"
+    "notes": "36 Songs",
+    "taught": "Yes"
   },
   {
     "id": 76,
@@ -681,7 +756,8 @@ const songs = [
     "duration": "1.49",
     "raga": "பிலஹரி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 77,
@@ -690,7 +766,8 @@ const songs = [
     "duration": "2.21",
     "raga": "பெளளி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 78,
@@ -699,7 +776,8 @@ const songs = [
     "duration": "2.22",
     "raga": "மோஹனம்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 79,
@@ -708,7 +786,8 @@ const songs = [
     "duration": "2.39",
     "raga": "நாட்டை குறிஞ்சி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 80,
@@ -717,7 +796,8 @@ const songs = [
     "duration": "1.40",
     "raga": "ஸெளராஷ்டிரம்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 81,
@@ -726,7 +806,8 @@ const songs = [
     "duration": "1.32",
     "raga": "பேகடா",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 82,
@@ -735,7 +816,8 @@ const songs = [
     "duration": "2.20",
     "raga": "ஹிந்தோளம்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 83,
@@ -744,7 +826,8 @@ const songs = [
     "duration": "1.22",
     "raga": "தன்யாஸி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 84,
@@ -753,7 +836,8 @@ const songs = [
     "duration": "2.25",
     "raga": "தேஷ்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 85,
@@ -762,7 +846,8 @@ const songs = [
     "duration": "1.47",
     "raga": "மோஹனம்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 86,
@@ -771,7 +856,8 @@ const songs = [
     "duration": "2.06",
     "raga": "ஸிந்து பைரவி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 87,
@@ -780,7 +866,8 @@ const songs = [
     "duration": "2.26",
     "raga": "விஜய நாகரி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 88,
@@ -789,7 +876,8 @@ const songs = [
     "duration": "4.05",
     "raga": "கெளளை",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 90,
@@ -798,7 +886,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஜோன்புரி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 91,
@@ -807,7 +896,8 @@ const songs = [
     "duration": "3.00",
     "raga": "சங்கராபரணம்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 92,
@@ -816,7 +906,8 @@ const songs = [
     "duration": "3.50",
     "raga": "வலஜி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 93,
@@ -825,7 +916,8 @@ const songs = [
     "duration": "1.40",
     "raga": "ஹம்ஸநாதம்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 94,
@@ -834,7 +926,8 @@ const songs = [
     "duration": "3.44",
     "raga": "நாட்டை குறிஞ்சி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 95,
@@ -843,7 +936,8 @@ const songs = [
     "duration": "3.00",
     "raga": "பிலஹரி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 96,
@@ -852,7 +946,8 @@ const songs = [
     "duration": "4.45",
     "raga": "பூர்வி கல்யாணி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 97,
@@ -861,7 +956,8 @@ const songs = [
     "duration": "1.53",
     "raga": "அமீர் கல்யாணி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 98,
@@ -870,7 +966,8 @@ const songs = [
     "duration": "2.13",
     "raga": "செஞ்சுருட்டி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 99,
@@ -879,7 +976,8 @@ const songs = [
     "duration": "1.35",
     "raga": "பந்து வராளி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 100,
@@ -888,7 +986,8 @@ const songs = [
     "duration": "2.33",
     "raga": "பைரவி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 101,
@@ -897,7 +996,8 @@ const songs = [
     "duration": "2.48",
     "raga": "வஸந்தா",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 102,
@@ -906,7 +1006,8 @@ const songs = [
     "duration": "4.28",
     "raga": "ஹுஸேனி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 103,
@@ -915,7 +1016,8 @@ const songs = [
     "duration": "3.14",
     "raga": "பாகேஸ்ரீ",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 104,
@@ -924,7 +1026,8 @@ const songs = [
     "duration": "3.06",
     "raga": "சாருகேஸி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 105,
@@ -933,7 +1036,8 @@ const songs = [
     "duration": "3.40",
     "raga": "பந்து வராளி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 106,
@@ -942,7 +1046,8 @@ const songs = [
     "duration": "3.00",
     "raga": "கேதார கெளளை",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 107,
@@ -951,7 +1056,8 @@ const songs = [
     "duration": "2.12",
     "raga": "பிஹாக்",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 108,
@@ -960,7 +1066,8 @@ const songs = [
     "duration": "4.05",
     "raga": "சுப பந்து வராளி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 109,
@@ -969,7 +1076,8 @@ const songs = [
     "duration": "1.00",
     "raga": "ரஞ்சனி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 110,
@@ -978,7 +1086,8 @@ const songs = [
     "duration": "1.00",
     "raga": "ராமப்ரியா",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 111,
@@ -987,7 +1096,8 @@ const songs = [
     "duration": "3.38",
     "raga": "ஹம்ஸாநந்தி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 112,
@@ -996,7 +1106,8 @@ const songs = [
     "duration": "4.25",
     "raga": "வராளி",
     "album": "திருப்பழனி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 113,
@@ -1005,7 +1116,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஜோன்புரி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 114,
@@ -1014,7 +1126,8 @@ const songs = [
     "duration": "4.14",
     "raga": "நாட்டை குறிஞ்சி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 115,
@@ -1023,7 +1136,8 @@ const songs = [
     "duration": "2.47",
     "raga": "அடாணா",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 116,
@@ -1032,7 +1146,8 @@ const songs = [
     "duration": "3.36",
     "raga": "மலய மாருதம்",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 117,
@@ -1041,7 +1156,8 @@ const songs = [
     "duration": "3.20",
     "raga": "சக்ரவாஹம்",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 118,
@@ -1050,7 +1166,8 @@ const songs = [
     "duration": "2.32",
     "raga": "மோஹனம்",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 119,
@@ -1059,7 +1176,8 @@ const songs = [
     "duration": "2.45",
     "raga": "கமாஸ்",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 120,
@@ -1068,7 +1186,8 @@ const songs = [
     "duration": "2.56",
     "raga": "பந்து வராளி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 121,
@@ -1077,7 +1196,8 @@ const songs = [
     "duration": "3.48",
     "raga": "யமுனா கல்யாணி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 122,
@@ -1086,7 +1206,8 @@ const songs = [
     "duration": "1.45",
     "raga": "பீம்பளாஸ்",
     "album": "ஸ்வாமி மலை",
-    "notes": "21"
+    "notes": "21",
+    "taught": "Yes"
   },
   {
     "id": 123,
@@ -1095,7 +1216,8 @@ const songs = [
     "duration": "1.45",
     "raga": "பிலஹரி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 124,
@@ -1104,7 +1226,8 @@ const songs = [
     "duration": "2.48",
     "raga": "கல்யாணி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 125,
@@ -1113,7 +1236,8 @@ const songs = [
     "duration": "4.35",
     "raga": "மா.மா.கெளளை",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 126,
@@ -1122,7 +1246,8 @@ const songs = [
     "duration": "2.00",
     "raga": "சுநாத விநோதினி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 127,
@@ -1131,7 +1256,8 @@ const songs = [
     "duration": "1.34",
     "raga": "ஆனந்த பைரவி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 128,
@@ -1140,7 +1266,8 @@ const songs = [
     "duration": "1.20",
     "raga": "காபி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 129,
@@ -1149,7 +1276,8 @@ const songs = [
     "duration": "3.40",
     "raga": "யதுகுல காம்போதி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 130,
@@ -1158,7 +1286,8 @@ const songs = [
     "duration": "0.48",
     "raga": "ஹம்ஸாநந்தி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 131,
@@ -1167,7 +1296,8 @@ const songs = [
     "duration": "1.36",
     "raga": "காபி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 132,
@@ -1176,7 +1306,8 @@ const songs = [
     "duration": "2.00",
     "raga": "அமிர்தவர்ஷனி",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 133,
@@ -1185,7 +1316,8 @@ const songs = [
     "duration": "3.45",
     "raga": "கமாஸ்",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 134,
@@ -1194,7 +1326,8 @@ const songs = [
     "duration": "6.00",
     "raga": "தர்பார் கானடா",
     "album": "ஸ்வாமி மலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 135,
@@ -1203,7 +1336,8 @@ const songs = [
     "duration": "1.26",
     "raga": "காபி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 136,
@@ -1212,7 +1346,8 @@ const songs = [
     "duration": "2.12",
     "raga": "நாதநாம க்ரியா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 137,
@@ -1221,7 +1356,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஷண்முக ப்ரியா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 138,
@@ -1230,7 +1366,8 @@ const songs = [
     "duration": "1.17",
     "raga": "வஸந்தா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 139,
@@ -1239,7 +1376,8 @@ const songs = [
     "duration": "1.40",
     "raga": "அஸாவேரி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 140,
@@ -1248,7 +1386,8 @@ const songs = [
     "duration": "3.16",
     "raga": "தோடி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 141,
@@ -1257,7 +1396,8 @@ const songs = [
     "duration": "1.30",
     "raga": "நளின காந்தி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 142,
@@ -1266,7 +1406,8 @@ const songs = [
     "duration": "2.36",
     "raga": "லலிதா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 143,
@@ -1275,7 +1416,8 @@ const songs = [
     "duration": "3.00",
     "raga": "கானடா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 144,
@@ -1284,7 +1426,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ரீதி கெளளை",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 145,
@@ -1293,7 +1436,8 @@ const songs = [
     "duration": "2.14",
     "raga": "மா.மா.கெளளை",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 146,
@@ -1302,7 +1446,8 @@ const songs = [
     "duration": "1.44",
     "raga": "ஆனந்த பைரவி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 147,
@@ -1311,7 +1456,8 @@ const songs = [
     "duration": "3.42",
     "raga": "ஹம்ஸாநந்தி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 148,
@@ -1320,7 +1466,8 @@ const songs = [
     "duration": "1.50",
     "raga": "ஆனந்த பைரவி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 149,
@@ -1329,7 +1476,8 @@ const songs = [
     "duration": "2.30",
     "raga": "தேஷ்",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 150,
@@ -1338,7 +1486,8 @@ const songs = [
     "duration": "1.44",
     "raga": "கானடா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 151,
@@ -1347,7 +1496,8 @@ const songs = [
     "duration": "2.56",
     "raga": "லதாங்கி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 152,
@@ -1356,7 +1506,8 @@ const songs = [
     "duration": "3.46",
     "raga": "நாதநாம க்ரியா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 153,
@@ -1365,7 +1516,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஆபோகி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 154,
@@ -1374,7 +1526,8 @@ const songs = [
     "duration": "5.00",
     "raga": "ஸாமா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 155,
@@ -1383,7 +1536,8 @@ const songs = [
     "duration": "4.20",
     "raga": "கானடா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 156,
@@ -1392,7 +1546,8 @@ const songs = [
     "duration": "1.26",
     "raga": "பிஹாக்",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 157,
@@ -1401,7 +1556,8 @@ const songs = [
     "duration": "1.41",
     "raga": "சுப பந்து வராளி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 158,
@@ -1410,7 +1566,8 @@ const songs = [
     "duration": "2.46",
     "raga": "செஞ்சுருட்டி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 159,
@@ -1419,7 +1576,8 @@ const songs = [
     "duration": "1.50",
     "raga": "செஞ்சுருட்டி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 160,
@@ -1428,7 +1586,8 @@ const songs = [
     "duration": "3.24",
     "raga": "ஸஹானா",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 161,
@@ -1437,7 +1596,8 @@ const songs = [
     "duration": "1.00",
     "raga": "ஸிந்து பைரவி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 162,
@@ -1446,7 +1606,8 @@ const songs = [
     "duration": "2.00",
     "raga": "தன்யாஸி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 163,
@@ -1455,7 +1616,8 @@ const songs = [
     "duration": "1.38",
     "raga": "ஹம்ஸாநந்தி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 164,
@@ -1464,7 +1626,8 @@ const songs = [
     "duration": "1.24",
     "raga": "த்விஜாவந்தி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 165,
@@ -1473,7 +1636,8 @@ const songs = [
     "duration": "1.24",
     "raga": "ரஞ்சனி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 166,
@@ -1482,7 +1646,8 @@ const songs = [
     "duration": "2.24",
     "raga": "மோஹனம்",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 167,
@@ -1491,7 +1656,8 @@ const songs = [
     "duration": "1.56",
     "raga": "ரஞ்சனி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 168,
@@ -1500,7 +1666,8 @@ const songs = [
     "duration": "2.45",
     "raga": "காபி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 169,
@@ -1509,7 +1676,8 @@ const songs = [
     "duration": "2.09",
     "raga": "ஆரபி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 170,
@@ -1518,7 +1686,8 @@ const songs = [
     "duration": "1.40",
     "raga": "ஹம்ஸத்வனி",
     "album": "திருத்தணிகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 171,
@@ -1527,7 +1696,8 @@ const songs = [
     "duration": "1.24",
     "raga": "நாட்டை ஙுறிஞ்சி",
     "album": "ஆறு திருப்பதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 172,
@@ -1536,7 +1706,8 @@ const songs = [
     "duration": "5.00",
     "raga": "மோஹனம்",
     "album": "ரத்னகிரி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 173,
@@ -1545,7 +1716,8 @@ const songs = [
     "duration": "1.35",
     "raga": "ஆனந்த பைரவி",
     "album": "ரத்னகிரி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 174,
@@ -1554,7 +1726,8 @@ const songs = [
     "duration": "2.30",
     "raga": "ஹம்ஸாநந்தி",
     "album": "ஊதிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 175,
@@ -1563,7 +1736,8 @@ const songs = [
     "duration": "3.55",
     "raga": "காம்போதி",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 176,
@@ -1572,7 +1746,8 @@ const songs = [
     "duration": "1.00",
     "raga": "சக்ரவாஹம்",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 178,
@@ -1581,7 +1756,8 @@ const songs = [
     "duration": "1.05",
     "raga": "காபி",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 179,
@@ -1590,7 +1766,8 @@ const songs = [
     "duration": "3.00",
     "raga": "வஸந்தா",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 180,
@@ -1599,7 +1776,8 @@ const songs = [
     "duration": "1.05",
     "raga": "குந்தல வராளி",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 181,
@@ -1608,7 +1786,8 @@ const songs = [
     "duration": "0.45",
     "raga": "குந்தல வராளி",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 182,
@@ -1617,7 +1796,8 @@ const songs = [
     "duration": "2.50",
     "raga": "பீம்பளாஸ்",
     "album": "கதிர்காமம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 183,
@@ -1626,7 +1806,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஸாவேரி",
     "album": "கரகமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 184,
@@ -1635,7 +1816,8 @@ const songs = [
     "duration": "2.50",
     "raga": "தோடி",
     "album": "கயிலைமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 185,
@@ -1644,7 +1826,8 @@ const songs = [
     "duration": "1.50",
     "raga": "அடாணா",
     "album": "ரசதகிரி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 186,
@@ -1653,7 +1836,8 @@ const songs = [
     "duration": "1.40",
     "raga": "பூர்வி கல்யாணி",
     "album": "குன்றுதோறாடல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 187,
@@ -1662,7 +1846,8 @@ const songs = [
     "duration": "2.00",
     "raga": "பேகடா",
     "album": "குன்றுதோறாடல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 188,
@@ -1671,7 +1856,8 @@ const songs = [
     "duration": "3.23",
     "raga": "ஆரபி",
     "album": "குன்றுதோறாடல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 189,
@@ -1680,7 +1866,8 @@ const songs = [
     "duration": "3.13",
     "raga": "தோடி",
     "album": "குன்றுதோறாடல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 190,
@@ -1689,7 +1876,8 @@ const songs = [
     "duration": "2.09",
     "raga": "மனோலயம்",
     "album": "கொங்கணகிரி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 191,
@@ -1698,7 +1886,8 @@ const songs = [
     "duration": "2.30",
     "raga": "ப்ருந்தாவன ஸாரங்கா",
     "album": "கொல்லிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 192,
@@ -1707,7 +1896,8 @@ const songs = [
     "duration": "2.50",
     "raga": "ரீதி கெளளை",
     "album": "ஞானமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 193,
@@ -1716,7 +1906,8 @@ const songs = [
     "duration": "1.28",
     "raga": "ஹிந்தோளம்",
     "album": "திருக்கழுக்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 194,
@@ -1725,7 +1916,8 @@ const songs = [
     "duration": "2.00",
     "raga": "பீம்பளாஸ்",
     "album": "திருக்கழுக்குன்றம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 195,
@@ -1734,7 +1926,8 @@ const songs = [
     "duration": "3.20",
     "raga": "ஹம்ஸ விநோதினி",
     "album": "திருக்கோணமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 196,
@@ -1743,7 +1936,8 @@ const songs = [
     "duration": "3.25",
     "raga": "கல்யாணி",
     "album": "திருச்சிராப்பள்ளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 197,
@@ -1752,7 +1946,8 @@ const songs = [
     "duration": "1.35",
     "raga": "ஆனந்த பைரவி",
     "album": "திருச்சிராப்பள்ளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 198,
@@ -1761,7 +1956,8 @@ const songs = [
     "duration": "2.17",
     "raga": "ஸிந்து பைரவி",
     "album": "திருச்சிராப்பள்ளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 199,
@@ -1770,7 +1966,8 @@ const songs = [
     "duration": "1.07",
     "raga": "மோஹனம்",
     "album": "திருச்சிராப்பள்ளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 200,
@@ -1779,7 +1976,8 @@ const songs = [
     "duration": "2.15",
     "raga": "பெஹாக்",
     "album": "திருச்சிராப்பள்ளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 201,
@@ -1788,7 +1986,8 @@ const songs = [
     "duration": "3.16",
     "raga": "பூர்வி கல்யாணி",
     "album": "திருச்சிராப்பள்ளி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 202,
@@ -1797,7 +1996,8 @@ const songs = [
     "duration": "2.38",
     "raga": "ஆஹிரி",
     "album": "திருச்செங்கோடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 203,
@@ -1806,7 +2006,8 @@ const songs = [
     "duration": "1.00",
     "raga": "சங்கராபரணம்",
     "album": "திருச்செங்கோடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 204,
@@ -1815,7 +2016,8 @@ const songs = [
     "duration": "5.00",
     "raga": "சந்த்ர கெளன்ஸ்",
     "album": "திருச்செங்கோடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 205,
@@ -1824,7 +2026,8 @@ const songs = [
     "duration": "1.55",
     "raga": "பீம்பளாஸ்",
     "album": "திருச்செங்கோடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 206,
@@ -1833,7 +2036,8 @@ const songs = [
     "duration": "1.40",
     "raga": "நவரஸ கன்னடா",
     "album": "திருச்செங்கோடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 207,
@@ -1842,7 +2046,8 @@ const songs = [
     "duration": "2.40",
     "raga": "பிலஹரி",
     "album": "ஸ்ரீசைலம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 208,
@@ -1851,7 +2056,8 @@ const songs = [
     "duration": "1.00",
     "raga": "சக்ரவாஹம்",
     "album": "திருவேங்கடம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 209,
@@ -1860,7 +2066,8 @@ const songs = [
     "duration": "3.30",
     "raga": "முகாரி",
     "album": "திருவேங்கடம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 210,
@@ -1869,7 +2076,8 @@ const songs = [
     "duration": "4.57",
     "raga": "ப்ருந்தாவன ஸாரங்கா",
     "album": "திருவேங்கடம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 211,
@@ -1878,7 +2086,8 @@ const songs = [
     "duration": "2.20",
     "raga": "ஷண்முகப்ரியா",
     "album": "திருவேங்கடம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 212,
@@ -1887,7 +2096,8 @@ const songs = [
     "duration": "3.18",
     "raga": "சங்கரானந்தநப்ரியா",
     "album": "தீர்த்தமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 213,
@@ -1896,7 +2106,8 @@ const songs = [
     "duration": "1.50",
     "raga": "தர்பார் கானடா",
     "album": "வள்ளிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 214,
@@ -1905,7 +2116,8 @@ const songs = [
     "duration": "2.10",
     "raga": "மோஹனம்",
     "album": "வள்ளிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 215,
@@ -1914,7 +2126,8 @@ const songs = [
     "duration": "1.38",
     "raga": "ஆனந்த பைரவி",
     "album": "வள்ளிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 216,
@@ -1923,7 +2136,8 @@ const songs = [
     "duration": "1.52",
     "raga": "அமிர்தவர்ஷனி",
     "album": "வள்ளிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 217,
@@ -1932,7 +2146,8 @@ const songs = [
     "duration": "2.50",
     "raga": "ராமப்ரியா",
     "album": "வள்ளிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 218,
@@ -1941,7 +2156,8 @@ const songs = [
     "duration": "1.25",
     "raga": "அடாணா",
     "album": "வள்ளியூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 219,
@@ -1950,7 +2166,8 @@ const songs = [
     "duration": "3.30",
     "raga": "ஆனந்த பைரவி",
     "album": "விநாயகமலை ( பிள்ளையார்பட்டி )",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 220,
@@ -1959,7 +2176,8 @@ const songs = [
     "duration": "2.50",
     "raga": "மனோலயம்",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 221,
@@ -1968,7 +2186,8 @@ const songs = [
     "duration": "3.45",
     "raga": "பைரவி",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 222,
@@ -1977,7 +2196,8 @@ const songs = [
     "duration": "3.36",
     "raga": "தோடி",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 223,
@@ -1986,7 +2206,8 @@ const songs = [
     "duration": "3.16",
     "raga": "கரஹரப்ரியா",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 224,
@@ -1995,7 +2216,8 @@ const songs = [
     "duration": "4.00",
     "raga": "கீரவாணி",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 225,
@@ -2004,7 +2226,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஸஹானா",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 226,
@@ -2013,7 +2236,8 @@ const songs = [
     "duration": "2.14",
     "raga": "தேஷ்",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 227,
@@ -2022,7 +2246,8 @@ const songs = [
     "duration": "1.50",
     "raga": "மாண்ட்",
     "album": "விராலிமலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 228,
@@ -2031,7 +2256,8 @@ const songs = [
     "duration": "4.25",
     "raga": "பூர்வி கல்யாணி",
     "album": "அத்திப்பட்டு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 229,
@@ -2040,7 +2266,8 @@ const songs = [
     "duration": "1.10",
     "raga": "காபி",
     "album": "அவிநாசி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 230,
@@ -2049,7 +2276,8 @@ const songs = [
     "duration": "4.40",
     "raga": "முகாரி",
     "album": "அவிநாசி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 231,
@@ -2058,7 +2286,8 @@ const songs = [
     "duration": "2.44",
     "raga": "சாருகேசி",
     "album": "ஆய்க்குடி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 232,
@@ -2067,7 +2296,8 @@ const songs = [
     "duration": "4.38",
     "raga": "ஆனந்த பைரவி",
     "album": "இராமேஸ்வரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 233,
@@ -2076,7 +2306,8 @@ const songs = [
     "duration": "2.40",
     "raga": "காபி",
     "album": "உத்தரமேரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 234,
@@ -2085,7 +2316,8 @@ const songs = [
     "duration": "3.50",
     "raga": "ஸிந்து பைரவி",
     "album": "உத்தரமேரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 235,
@@ -2094,7 +2326,8 @@ const songs = [
     "duration": "1.58",
     "raga": "ஆரபி",
     "album": "எட்டுகுடி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 236,
@@ -2103,7 +2336,8 @@ const songs = [
     "duration": "1.32",
     "raga": "ரஞ்சனி",
     "album": "எண்கண்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 237,
@@ -2112,7 +2346,8 @@ const songs = [
     "duration": "2.16",
     "raga": "மனோலயம்",
     "album": "எழுகரைநாடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 238,
@@ -2121,7 +2356,8 @@ const songs = [
     "duration": "3.04",
     "raga": "பூர்வி கல்யாணி",
     "album": "கந்தனூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 239,
@@ -2130,7 +2366,8 @@ const songs = [
     "duration": "3.22",
     "raga": "ஸஹானா",
     "album": "கந்தன்குடி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 240,
@@ -2139,7 +2376,8 @@ const songs = [
     "duration": "3.24",
     "raga": "கீரவாணி",
     "album": "கருவூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 241,
@@ -2148,7 +2386,8 @@ const songs = [
     "duration": "6.16",
     "raga": "கீரவாணி",
     "album": "கருவூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 242,
@@ -2157,7 +2396,8 @@ const songs = [
     "duration": "1.00",
     "raga": "பூர்வி கல்யாணி",
     "album": "கருவூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 243,
@@ -2166,7 +2406,8 @@ const songs = [
     "duration": "4.32",
     "raga": "சந்த்ர கெளன்ஸ்",
     "album": "காசி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 244,
@@ -2175,7 +2416,8 @@ const songs = [
     "duration": "1.26",
     "raga": "சாரங்கா",
     "album": "காசி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 245,
@@ -2184,7 +2426,8 @@ const songs = [
     "duration": "4.08",
     "raga": "அஸாவேரி",
     "album": "கும்பகோணம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 246,
@@ -2193,7 +2436,8 @@ const songs = [
     "duration": "4.20",
     "raga": "மோஹனம்",
     "album": "கும்பகோணம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 247,
@@ -2202,7 +2446,8 @@ const songs = [
     "duration": "3.50",
     "raga": "லதாங்கி",
     "album": "கூந்தலூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 248,
@@ -2211,7 +2456,8 @@ const songs = [
     "duration": "3.05",
     "raga": "கேதாரகெளளை",
     "album": "கோடிநகர் ( குழகர் கோயில் )",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 249,
@@ -2220,7 +2466,8 @@ const songs = [
     "duration": "2.50",
     "raga": "மா.மா.கெளளை",
     "album": "கோடிநகர் ( குழகர் கோயில் )",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 250,
@@ -2229,7 +2476,8 @@ const songs = [
     "duration": "3.20",
     "raga": "கரஹரப்ரியா",
     "album": "கோடிநகர் ( குழகர் கோயில் )",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 251,
@@ -2238,7 +2486,8 @@ const songs = [
     "duration": "1.24",
     "raga": "ஹம்ஸாநந்தி",
     "album": "கோடிநகர் ( குழகர் கோயில் )",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 252,
@@ -2247,7 +2496,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ப்ருந்தாவன ஸாரங்கா",
     "album": "கோடிநகர் ( குழகர் கோயில் )",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 253,
@@ -2256,7 +2506,8 @@ const songs = [
     "duration": "3.60",
     "raga": "பந்து வராளி",
     "album": "சிக்கல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 254,
@@ -2265,7 +2516,8 @@ const songs = [
     "duration": "4.00",
     "raga": "நீலாம்பரி",
     "album": "சிவபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 255,
@@ -2274,7 +2526,8 @@ const songs = [
     "duration": "2.44",
     "raga": "ஸிந்து பைரவி",
     "album": "சிறுவை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 256,
@@ -2283,7 +2536,8 @@ const songs = [
     "duration": "4.28",
     "raga": "கேதாரம்",
     "album": "சிறுவை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 257,
@@ -2292,7 +2546,8 @@ const songs = [
     "duration": "3.40",
     "raga": "பீம்பளாஸ்",
     "album": "சிறுவை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 258,
@@ -2301,7 +2556,8 @@ const songs = [
     "duration": "2.40",
     "raga": "ஜோன்புரி",
     "album": "சீகாழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 259,
@@ -2310,7 +2566,8 @@ const songs = [
     "duration": "3.38",
     "raga": "இராக மாலிகை",
     "album": "சீகாழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 260,
@@ -2319,7 +2576,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஹம்ஸநாதம்",
     "album": "சீகாழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 261,
@@ -2328,7 +2586,8 @@ const songs = [
     "duration": "3.36",
     "raga": "பந்து வராளி",
     "album": "சீகாழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 262,
@@ -2337,7 +2596,8 @@ const songs = [
     "duration": "2.40",
     "raga": "கானடா",
     "album": "சேலம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 263,
@@ -2346,7 +2606,8 @@ const songs = [
     "duration": "2.26",
     "raga": "செஞ்சுருட்டி",
     "album": "சோமநாதன் மடம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 264,
@@ -2355,7 +2616,8 @@ const songs = [
     "duration": "1.30",
     "raga": "மாண்ட்",
     "album": "சோமீஸ்வரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 266,
@@ -2364,7 +2626,8 @@ const songs = [
     "duration": "3.32",
     "raga": "பைரவி",
     "album": "திருக்கடவூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 267,
@@ -2373,7 +2636,8 @@ const songs = [
     "duration": "4.01",
     "raga": "துர்கா",
     "album": "திருக்குடவாயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 268,
@@ -2382,7 +2646,8 @@ const songs = [
     "duration": "2.46",
     "raga": "பாகேஸ்ரீ",
     "album": "திருகுரங்காடுதுறை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 269,
@@ -2391,7 +2656,8 @@ const songs = [
     "duration": "3.10",
     "raga": "ஸ்ரீரஞ்சனி",
     "album": "திருக்குற்றாலம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 270,
@@ -2400,7 +2666,8 @@ const songs = [
     "duration": "4.35",
     "raga": "ஸிந்து பைரவி",
     "album": "திருச்செங்காட்டங்குடி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 271,
@@ -2409,7 +2676,8 @@ const songs = [
     "duration": "4.37",
     "raga": "யதுகுல காம்போதி",
     "album": "திருநள்ளாறு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 272,
@@ -2418,7 +2686,8 @@ const songs = [
     "duration": "3.40",
     "raga": "ரேவதி",
     "album": "திருநாகேஸ்வரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 273,
@@ -2427,7 +2696,8 @@ const songs = [
     "duration": "3.00",
     "raga": "நாட்டை",
     "album": "திருநெல்வாயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 274,
@@ -2436,7 +2706,8 @@ const songs = [
     "duration": "1.37",
     "raga": "ஹிந்தோளம்",
     "album": "திருப்பந்தணை நல்லூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 275,
@@ -2445,7 +2716,8 @@ const songs = [
     "duration": "4.16",
     "raga": "பைரவி",
     "album": "திருப்பாதிரிப்புலியூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 276,
@@ -2454,7 +2726,8 @@ const songs = [
     "duration": "1.07",
     "raga": "மாண்ட்",
     "album": "திருப்பாண்டிக்கொடிமுடி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 277,
@@ -2463,7 +2736,8 @@ const songs = [
     "duration": "2.17",
     "raga": "தேஷ்",
     "album": "திருப்புக்கொளியூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 278,
@@ -2472,7 +2746,8 @@ const songs = [
     "duration": "4.48",
     "raga": "முகாரி",
     "album": "திருப்பெருந்துரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 279,
@@ -2481,7 +2756,8 @@ const songs = [
     "duration": "3.00",
     "raga": "பந்து வராளி",
     "album": "திருப்போரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 280,
@@ -2490,7 +2766,8 @@ const songs = [
     "duration": "1.40",
     "raga": "இராம ப்ரியா",
     "album": "திருமயிலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 281,
@@ -2499,7 +2776,8 @@ const songs = [
     "duration": "1.53",
     "raga": "பூர்வி கல்யாணி",
     "album": "திருமயிலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 282,
@@ -2508,7 +2786,8 @@ const songs = [
     "duration": "4.04",
     "raga": "கீரவாணி",
     "album": "திருமயிலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 283,
@@ -2517,7 +2796,8 @@ const songs = [
     "duration": "2.50",
     "raga": "கல்யாண வஸந்தம்",
     "album": "திருமயிலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 284,
@@ -2526,7 +2806,8 @@ const songs = [
     "duration": "3.00",
     "raga": "சுபபந்துவராளி",
     "album": "திருமயிலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 285,
@@ -2535,7 +2816,8 @@ const songs = [
     "duration": "2.36",
     "raga": "ஆஹிரி",
     "album": "திருமாந்துரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 286,
@@ -2544,7 +2826,8 @@ const songs = [
     "duration": "1.32",
     "raga": "துர்கா",
     "album": "திருமுருகன்பூண்டி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 287,
@@ -2553,7 +2836,8 @@ const songs = [
     "duration": "2.00",
     "raga": "குந்தல வராளி",
     "album": "திருவக்கரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 288,
@@ -2562,7 +2846,8 @@ const songs = [
     "duration": "1.39",
     "raga": "ஷண்முகப்ரியா",
     "album": "திருவலிதாயம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 289,
@@ -2571,7 +2856,8 @@ const songs = [
     "duration": "3.51",
     "raga": "காம்போதி",
     "album": "திருவாஞ்சியம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 290,
@@ -2580,7 +2866,8 @@ const songs = [
     "duration": "2.18",
     "raga": "இராக மாலிகை",
     "album": "திருவாடானை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 291,
@@ -2589,7 +2876,8 @@ const songs = [
     "duration": "1.17",
     "raga": "ஸ்ரீரஞ்சனி",
     "album": "திருவாரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 292,
@@ -2598,7 +2886,8 @@ const songs = [
     "duration": "2.41",
     "raga": "குந்தல வராளி",
     "album": "திருவாரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 293,
@@ -2607,7 +2896,8 @@ const songs = [
     "duration": "2.32",
     "raga": "நீலாம்பரி",
     "album": "திருவாரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 294,
@@ -2616,7 +2906,8 @@ const songs = [
     "duration": "2.35",
     "raga": "தர்மவதி",
     "album": "திருவான்மியூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 295,
@@ -2625,7 +2916,8 @@ const songs = [
     "duration": "2.04",
     "raga": "ஸெளராஷ்டிரம்",
     "album": "திருவிடைக்கழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 296,
@@ -2634,7 +2926,8 @@ const songs = [
     "duration": "2.46",
     "raga": "ரேவதி",
     "album": "திருவிடைக்கழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 297,
@@ -2643,7 +2936,8 @@ const songs = [
     "duration": "2.26",
     "raga": "கல்யாணி",
     "album": "திருவிடைக்கழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 298,
@@ -2652,7 +2946,8 @@ const songs = [
     "duration": "0.05",
     "raga": "காபி",
     "album": "திருவிடைக்கழி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 299,
@@ -2661,7 +2956,8 @@ const songs = [
     "duration": "2.07",
     "raga": "அமிர்தவர்ஷனி",
     "album": "திருவீழிமிழலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 300,
@@ -2670,7 +2966,8 @@ const songs = [
     "duration": "2.18",
     "raga": "சுத்ததன்யாஸி",
     "album": "திருவெஞ்சமாகூடல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 301,
@@ -2679,7 +2976,8 @@ const songs = [
     "duration": "2.46",
     "raga": "பெஹாக்",
     "album": "திருவேட்களம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 302,
@@ -2688,7 +2986,8 @@ const songs = [
     "duration": "2.04",
     "raga": "மனோலயம்",
     "album": "திருவேட்களம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 303,
@@ -2697,7 +2996,8 @@ const songs = [
     "duration": "3.59",
     "raga": "ஸி . மத்யமம்",
     "album": "திருவேற்காடு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 304,
@@ -2706,7 +3006,8 @@ const songs = [
     "duration": "3.26",
     "raga": "தன்யாஸி",
     "album": "திருவொற்றியூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 305,
@@ -2715,7 +3016,8 @@ const songs = [
     "duration": "2.46",
     "raga": "மோஹனம்",
     "album": "திருவோத்தூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 306,
@@ -2724,7 +3026,8 @@ const songs = [
     "duration": "1.11",
     "raga": "ஜனரஞ்சனி",
     "album": "திலதைப்பதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 307,
@@ -2733,7 +3036,8 @@ const songs = [
     "duration": "2.54",
     "raga": "நாட்டை குறிஞ்சி",
     "album": "தேவனூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 308,
@@ -2742,7 +3046,8 @@ const songs = [
     "duration": "2.37",
     "raga": "மாண்ட்",
     "album": "தேவனூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 309,
@@ -2751,7 +3056,8 @@ const songs = [
     "duration": "1.33",
     "raga": "வலஜி",
     "album": "தேவனூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 310,
@@ -2760,7 +3066,8 @@ const songs = [
     "duration": "1.36",
     "raga": "ஜோன்புரி",
     "album": "நாகபட்டினம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 311,
@@ -2769,7 +3076,8 @@ const songs = [
     "duration": "2.35",
     "raga": "யமுனா கல்யாணி",
     "album": "நாகபட்டினம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 312,
@@ -2778,7 +3086,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஸி . மத்யமம்",
     "album": "நிம்பபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 313,
@@ -2787,7 +3096,8 @@ const songs = [
     "duration": "1.46",
     "raga": "ஹிந்தோளம்",
     "album": "பாகை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 314,
@@ -2796,7 +3106,8 @@ const songs = [
     "duration": "4.18",
     "raga": "ரஞ்சனி",
     "album": "புனவாயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 315,
@@ -2805,7 +3116,8 @@ const songs = [
     "duration": "2.55",
     "raga": "ஸாரமதி",
     "album": "பெருங்குடி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 316,
@@ -2814,7 +3126,8 @@ const songs = [
     "duration": "0.51",
     "raga": "சாருகேசி",
     "album": "பேரூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 317,
@@ -2823,7 +3136,8 @@ const songs = [
     "duration": "2.17",
     "raga": "கல்யாணி",
     "album": "மதுராந்தகம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 318,
@@ -2832,7 +3146,8 @@ const songs = [
     "duration": "3.17",
     "raga": "பூர்வி கல்யாணி",
     "album": "மதுராந்தகம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 319,
@@ -2841,7 +3156,8 @@ const songs = [
     "duration": "4.00",
     "raga": "நீலாம்பரி",
     "album": "மதுரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 320,
@@ -2850,7 +3166,8 @@ const songs = [
     "duration": "1.19",
     "raga": "மோஹனம்",
     "album": "மதுரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 321,
@@ -2859,7 +3176,8 @@ const songs = [
     "duration": "1.06",
     "raga": "ஷண்முகப்ரியா",
     "album": "மதுரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 322,
@@ -2868,7 +3186,8 @@ const songs = [
     "duration": "1.48",
     "raga": "தேவ மனோஹரி",
     "album": "மதுரை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 323,
@@ -2877,7 +3196,8 @@ const songs = [
     "duration": "1.45",
     "raga": "பந்து வராளி",
     "album": "மாயாபுரி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 324,
@@ -2886,7 +3206,8 @@ const songs = [
     "duration": "3.52",
     "raga": "மோஹனம்",
     "album": "வடதிருமுல்லைவாயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 325,
@@ -2895,7 +3216,8 @@ const songs = [
     "duration": "1.50",
     "raga": "ரேவதி",
     "album": "வடுகூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 326,
@@ -2904,7 +3226,8 @@ const songs = [
     "duration": "2.45",
     "raga": "கேதாரம்",
     "album": "வயலூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 327,
@@ -2913,7 +3236,8 @@ const songs = [
     "duration": "1.44",
     "raga": "பேகடா",
     "album": "வயலூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 328,
@@ -2922,7 +3246,8 @@ const songs = [
     "duration": "3.43",
     "raga": "கேதாரம்",
     "album": "வயலூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 329,
@@ -2931,7 +3256,8 @@ const songs = [
     "duration": "1.48",
     "raga": "தர்பார் கானடா",
     "album": "வயலூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 330,
@@ -2940,7 +3266,8 @@ const songs = [
     "duration": "2.22",
     "raga": "ஸரஸ்வதி",
     "album": "வயிரவிவனம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 331,
@@ -2949,7 +3276,8 @@ const songs = [
     "duration": "4.11",
     "raga": "மத்யமாவதி",
     "album": "வாலிகொண்டபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 332,
@@ -2958,7 +3286,8 @@ const songs = [
     "duration": "2.56",
     "raga": "ஹம்ஸாநந்தி",
     "album": "விஜயபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 333,
@@ -2967,7 +3296,8 @@ const songs = [
     "duration": "2.37",
     "raga": "மனோலயம்",
     "album": "விரிஞ்சிபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 334,
@@ -2976,7 +3306,8 @@ const songs = [
     "duration": "1.20",
     "raga": "மோஹனம்",
     "album": "விரிஞ்சிபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 335,
@@ -2985,7 +3316,8 @@ const songs = [
     "duration": "1.20",
     "raga": "ஹரிகாம்போதி",
     "album": "வ்ருத்தாசலம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 336,
@@ -2994,7 +3326,8 @@ const songs = [
     "duration": "1.39",
     "raga": "ரேவதி",
     "album": "வ்ருத்தாசலம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 337,
@@ -3003,7 +3336,8 @@ const songs = [
     "duration": "1.30",
     "raga": "சாமா",
     "album": "வெள்ளிகரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 338,
@@ -3012,7 +3346,8 @@ const songs = [
     "duration": "2.19",
     "raga": "குமுதக்ரியா",
     "album": "வெள்ளிகரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 339,
@@ -3021,7 +3356,8 @@ const songs = [
     "duration": "1.52",
     "raga": "மா.மா.கெளளை",
     "album": "வெள்ளிகரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 340,
@@ -3030,7 +3366,8 @@ const songs = [
     "duration": "3.20",
     "raga": "ப்ருந்தாவன ஸாரங்கா",
     "album": "வெள்ளிகரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 341,
@@ -3039,7 +3376,8 @@ const songs = [
     "duration": "3.01",
     "raga": "மோஹனம்",
     "album": "வேதாரண்யம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 342,
@@ -3048,7 +3386,8 @@ const songs = [
     "duration": "1.28",
     "raga": "பீம்பளாஸ்",
     "album": "வேப்பூர்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 343,
@@ -3057,7 +3396,8 @@ const songs = [
     "duration": "1.35",
     "raga": "வாசஸ்பதி",
     "album": "வைத்தீஸ்வரன் கோயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 344,
@@ -3066,7 +3406,8 @@ const songs = [
     "duration": "2.09",
     "raga": "திலங்",
     "album": "வைத்தீஸ்வரன் கோயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 345,
@@ -3075,7 +3416,8 @@ const songs = [
     "duration": "1.33",
     "raga": "மனோலயம்",
     "album": "வைத்தீஸ்வரன் கோயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 346,
@@ -3084,7 +3426,8 @@ const songs = [
     "duration": "1.48",
     "raga": "மத்யமாவதி",
     "album": "ஸ்ரீமுஷ்டம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 347,
@@ -3093,7 +3436,8 @@ const songs = [
     "duration": "3.48",
     "raga": "யமுனா கல்யாணி",
     "album": "க்ஷேத்ரகோவை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 348,
@@ -3102,7 +3446,8 @@ const songs = [
     "duration": "5.03",
     "raga": "கரஹரப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 349,
@@ -3111,7 +3456,8 @@ const songs = [
     "duration": "2.53",
     "raga": "சாமா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 350,
@@ -3120,7 +3466,8 @@ const songs = [
     "duration": "2.29",
     "raga": "ப்ருந்தாவன ஸாரங்கா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 351,
@@ -3129,7 +3476,8 @@ const songs = [
     "duration": "3.01",
     "raga": "கேதாரம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 352,
@@ -3138,7 +3486,8 @@ const songs = [
     "duration": "3.11",
     "raga": "யமுனா கல்யாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 354,
@@ -3147,7 +3496,8 @@ const songs = [
     "duration": "4.03",
     "raga": "யமுனா கல்யாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 355,
@@ -3156,7 +3506,8 @@ const songs = [
     "duration": "2.46",
     "raga": "கேதாரம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 356,
@@ -3165,7 +3516,8 @@ const songs = [
     "duration": "4.29",
     "raga": "திலங்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 357,
@@ -3174,7 +3526,8 @@ const songs = [
     "duration": "3.40",
     "raga": "கீரவாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 358,
@@ -3183,7 +3536,8 @@ const songs = [
     "duration": "2.39",
     "raga": "ஆரபி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 359,
@@ -3192,7 +3546,8 @@ const songs = [
     "duration": "3.38",
     "raga": "சுருட்டி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 360,
@@ -3201,7 +3556,8 @@ const songs = [
     "duration": "1.59",
     "raga": "ரீதி கெளளை",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 361,
@@ -3210,7 +3566,8 @@ const songs = [
     "duration": "3.36",
     "raga": "அஸாவேரி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 362,
@@ -3219,7 +3576,8 @@ const songs = [
     "duration": "2.40",
     "raga": "தர்பார் கானடா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 363,
@@ -3228,7 +3586,8 @@ const songs = [
     "duration": "3.16",
     "raga": "ஸிந்து பைரவி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 364,
@@ -3237,7 +3596,8 @@ const songs = [
     "duration": "1.39",
     "raga": "வஸந்தா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 365,
@@ -3246,7 +3606,8 @@ const songs = [
     "duration": "2.46",
     "raga": "பூபாளம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 366,
@@ -3255,7 +3616,8 @@ const songs = [
     "duration": "3.15",
     "raga": "ஆந்தோளிகா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 367,
@@ -3264,7 +3626,8 @@ const songs = [
     "duration": "5.46",
     "raga": "வலஜி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 368,
@@ -3273,7 +3636,8 @@ const songs = [
     "duration": "2.02",
     "raga": "ஸிந்து பைரவி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 369,
@@ -3282,7 +3646,8 @@ const songs = [
     "duration": "3.09",
     "raga": "சங்கராபரணம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 370,
@@ -3291,7 +3656,8 @@ const songs = [
     "duration": "3.42",
     "raga": "த்விஜாவந்தி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 371,
@@ -3300,7 +3666,8 @@ const songs = [
     "duration": "1.50",
     "raga": "ஹம்ஸாநந்தி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 372,
@@ -3309,7 +3676,8 @@ const songs = [
     "duration": "1.00",
     "raga": "ஆனந்த பைரவி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 373,
@@ -3318,7 +3686,8 @@ const songs = [
     "duration": "2.46",
     "raga": "கரஹரப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 374,
@@ -3327,7 +3696,8 @@ const songs = [
     "duration": "3.05",
     "raga": "பூர்வி கல்யாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 375,
@@ -3336,7 +3706,8 @@ const songs = [
     "duration": "1.37",
     "raga": "காவடிசிந்து",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 376,
@@ -3345,7 +3716,8 @@ const songs = [
     "duration": "1.59",
     "raga": "மணிரங்கு",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 377,
@@ -3354,7 +3726,8 @@ const songs = [
     "duration": "4.34",
     "raga": "ஸாவேரி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 378,
@@ -3363,7 +3736,8 @@ const songs = [
     "duration": "4.54",
     "raga": "பெஹாக்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 379,
@@ -3372,7 +3746,8 @@ const songs = [
     "duration": "1.26",
     "raga": "நடபைரவி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 380,
@@ -3381,7 +3756,8 @@ const songs = [
     "duration": "1.36",
     "raga": "ஆரபி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 381,
@@ -3390,7 +3766,8 @@ const songs = [
     "duration": "3.19",
     "raga": "பாகேஸ்ரீ",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 382,
@@ -3399,7 +3776,8 @@ const songs = [
     "duration": "1.39",
     "raga": "சங்கராபரணம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 383,
@@ -3408,7 +3786,8 @@ const songs = [
     "duration": "3.13",
     "raga": "பெஹாக்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 384,
@@ -3417,7 +3796,8 @@ const songs = [
     "duration": "3.35",
     "raga": "அடாணா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 385,
@@ -3426,7 +3806,8 @@ const songs = [
     "duration": "1.21",
     "raga": "வாசஸ்பதி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 386,
@@ -3435,7 +3816,8 @@ const songs = [
     "duration": "1.21",
     "raga": "அமிர்தவர்ஷிணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 387,
@@ -3444,7 +3826,8 @@ const songs = [
     "duration": "1.25",
     "raga": "சாரங்கா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 388,
@@ -3453,7 +3836,8 @@ const songs = [
     "duration": "1.09",
     "raga": "ஆனந்த பைரவி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 389,
@@ -3462,7 +3846,8 @@ const songs = [
     "duration": "1.56",
     "raga": "குந்தலவராளி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 390,
@@ -3471,7 +3856,8 @@ const songs = [
     "duration": "2.12",
     "raga": "வாசஸ்பதி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 391,
@@ -3480,7 +3866,8 @@ const songs = [
     "duration": "2.39",
     "raga": "கல்யாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 392,
@@ -3489,7 +3876,8 @@ const songs = [
     "duration": "1.43",
     "raga": "பீம்பளாஸ்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 393,
@@ -3498,7 +3886,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ஹிந்தோளம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 394,
@@ -3507,7 +3896,8 @@ const songs = [
     "duration": "3.00",
     "raga": "குந்தலவராளி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 395,
@@ -3516,7 +3906,8 @@ const songs = [
     "duration": "2.52",
     "raga": "வாசஸ்பதி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 396,
@@ -3525,7 +3916,8 @@ const songs = [
     "duration": "2.43",
     "raga": "சுத்த சாவேரி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 397,
@@ -3534,7 +3926,8 @@ const songs = [
     "duration": "5.23",
     "raga": "கானடா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 398,
@@ -3543,7 +3936,8 @@ const songs = [
     "duration": "4.08",
     "raga": "பாகேச்ரீ",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 399,
@@ -3552,7 +3946,8 @@ const songs = [
     "duration": "1.26",
     "raga": "சுத்த சாவேரி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 400,
@@ -3561,7 +3956,8 @@ const songs = [
     "duration": "2.01",
     "raga": "அமிர்தவர்ஷிணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 401,
@@ -3570,7 +3966,8 @@ const songs = [
     "duration": "2.37",
     "raga": "பிலஹரி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 402,
@@ -3579,7 +3976,8 @@ const songs = [
     "duration": "2.12",
     "raga": "ஆபோகி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 403,
@@ -3588,7 +3986,8 @@ const songs = [
     "duration": "1.53",
     "raga": "தர்பார் கானடா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 404,
@@ -3597,7 +3996,8 @@ const songs = [
     "duration": "2.27",
     "raga": "நாட்டைக்குறிஞ்சி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 405,
@@ -3606,7 +4006,8 @@ const songs = [
     "duration": "0.46",
     "raga": "ஹம்ஸாநந்தி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 406,
@@ -3615,7 +4016,8 @@ const songs = [
     "duration": "2.16",
     "raga": "மோஹனம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 407,
@@ -3624,7 +4026,8 @@ const songs = [
     "duration": "1.29",
     "raga": "சுருட்டி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 408,
@@ -3633,7 +4036,8 @@ const songs = [
     "duration": "3.28",
     "raga": "நாதநாமக்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 409,
@@ -3642,7 +4046,8 @@ const songs = [
     "duration": "1.35",
     "raga": "மலஹரி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 410,
@@ -3651,7 +4056,8 @@ const songs = [
     "duration": "2.45",
     "raga": "துர்கா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 411,
@@ -3660,7 +4066,8 @@ const songs = [
     "duration": "1.23",
     "raga": "கமாஸ்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 412,
@@ -3669,7 +4076,8 @@ const songs = [
     "duration": "1.13",
     "raga": "குந்தலவராளி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 413,
@@ -3678,7 +4086,8 @@ const songs = [
     "duration": "2.51",
     "raga": "காபி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 414,
@@ -3687,7 +4096,8 @@ const songs = [
     "duration": "1.41",
     "raga": "மத்யமாவதி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 415,
@@ -3696,7 +4106,8 @@ const songs = [
     "duration": "1.39",
     "raga": "நவரஸ கன்னடா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 416,
@@ -3705,7 +4116,8 @@ const songs = [
     "duration": "1.38",
     "raga": "ஸாரங்கா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 417,
@@ -3714,7 +4126,8 @@ const songs = [
     "duration": "1.46",
     "raga": "குறிஞ்சி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 418,
@@ -3723,7 +4136,8 @@ const songs = [
     "duration": "4.21",
     "raga": "காம்போதி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 419,
@@ -3732,7 +4146,8 @@ const songs = [
     "duration": "4.13",
     "raga": "ஸஹானா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 420,
@@ -3741,7 +4156,8 @@ const songs = [
     "duration": "1.10",
     "raga": "கானடா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 421,
@@ -3750,7 +4166,8 @@ const songs = [
     "duration": "1.09",
     "raga": "ராமப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 422,
@@ -3759,7 +4176,8 @@ const songs = [
     "duration": "3.11",
     "raga": "ஸஹானா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 423,
@@ -3768,7 +4186,8 @@ const songs = [
     "duration": "2.48",
     "raga": "ஹரி காம்போதி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 424,
@@ -3777,7 +4196,8 @@ const songs = [
     "duration": "2.29",
     "raga": "கல்யாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 425,
@@ -3786,7 +4206,8 @@ const songs = [
     "duration": "4.36",
     "raga": "மலய மாருதம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 426,
@@ -3795,7 +4216,8 @@ const songs = [
     "duration": "1.04",
     "raga": "ஆபோகி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 427,
@@ -3804,7 +4226,8 @@ const songs = [
     "duration": "3.08",
     "raga": "ஷண்முகப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 428,
@@ -3813,7 +4236,8 @@ const songs = [
     "duration": "4.31",
     "raga": "மோஹனம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 429,
@@ -3822,7 +4246,8 @@ const songs = [
     "duration": "1.06",
     "raga": "கரஹரப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 430,
@@ -3831,7 +4256,8 @@ const songs = [
     "duration": "1.36",
     "raga": "ஹிந்தோளம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 431,
@@ -3840,7 +4266,8 @@ const songs = [
     "duration": "1.19",
     "raga": "ஹம்ஸத்வனி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 432,
@@ -3849,7 +4276,8 @@ const songs = [
     "duration": "3.56",
     "raga": "சுநாத விநோதினி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 433,
@@ -3858,7 +4286,8 @@ const songs = [
     "duration": "3.02",
     "raga": "ஆனந்த பைரவி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 434,
@@ -3867,7 +4296,8 @@ const songs = [
     "duration": "3.39",
     "raga": "தோடி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 435,
@@ -3876,7 +4306,8 @@ const songs = [
     "duration": "3.32",
     "raga": "தன்யாஸி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 436,
@@ -3885,7 +4316,8 @@ const songs = [
     "duration": "3.10",
     "raga": "திலங்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 437,
@@ -3894,7 +4326,8 @@ const songs = [
     "duration": "1.03",
     "raga": "ராமப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 438,
@@ -3903,7 +4336,8 @@ const songs = [
     "duration": "4.00",
     "raga": "சங்கராபரணம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 439,
@@ -3912,7 +4346,8 @@ const songs = [
     "duration": "2.21",
     "raga": "பாகேச்ரீ",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 440,
@@ -3921,7 +4356,8 @@ const songs = [
     "duration": "4.00",
     "raga": "சங்கரானந்தப்ரியா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 442,
@@ -3930,7 +4366,8 @@ const songs = [
     "duration": "3.09",
     "raga": "ஹம்ஸத்வனி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 443,
@@ -3939,7 +4376,8 @@ const songs = [
     "duration": "2.21",
     "raga": "பெஹாக்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 444,
@@ -3948,7 +4386,8 @@ const songs = [
     "duration": "1.35",
     "raga": "குறிஞ்சி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 445,
@@ -3957,7 +4396,8 @@ const songs = [
     "duration": "1.34",
     "raga": "பூர்வி கல்யாணி",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 446,
@@ -3966,7 +4406,8 @@ const songs = [
     "duration": "2.05",
     "raga": "ஸி . மத்யமம்",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 447,
@@ -3975,7 +4416,8 @@ const songs = [
     "duration": "4.00",
     "raga": "சாமா",
     "album": "பொதுப் பாடல்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 448,
@@ -3984,7 +4426,8 @@ const songs = [
     "duration": "4.22",
     "raga": "கல்யாணி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 449,
@@ -3993,7 +4436,8 @@ const songs = [
     "duration": "2.23",
     "raga": "ஸரங்கா",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 450,
@@ -4002,7 +4446,8 @@ const songs = [
     "duration": "1.18",
     "raga": "பாகேச்ரீ",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 451,
@@ -4011,7 +4456,8 @@ const songs = [
     "duration": "1.02",
     "raga": "கமாஸ்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 452,
@@ -4020,7 +4466,8 @@ const songs = [
     "duration": "1.47",
     "raga": "பெஹாக்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 453,
@@ -4029,7 +4476,8 @@ const songs = [
     "duration": "4.23",
     "raga": "தோடி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 454,
@@ -4038,7 +4486,8 @@ const songs = [
     "duration": "3.34",
     "raga": "ஆரபி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 455,
@@ -4047,7 +4496,8 @@ const songs = [
     "duration": "2.01",
     "raga": "கல்யாண வஸந்தம்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 456,
@@ -4056,7 +4506,8 @@ const songs = [
     "duration": "3.16",
     "raga": "தர்பார்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 457,
@@ -4065,7 +4516,8 @@ const songs = [
     "duration": "4.13",
     "raga": "ஷண்முகப்ரியா",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 458,
@@ -4074,7 +4526,8 @@ const songs = [
     "duration": "4.00",
     "raga": "சுத்ததன்யாஸி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 459,
@@ -4083,7 +4536,8 @@ const songs = [
     "duration": "1.44",
     "raga": "கானடா",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 460,
@@ -4092,7 +4546,8 @@ const songs = [
     "duration": "1.54",
     "raga": "ஸரங்கா",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 461,
@@ -4101,7 +4556,8 @@ const songs = [
     "duration": "4.25",
     "raga": "ஹிந்தோளம்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 462,
@@ -4110,7 +4566,8 @@ const songs = [
     "duration": "4.03",
     "raga": "சங்கராபரணம்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 463,
@@ -4119,7 +4576,8 @@ const songs = [
     "duration": "1.47",
     "raga": "பஹுதாரி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 464,
@@ -4128,7 +4586,8 @@ const songs = [
     "duration": "3.37",
     "raga": "லதாங்கி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 465,
@@ -4137,7 +4596,8 @@ const songs = [
     "duration": "0.30",
     "raga": "பெஹாக்",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 466,
@@ -4146,7 +4606,8 @@ const songs = [
     "duration": "1.44",
     "raga": "ஆபோகி",
     "album": "பஞ்சபூதம் காஞ்சீபுரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 467,
@@ -4155,7 +4616,8 @@ const songs = [
     "duration": "1.26",
     "raga": "பூபாளம்",
     "album": "பஞ்சபூதம் திரு ஆனைகாவல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 468,
@@ -4164,7 +4626,8 @@ const songs = [
     "duration": "3.37",
     "raga": "ஹம்ஸாநந்தி",
     "album": "பஞ்சபூதம் திரு ஆனைகாவல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 469,
@@ -4173,7 +4636,8 @@ const songs = [
     "duration": "3.00",
     "raga": "ரஞ்சனி",
     "album": "பஞ்சபூதம் திரு ஆனைகாவல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 470,
@@ -4182,7 +4646,8 @@ const songs = [
     "duration": "1.10",
     "raga": "சுத்த சாவேரி",
     "album": "பஞ்சபூதம் திரு ஆனைகாவல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 471,
@@ -4191,7 +4656,8 @@ const songs = [
     "duration": "3.41",
     "raga": "தேஷ்",
     "album": "பஞ்சபூதம் திரு ஆனைகாவல்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 472,
@@ -4200,7 +4666,8 @@ const songs = [
     "duration": "1.22",
     "raga": "செஞ்சுருட்டி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 473,
@@ -4209,7 +4676,8 @@ const songs = [
     "duration": "3.03",
     "raga": "சந்த்ர கெளன்ஸ்",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 474,
@@ -4218,7 +4686,8 @@ const songs = [
     "duration": "1.16",
     "raga": "ஸரஸ்வதி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 475,
@@ -4227,7 +4696,8 @@ const songs = [
     "duration": "1.06",
     "raga": "குந்தலவராளி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 476,
@@ -4236,7 +4706,8 @@ const songs = [
     "duration": "0.77",
     "raga": "சாமா",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 477,
@@ -4245,7 +4716,8 @@ const songs = [
     "duration": "1.51",
     "raga": "ஸாவேரி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 478,
@@ -4254,7 +4726,8 @@ const songs = [
     "duration": "1.36",
     "raga": "பூர்வி கல்யாணி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 479,
@@ -4263,7 +4736,8 @@ const songs = [
     "duration": "2.22",
     "raga": "ஆரபி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 480,
@@ -4272,7 +4746,8 @@ const songs = [
     "duration": "2.06",
     "raga": "ஆரபி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 481,
@@ -4281,7 +4756,8 @@ const songs = [
     "duration": "2.03",
     "raga": "சிவரஞ்சனி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 482,
@@ -4290,7 +4766,8 @@ const songs = [
     "duration": "2.15",
     "raga": "மத்யமாவதி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 483,
@@ -4299,7 +4776,8 @@ const songs = [
     "duration": "3.36",
     "raga": "ஹம்ஸாநந்தி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 484,
@@ -4308,7 +4786,8 @@ const songs = [
     "duration": "2.18",
     "raga": "செஞ்சுருட்டி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 485,
@@ -4317,7 +4796,8 @@ const songs = [
     "duration": "3.55",
     "raga": "பந்து வராளி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 486,
@@ -4326,7 +4806,8 @@ const songs = [
     "duration": "3.25",
     "raga": "மோஹனம்",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 487,
@@ -4335,7 +4816,8 @@ const songs = [
     "duration": "1.08",
     "raga": "திலங்",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 488,
@@ -4344,7 +4826,8 @@ const songs = [
     "duration": "2.07",
     "raga": "ஆபோகி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 489,
@@ -4353,7 +4836,8 @@ const songs = [
     "duration": "3.30",
     "raga": "தேஷ்",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 490,
@@ -4362,7 +4846,8 @@ const songs = [
     "duration": "4.20",
     "raga": "ஆனந்த பைரவி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 491,
@@ -4371,7 +4856,8 @@ const songs = [
     "duration": "2.03",
     "raga": "ஸாரமதி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 492,
@@ -4380,7 +4866,8 @@ const songs = [
     "duration": "2.18",
     "raga": "ஸிந்து பைரவி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 493,
@@ -4389,7 +4876,8 @@ const songs = [
     "duration": "2.10",
     "raga": "ஹிந்தோளம்",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 494,
@@ -4398,7 +4886,8 @@ const songs = [
     "duration": "2.35",
     "raga": "கௌரிமனோஹரி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 495,
@@ -4407,7 +4896,8 @@ const songs = [
     "duration": "2.07",
     "raga": "ஆஹிரி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 496,
@@ -4416,7 +4906,8 @@ const songs = [
     "duration": "2.08",
     "raga": "முகாரி",
     "album": "பஞ்சபூதம் திரு அருணை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 497,
@@ -4425,7 +4916,8 @@ const songs = [
     "duration": "4.34",
     "raga": "கல்யாணி",
     "album": "பஞ்சபூதம் திருக் காளஹஸ்தி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 498,
@@ -4434,7 +4926,8 @@ const songs = [
     "duration": "0.45",
     "raga": "கானடா",
     "album": "பஞ்சபூதம் திருக் காளஹஸ்தி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 499,
@@ -4443,7 +4936,8 @@ const songs = [
     "duration": "3.03",
     "raga": "பெஹாக்",
     "album": "பஞ்சபூதம் திருக் காளஹஸ்தி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 500,
@@ -4452,7 +4946,8 @@ const songs = [
     "duration": "3.50",
     "raga": "மோஹனம்",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 501,
@@ -4461,7 +4956,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஆரபி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 502,
@@ -4470,7 +4966,8 @@ const songs = [
     "duration": "2.11",
     "raga": "வாசஸ்பதி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 503,
@@ -4479,7 +4976,8 @@ const songs = [
     "duration": "2.18",
     "raga": "ஸிந்து பைரவி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 504,
@@ -4488,7 +4986,8 @@ const songs = [
     "duration": "2.00",
     "raga": "அடாணா",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 505,
@@ -4497,7 +4996,8 @@ const songs = [
     "duration": "3.06",
     "raga": "முகாரி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 506,
@@ -4506,7 +5006,8 @@ const songs = [
     "duration": "2.00",
     "raga": "கரஹரப்ரியா",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 507,
@@ -4515,7 +5016,8 @@ const songs = [
     "duration": "2.00",
     "raga": "ஹம்ஸாநந்தி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 508,
@@ -4524,7 +5026,8 @@ const songs = [
     "duration": "2.05",
     "raga": "மத்யமாவதி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 509,
@@ -4533,7 +5036,8 @@ const songs = [
     "duration": "3.12",
     "raga": "வஸந்தா",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 510,
@@ -4542,7 +5046,8 @@ const songs = [
     "duration": "1.31",
     "raga": "ஜோன்புரி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 511,
@@ -4551,7 +5056,8 @@ const songs = [
     "duration": "2.02",
     "raga": "கெளளை",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 512,
@@ -4560,7 +5066,8 @@ const songs = [
     "duration": "2.00",
     "raga": "வலஜி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 513,
@@ -4569,7 +5076,8 @@ const songs = [
     "duration": "2.05",
     "raga": "ஆபோகி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 514,
@@ -4578,7 +5086,8 @@ const songs = [
     "duration": "2.10",
     "raga": "ஷண்முகப்ரியா",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 515,
@@ -4587,7 +5096,8 @@ const songs = [
     "duration": "1.48",
     "raga": "ஹிந்தோளம்",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 516,
@@ -4596,7 +5106,8 @@ const songs = [
     "duration": "2.01",
     "raga": "கல்யாணி",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 517,
@@ -4605,7 +5116,8 @@ const songs = [
     "duration": "3.04",
     "raga": "தர்பார்",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 518,
@@ -4614,7 +5126,8 @@ const songs = [
     "duration": "3.06",
     "raga": "கானடா",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 519,
@@ -4623,7 +5136,8 @@ const songs = [
     "duration": "4.33",
     "raga": "சங்கராபரணம்",
     "album": "பஞ்சபூதம் திரு சிதம்பரம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 520,
@@ -4632,7 +5146,8 @@ const songs = [
     "duration": "1.30",
     "raga": "பூர்வி கல்யாணி",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 521,
@@ -4641,7 +5156,8 @@ const songs = [
     "duration": "2.10",
     "raga": "ஸிந்து பைரவி",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 522,
@@ -4650,7 +5166,8 @@ const songs = [
     "duration": "3.21",
     "raga": "பீம்பளாஸ்",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 523,
@@ -4659,7 +5176,8 @@ const songs = [
     "duration": "3.30",
     "raga": "தேநுகா",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 524,
@@ -4668,7 +5186,8 @@ const songs = [
     "duration": "0.40",
     "raga": "ஹம்ஸத்வனி",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 525,
@@ -4677,7 +5196,8 @@ const songs = [
     "duration": "2.36",
     "raga": "ஸி . மத்யமம்",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 526,
@@ -4686,7 +5206,8 @@ const songs = [
     "duration": "3.31",
     "raga": "யமுனா கல்யாணி",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 527,
@@ -4695,7 +5216,8 @@ const songs = [
     "duration": "2.47",
     "raga": "சங்கராபரணம்",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 528,
@@ -4704,7 +5226,8 @@ const songs = [
     "duration": "1.54",
     "raga": "குந்தலவராளி",
     "album": "பழமுதிர் சோலை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 529,
@@ -4713,7 +5236,8 @@ const songs = [
     "duration": "11.21",
     "raga": "இராக மாலிகை",
     "album": "கந்தர் அனுபூதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 530,
@@ -4722,7 +5246,8 @@ const songs = [
     "duration": "14.50",
     "raga": "இராக மாலிகை",
     "album": "கந்தர் அனுபூதி",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 531,
@@ -4731,7 +5256,8 @@ const songs = [
     "duration": "3.32",
     "raga": "நாட்டை",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 532,
@@ -4740,7 +5266,8 @@ const songs = [
     "duration": "1.52",
     "raga": "நாட்டை",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 533,
@@ -4749,7 +5276,8 @@ const songs = [
     "duration": "7.22",
     "raga": "ஹம்ஸத்வனி",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 534,
@@ -4758,7 +5286,8 @@ const songs = [
     "duration": "7.00",
     "raga": "மோஹனம்",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 535,
@@ -4767,7 +5296,8 @@ const songs = [
     "duration": "6.50",
     "raga": "ஸாரங்கா",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 536,
@@ -4776,7 +5306,8 @@ const songs = [
     "duration": "3.21",
     "raga": "மனோலயம்",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 537,
@@ -4785,7 +5316,8 @@ const songs = [
     "duration": "6.49",
     "raga": "பாகேஸ்ரீ",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 538,
@@ -4794,7 +5326,8 @@ const songs = [
     "duration": "7.00",
     "raga": "ஸிந்து பைரவி",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 539,
@@ -4803,7 +5336,8 @@ const songs = [
     "duration": "6.49",
     "raga": "பீம்பளாஸ்",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 540,
@@ -4812,7 +5346,8 @@ const songs = [
     "duration": "6.51",
     "raga": "மாண்ட்",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 541,
@@ -4821,7 +5356,8 @@ const songs = [
     "duration": "6.51",
     "raga": "துர்கா",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 542,
@@ -4830,7 +5366,8 @@ const songs = [
     "duration": "7.02",
     "raga": "மத்யமாவதி",
     "album": "வே, ம, சே",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 543,
@@ -4839,7 +5376,8 @@ const songs = [
     "duration": "1.26",
     "raga": "மத்யமாவதி",
     "album": "விரு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 544,
@@ -4848,7 +5386,8 @@ const songs = [
     "duration": "4.48",
     "raga": "மத்யமாவதி",
     "album": "விரு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 545,
@@ -4857,7 +5396,8 @@ const songs = [
     "duration": "5.00",
     "raga": "",
     "album": "மகுடம்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 546,
@@ -4866,7 +5406,8 @@ const songs = [
     "duration": "8.34",
     "raga": "காவடி சிந்து",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 547,
@@ -4875,7 +5416,8 @@ const songs = [
     "duration": "4.32",
     "raga": "புன்னாக வராளி",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 548,
@@ -4884,7 +5426,8 @@ const songs = [
     "duration": "2.48",
     "raga": "மோஹனம்",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 549,
@@ -4893,7 +5436,8 @@ const songs = [
     "duration": "7.42",
     "raga": "நாதநாமக்ரியா",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 550,
@@ -4902,7 +5446,8 @@ const songs = [
     "duration": "4.22",
     "raga": "இராக மாலிகை",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 551,
@@ -4911,7 +5456,8 @@ const songs = [
     "duration": "8.51",
     "raga": "நீலாம்பரி",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 552,
@@ -4920,7 +5466,8 @@ const songs = [
     "duration": "1.22",
     "raga": "மாண்ட்",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 553,
@@ -4929,7 +5476,8 @@ const songs = [
     "duration": "10.03",
     "raga": "இராக மாலிகை",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 554,
@@ -4938,7 +5486,8 @@ const songs = [
     "duration": "3.26",
     "raga": "ஹிந்தோளம்",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 555,
@@ -4947,7 +5496,8 @@ const songs = [
     "duration": "4.72",
     "raga": "இராக மாலிகை",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 556,
@@ -4956,7 +5506,8 @@ const songs = [
     "duration": "4.19",
     "raga": "பீம்பளாஸ்",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 557,
@@ -4965,7 +5516,8 @@ const songs = [
     "duration": "4.25",
     "raga": "மத்யமாவதி",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 558,
@@ -4974,7 +5526,8 @@ const songs = [
     "duration": "8.00",
     "raga": "வராளி",
     "album": "வகுப்பு",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 559,
@@ -4983,7 +5536,8 @@ const songs = [
     "duration": "20.00",
     "raga": "",
     "album": "பூஜோபசாரங்கள்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 560,
@@ -4992,7 +5546,8 @@ const songs = [
     "duration": "1.00",
     "raga": "",
     "album": "ஏறுமயில்",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 561,
@@ -5001,7 +5556,8 @@ const songs = [
     "duration": "10.00",
     "raga": "",
     "album": "ப்ரார்த்தனை",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 562,
@@ -5010,7 +5566,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 563,
@@ -5019,7 +5576,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 564,
@@ -5028,7 +5586,8 @@ const songs = [
     "duration": "10.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 565,
@@ -5037,7 +5596,8 @@ const songs = [
     "duration": "5.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 566,
@@ -5046,7 +5606,8 @@ const songs = [
     "duration": "10.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 567,
@@ -5055,7 +5616,8 @@ const songs = [
     "duration": "10.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 568,
@@ -5064,7 +5626,8 @@ const songs = [
     "duration": "10.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 569,
@@ -5073,7 +5636,8 @@ const songs = [
     "duration": "8.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 570,
@@ -5082,7 +5646,8 @@ const songs = [
     "duration": "3.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 571,
@@ -5091,7 +5656,8 @@ const songs = [
     "duration": "5.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 572,
@@ -5100,7 +5666,8 @@ const songs = [
     "duration": "7.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 573,
@@ -5109,7 +5676,8 @@ const songs = [
     "duration": "6.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 574,
@@ -5118,7 +5686,8 @@ const songs = [
     "duration": "10.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 575,
@@ -5127,7 +5696,8 @@ const songs = [
     "duration": "1.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 576,
@@ -5136,7 +5706,8 @@ const songs = [
     "duration": "2.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 577,
@@ -5145,7 +5716,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 578,
@@ -5154,7 +5726,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 579,
@@ -5163,7 +5736,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 580,
@@ -5172,7 +5746,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 581,
@@ -5181,7 +5756,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 582,
@@ -5190,7 +5766,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 583,
@@ -5199,7 +5776,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 584,
@@ -5208,7 +5786,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 585,
@@ -5217,7 +5796,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 586,
@@ -5226,7 +5806,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 587,
@@ -5235,7 +5816,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 588,
@@ -5244,7 +5826,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 589,
@@ -5253,7 +5836,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 590,
@@ -5262,7 +5846,8 @@ const songs = [
     "duration": "",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 591,
@@ -5271,7 +5856,8 @@ const songs = [
     "duration": "3.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 592,
@@ -5280,7 +5866,8 @@ const songs = [
     "duration": "2.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 593,
@@ -5289,7 +5876,8 @@ const songs = [
     "duration": "2.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 594,
@@ -5298,7 +5886,8 @@ const songs = [
     "duration": "3.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 595,
@@ -5307,7 +5896,8 @@ const songs = [
     "duration": "5.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   },
   {
     "id": 596,
@@ -5316,7 +5906,8 @@ const songs = [
     "duration": "8.00",
     "raga": "",
     "album": "",
-    "notes": ""
+    "notes": "",
+    "taught": "Yes"
   }
 ];
 

@@ -17,7 +17,7 @@
 body {
     font-size: 1.2rem; /* Increase base font size */
     line-height: 1.6;
-    background: var(--senior-light-blue) !important;
+    background: #f5f5f5 !important;
     color: var(--senior-dark-text) !important;
 }
 
@@ -324,7 +324,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Senior-friendly header */
 header {
-    background: var(--senior-navy) !important;
+    background: linear-gradient(135deg, var(--senior-navy) 0%, #34495e 100%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     color: white !important;
@@ -374,7 +374,7 @@ header h1, header small {
 }
 
 .alert-info {
-    background-color: var(--senior-light-blue) !important;
+    background-color: #e8f4f8 !important;
     border-color: var(--senior-border) !important;
     color: var(--senior-dark-text) !important;
 }
@@ -410,3 +410,615 @@ header h1, header small {
         max-width: 100%;
     }
 }
+
+/* =========================================================================
+   Master Song List - Senior-Friendly Styles
+   ========================================================================= */
+
+/* Modal header button */
+#masterSongListBtn {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 700 !important;
+    border: 3px solid white !important;
+}
+
+#masterSongListBtn:hover {
+    background-color: white !important;
+    color: var(--senior-navy) !important;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* Host Member Details button */
+#hostMemberDetailsBtn {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 700 !important;
+    border: 3px solid white !important;
+    background-color: var(--senior-success) !important;
+    color: white !important;
+}
+
+#hostMemberDetailsBtn:hover {
+    background-color: white !important;
+    color: var(--senior-success) !important;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* Modal styling */
+#masterSongListModal .modal-header {
+    padding: 1.5rem 2rem !important;
+    border-bottom: 3px solid var(--senior-border) !important;
+}
+
+#masterSongListModal .modal-title {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+}
+
+#masterSongListModal .modal-body {
+    background: #f5f5f5 !important;
+}
+
+/* Host Member Modal styling */
+#hostMemberModal .modal-header {
+    padding: 1.5rem 2rem !important;
+    border-bottom: 3px solid var(--senior-border) !important;
+    background: var(--senior-success) !important;
+    color: white !important;
+}
+
+#hostMemberModal .modal-title {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+}
+
+#hostMemberModal .modal-body {
+    background: #f5f5f5 !important;
+}
+
+/* Search box */
+#songSearchInput {
+    font-size: 1.5rem !important;
+    padding: 1rem 1.5rem !important;
+    border: 3px solid var(--senior-border) !important;
+    border-radius: 0.5rem !important;
+}
+
+#songSearchInput:focus {
+    border-color: var(--senior-navy) !important;
+    box-shadow: 0 0 0 0.3rem rgba(44, 62, 80, 0.3) !important;
+}
+
+#songSearchInput::placeholder {
+    color: var(--senior-sage) !important;
+    font-size: 1.3rem !important;
+}
+
+/* Member search box */
+#memberSearchInput {
+    font-size: 1.5rem !important;
+    padding: 1rem 1.5rem !important;
+    border: 3px solid var(--senior-border) !important;
+    border-radius: 0.5rem !important;
+}
+
+#memberSearchInput:focus {
+    border-color: var(--senior-success) !important;
+    box-shadow: 0 0 0 0.3rem rgba(39, 174, 96, 0.3) !important;
+}
+
+#memberSearchInput::placeholder {
+    color: var(--senior-sage) !important;
+    font-size: 1.3rem !important;
+}
+
+/* Song count badge */
+#totalSongsCount {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 700 !important;
+}
+
+/* Member count badge */
+#totalMembersCount {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 700 !important;
+}
+
+/* Master song table */
+.master-song-table {
+    font-size: 1.3rem !important;
+    border: 3px solid var(--senior-border) !important;
+}
+
+.master-song-table thead th {
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+    padding: 1.25rem 1rem !important;
+    background: var(--senior-navy) !important;
+    color: white !important;
+    border: 2px solid var(--senior-border) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+}
+
+.master-song-table tbody td {
+    padding: 1rem !important;
+    font-size: 1.3rem !important;
+    background: white !important;
+    border: 1px solid var(--senior-border) !important;
+    vertical-align: middle !important;
+}
+
+.master-song-table tbody tr:hover {
+    background: var(--senior-hover) !important;
+}
+
+.master-song-table tbody tr:hover td {
+    background: var(--senior-hover) !important;
+}
+
+/* Edit mode styling */
+.master-song-table tbody tr.editing {
+    background: #fffacd !important;
+    border: 3px solid var(--senior-warning) !important;
+}
+
+.master-song-table tbody tr.editing td {
+    background: #fffacd !important;
+    border-color: var(--senior-warning) !important;
+}
+
+/* Just saved animation */
+.master-song-table tbody tr.just-saved {
+    background: #d4edda !important;
+    animation: savedPulse 2s ease;
+}
+
+.master-song-table tbody tr.just-saved td {
+    background: #d4edda !important;
+}
+
+@keyframes savedPulse {
+    0%, 100% { background: white; }
+    50% { background: #d4edda; }
+}
+
+/* Edit mode form controls */
+.master-song-table tr.editing input.form-control,
+.master-song-table tr.editing textarea.form-control,
+.master-song-table tr.editing select.form-select {
+    font-size: 1.3rem !important;
+    padding: 0.75rem 1rem !important;
+    border: 2px solid var(--senior-navy) !important;
+    background: white !important;
+}
+
+.master-song-table tr.editing input.form-control:focus,
+.master-song-table tr.editing textarea.form-control:focus,
+.master-song-table tr.editing select.form-select:focus {
+    border-color: var(--senior-success) !important;
+    box-shadow: 0 0 0 0.25rem rgba(39, 174, 96, 0.25) !important;
+}
+
+/* Action buttons in table */
+.master-song-table .edit-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+.master-song-table .delete-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.master-song-table .delete-btn:hover {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+    transform: scale(1.05);
+}
+
+.master-song-table .save-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+.master-song-table .cancel-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+/* Taught badge */
+.master-song-table .badge {
+    font-size: 1.2rem !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 600 !important;
+}
+
+.master-song-table .badge.bg-success {
+    background-color: var(--senior-success) !important;
+}
+
+.master-song-table .badge.bg-secondary {
+    background-color: var(--senior-sage) !important;
+}
+
+/* Table responsiveness */
+.table-responsive {
+    max-height: calc(100vh - 300px) !important;
+    overflow-y: auto !important;
+    border: 3px solid var(--senior-border) !important;
+    border-radius: 0.5rem !important;
+}
+
+.table-responsive::-webkit-scrollbar {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #e0e0e0 !important;
+    border-radius: 8px !important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--senior-navy) !important;
+    border-radius: 8px !important;
+    border: 3px solid #e0e0e0 !important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #34495e !important;
+}
+
+/* Modal footer */
+#masterSongListModal .modal-footer {
+    padding: 1.25rem 2rem !important;
+    border-top: 3px solid var(--senior-border) !important;
+}
+
+#masterSongListModal .modal-footer .btn {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 2rem !important;
+}
+
+/* Empty state */
+.master-song-table tbody td[colspan] {
+    padding: 3rem !important;
+}
+
+.master-song-table tbody td[colspan] i {
+    font-size: 4rem !important;
+    color: var(--senior-sage) !important;
+}
+
+.master-song-table tbody td[colspan] h5 {
+    font-size: 1.8rem !important;
+    color: var(--senior-dark-text) !important;
+    margin-top: 1.5rem !important;
+}
+
+.master-song-table tbody td[colspan] p {
+    font-size: 1.4rem !important;
+    color: var(--senior-sage) !important;
+}
+
+/* Input group for search */
+#masterSongListModal .input-group-text {
+    font-size: 1.5rem !important;
+    padding: 1rem 1.25rem !important;
+    background: var(--senior-cream) !important;
+    border: 3px solid var(--senior-border) !important;
+    border-right: none !important;
+}
+
+/* =========================================================================
+   Taught Field - Yes/No Button Group
+   ========================================================================= */
+
+.taught-btn-group {
+    display: flex !important;
+    gap: 0 !important;
+}
+
+.taught-btn-group button {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 600 !important;
+    border-width: 2px !important;
+    transition: all 0.3s ease !important;
+}
+
+.taught-btn-group .taught-yes-btn {
+    border-color: var(--senior-success) !important;
+    color: var(--senior-success) !important;
+}
+
+.taught-btn-group .taught-yes-btn:hover {
+    background: #d4edda !important;
+    transform: scale(1.05);
+}
+
+.taught-btn-group .taught-yes-btn.active {
+    background: var(--senior-success) !important;
+    color: white !important;
+    border-color: var(--senior-success) !important;
+    box-shadow: 0 0 0 0.25rem rgba(39, 174, 96, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+.taught-btn-group .taught-no-btn {
+    border-color: var(--senior-sage) !important;
+    color: var(--senior-sage) !important;
+}
+
+.taught-btn-group .taught-no-btn:hover {
+    background: #e9ecef !important;
+    transform: scale(1.05);
+}
+
+.taught-btn-group .taught-no-btn.active {
+    background: var(--senior-sage) !important;
+    color: white !important;
+    border-color: var(--senior-sage) !important;
+    box-shadow: 0 0 0 0.25rem rgba(149, 165, 166, 0.3) !important;
+    font-weight: 700 !important;
+}
+
+/* =========================================================================
+   Search Results Status
+   ========================================================================= */
+
+#searchResultsStatus {
+    font-size: 1.4rem !important;
+    border: 3px solid var(--senior-navy) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+#searchResultsStatus i {
+    font-size: 1.6rem !important;
+}
+
+#searchResultsText strong {
+    color: var(--senior-navy) !important;
+}
+
+/* =========================================================================
+   Delete Confirmation Modal
+   ========================================================================= */
+
+#deleteSongConfirmModal .modal-content {
+    border: 4px solid #dc3545 !important;
+}
+
+#deleteSongConfirmModal .modal-header {
+    font-size: 1.8rem !important;
+    padding: 1.5rem 2rem !important;
+}
+
+#deleteSongConfirmModal .modal-body {
+    font-size: 1.4rem !important;
+    padding: 2rem !important;
+}
+
+#deleteSongConfirmModal .modal-body h3 {
+    font-size: 2rem !important;
+    color: var(--senior-dark-text) !important;
+}
+
+#deleteSongConfirmModal .modal-body .alert {
+    font-size: 1.3rem !important;
+    padding: 1.25rem !important;
+    border-width: 2px !important;
+}
+
+#deleteSongConfirmModal .modal-footer {
+    padding: 1.25rem 2rem !important;
+}
+
+#deleteSongConfirmModal .modal-footer .btn {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 700 !important;
+}
+
+#deleteSongConfirmModal .bi-exclamation-triangle-fill {
+    animation: warningPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes warningPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* ========================================================================== */
+/* Master Member Table Styles */
+/* ========================================================================== */
+
+.master-member-table {
+    font-size: 1.3rem !important;
+    border: 3px solid var(--senior-border) !important;
+}
+
+.master-member-table thead th {
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
+    padding: 1.25rem 1rem !important;
+    background: var(--senior-navy) !important;
+    color: white !important;
+    border: 2px solid var(--senior-border) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+}
+
+.master-member-table tbody td {
+    padding: 1rem !important;
+    font-size: 1.3rem !important;
+    background: white !important;
+    border: 1px solid var(--senior-border) !important;
+    vertical-align: middle !important;
+}
+
+.master-member-table tbody tr:hover {
+    background: var(--senior-hover) !important;
+}
+
+.master-member-table tbody tr:hover td {
+    background: var(--senior-hover) !important;
+}
+
+/* Edit mode styling */
+.master-member-table tbody tr.editing {
+    background: #fffacd !important;
+    border: 3px solid var(--senior-warning) !important;
+}
+
+.master-member-table tbody tr.editing td {
+    background: #fffacd !important;
+    border-color: var(--senior-warning) !important;
+}
+
+/* Just saved animation */
+.master-member-table tbody tr.just-saved {
+    background: #d4edda !important;
+    animation: savedPulse 2s ease;
+}
+
+.master-member-table tbody tr.just-saved td {
+    background: #d4edda !important;
+}
+
+/* Edit mode form controls */
+.master-member-table tr.editing input.form-control,
+.master-member-table tr.editing textarea.form-control {
+    font-size: 1.3rem !important;
+    padding: 0.75rem 1rem !important;
+    border: 2px solid var(--senior-navy) !important;
+    background: white !important;
+}
+
+.master-member-table tr.editing input.form-control:focus,
+.master-member-table tr.editing textarea.form-control:focus {
+    border-color: var(--senior-success) !important;
+    box-shadow: 0 0 0 0.25rem rgba(39, 174, 96, 0.25) !important;
+}
+
+/* Action buttons in member table */
+.master-member-table .edit-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+.master-member-table .delete-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.master-member-table .delete-btn:hover {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+    transform: scale(1.05);
+}
+
+.master-member-table .save-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+.master-member-table .cancel-btn {
+    font-size: 1.2rem !important;
+    padding: 0.75rem 1.25rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-width: 100px !important;
+}
+
+/* New member row styling */
+.master-member-table .new-member-row {
+    background: #e7f3ff !important;
+    border: 3px solid #0d6efd !important;
+    animation: newRowSlideIn 0.5s ease;
+}
+
+.master-member-table .new-member-row td {
+    background: #e7f3ff !important;
+    border-color: #0d6efd !important;
+}
+
+@keyframes newRowSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delete confirmation modal for members */
+#deleteMemberConfirmModal .modal-header {
+    background: #dc3545 !important;
+    color: white !important;
+}
+
+#deleteMemberConfirmModal .modal-title {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+}
+
+#deleteMemberConfirmModal .modal-body {
+    font-size: 1.4rem !important;
+    padding: 2rem !important;
+}
+
+#deleteMemberConfirmModal .warning-text {
+    font-size: 1.3rem !important;
+    color: #dc3545 !important;
+    font-weight: 600 !important;
+    margin-top: 1rem !important;
+}
+
+#deleteMemberConfirmModal .btn {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 700 !important;
+}
+
+#deleteMemberConfirmModal .bi-exclamation-triangle-fill {
+    animation: warningPulse 1.5s ease-in-out infinite;
+}
+
+
