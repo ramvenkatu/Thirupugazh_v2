@@ -36,7 +36,7 @@
                         <i class="bi bi-music-note-beamed me-2"></i>
                         Thirupugazh Song List Generator
                     </h1>
-                    <small class="text-light">Automated playlist creation following the 13-step sequence</small>
+                    <small class="text-light">Automated playlist creation following the 16-step sequence</small>
                 </div>
                 <div class="col-auto">
                     <button type="button" class="btn btn-light btn-lg me-2" id="masterSongListBtn">
@@ -331,7 +331,7 @@
                             <h4 class="text-muted mt-3">No Playlist Generated</h4>
                             <p class="text-muted">
                                 Use the control panel on the left to generate your first playlist.
-                                The system will follow the traditional 13-step sequence.
+                                The system will follow the traditional 16-step sequence.
                             </p>
                         </div>
 
@@ -372,7 +372,7 @@
     <!-- Footer -->
     <footer class="bg-light text-center py-3 mt-4">
         <small class="text-muted">
-            Thirupugazh Song List Generator v2.1 | Following the traditional 13-step sequence
+            Thirupugazh Song List Generator v2.1 | Following the traditional 16-step sequence
         </small>
     </footer>
 
@@ -429,7 +429,9 @@
                                     <th style="width: 200px;">Raga</th>
                                     <th style="width: 250px;">Album</th>
                                     <th style="width: 100px;">Taught</th>
-                                    <th style="width: 250px;">Notes</th>
+                                    <th style="width: 150px;" class="text-center">
+                                        <i class="bi bi-plus-circle me-2"></i>Add to Playlist
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="masterSongTableBody">
@@ -447,6 +449,9 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-success btn-lg me-auto" id="addSongsToPlaylistBtn">
+                        <i class="bi bi-plus-circle me-2"></i>Add Songs to Playlist
+                    </button>
                     <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle me-2"></i>Close
                     </button>
@@ -546,7 +551,7 @@
     <script src="members.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="script.js?v=20251122h"></script>
+    <script src="script.js?v=20251123f"></script>
 </body>
 <!-- PDF libs (no SRI to avoid blocking when CDN hash changes) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

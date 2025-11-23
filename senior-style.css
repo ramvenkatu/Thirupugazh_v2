@@ -1,29 +1,33 @@
-/* Senior-Friendly Stylesheet with Cohesive Color Scheme */
+/* Senior-Friendly Stylesheet with Vibrant, Warm Color Scheme */
 
-/* Senior-friendly color palette */
+/* Senior-friendly color palette - Vibrant yet soothing */
 :root {
-    --senior-navy: #2c3e50;        /* Dark blue-gray for headers */
-    --senior-light-blue: #ecf0f1;  /* Very light blue-gray for backgrounds */
-    --senior-cream: #f8f9fa;       /* Warm cream for cards */
-    --senior-sage: #95a5a6;        /* Muted sage green for accents */
-    --senior-dark-text: #2c3e50;   /* Dark text for high contrast */
-    --senior-success: #27ae60;     /* Calm green for success states */
-    --senior-warning: #f39c12;     /* Warm orange for warnings */
-    --senior-border: #bdc3c7;      /* Soft gray for borders */
-    --senior-hover: #dde4e6;       /* Light hover state */
+    --senior-primary: #3498db;      /* Bright but soft blue - friendly and calming */
+    --senior-secondary: #9b59b6;    /* Rich purple - regal and dignified */
+    --senior-success: #2ecc71;      /* Vibrant green - fresh and positive */
+    --senior-warning: #f39c12;      /* Warm orange - attention-grabbing */
+    --senior-danger: #e74c3c;       /* Warm red - clear warning */
+    --senior-info: #1abc9c;         /* Teal - refreshing accent */
+    --senior-navy: #2c3e50;         /* Deep navy for text */
+    --senior-cream: #ffe4cc;        /* Light vibrant orange background */
+    --senior-light-bg: #ffd4a8;     /* Warm peachy orange background */
+    --senior-border: #d4af37;       /* Golden border for warmth */
+    --senior-hover: #ffe4b5;        /* Warm peach hover */
+    --senior-sage: #8fbc8f;         /* Soft sage green */
+    --senior-coral: #ff7f50;        /* Coral for highlights */
 }
 
-/* General accessibility improvements */
+/* General accessibility improvements with warm background */
 body {
     font-size: 1.2rem; /* Increase base font size */
     line-height: 1.6;
-    background: #f5f5f5 !important;
-    color: var(--senior-dark-text) !important;
+    background: linear-gradient(135deg, #ffd4a8 0%, #ffe4cc 100%) !important;
+    color: var(--senior-navy) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-size: 1.5em; /* Increase heading sizes */
-    color: var(--senior-dark-text) !important;
+    color: var(--senior-navy) !important;
 }
 
 /* Make buttons and other interactive elements larger with senior-friendly colors */
@@ -35,20 +39,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-    background-color: var(--senior-navy) !important;
-    border-color: var(--senior-navy) !important;
+    background: linear-gradient(135deg, var(--senior-primary) 0%, #5dade2 100%) !important;
+    border: 3px solid var(--senior-primary) !important;
     color: white !important;
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3) !important;
 }
 
 .btn-primary:hover {
-    background-color: #34495e !important;
-    border-color: #34495e !important;
+    background: linear-gradient(135deg, #5dade2 0%, var(--senior-primary) 100%) !important;
+    border-color: #2980b9 !important;
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4) !important;
+    transform: translateY(-2px);
 }
 
 .btn-success {
-    background-color: var(--senior-success) !important;
-    border-color: var(--senior-success) !important;
+    background: linear-gradient(135deg, var(--senior-success) 0%, #58d68d 100%) !important;
+    border: 3px solid var(--senior-success) !important;
     color: white !important;
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3) !important;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #58d68d 0%, var(--senior-success) 100%) !important;
+    box-shadow: 0 6px 12px rgba(46, 204, 113, 0.4) !important;
+    transform: translateY(-2px);
 }
 
 .btn-success:hover {
@@ -72,13 +86,14 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0.75rem 1.25rem;
     border-radius: 0.5rem;
     background: white !important;
-    border: 2px solid var(--senior-border) !important;
-    color: var(--senior-dark-text) !important;
+    border: 3px solid var(--senior-border) !important;
+    color: var(--senior-navy) !important;
 }
 
 .form-control:focus {
-    border-color: var(--senior-navy) !important;
-    box-shadow: 0 0 0 0.25rem rgba(44, 62, 80, 0.25) !important;
+    border-color: var(--senior-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25) !important;
+    background: var(--senior-light-bg) !important;
 }
 
 .form-select {
@@ -96,19 +111,28 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Cohesive color scheme for cards and headers */
 .text-muted {
-    color: var(--senior-sage) !important;
+    color: #6c757d !important; /* Dark gray for better contrast on yellow hover backgrounds */
 }
 
 .card {
-    border: 2px solid var(--senior-border) !important;
-    background: var(--senior-cream) !important;
+    border: 3px solid var(--senior-border) !important;
+    background: linear-gradient(to bottom, white 0%, var(--senior-light-bg) 100%) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3) !important;
 }
 
 .card-header {
     font-weight: bold;
-    background: var(--senior-navy) !important;
+    background: linear-gradient(135deg, var(--senior-secondary) 0%, var(--senior-primary) 100%) !important;
     color: white !important;
-    border-bottom: 2px solid var(--senior-border) !important;
+    border-bottom: 3px solid var(--senior-border) !important;
+    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.2) !important;
 }
 
 /* Override all colored headers with consistent senior-friendly colors */
@@ -313,21 +337,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .function-card.bg-primary, .function-card.border-primary {
-    background: var(--senior-navy) !important;
-    border-color: var(--senior-navy) !important;
+    background: var(--senior-primary) !important;
+    border-color: var(--senior-primary) !important;
     color: white !important;
+    font-weight: bold !important;
 }
 
 .member-card.border-info {
     border-color: var(--senior-navy) !important;
 }
 
-/* Senior-friendly header */
+/* Senior-friendly header with vibrant gradient */
 header {
-    background: linear-gradient(135deg, var(--senior-navy) 0%, #34495e 100%) !important;
+    background: linear-gradient(135deg, var(--senior-secondary) 0%, var(--senior-primary) 50%, var(--senior-info) 100%) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     color: white !important;
+    border-bottom: 4px solid var(--senior-border) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }
 
 header h1, header small {
@@ -374,15 +401,31 @@ header h1, header small {
 }
 
 .alert-info {
-    background-color: #e8f4f8 !important;
-    border-color: var(--senior-border) !important;
-    color: var(--senior-dark-text) !important;
+    background-color: #d6eaf8 !important;
+    border: 3px solid var(--senior-primary) !important;
+    color: #1a5490 !important;
+    font-weight: 600 !important;
 }
 
 .alert-warning {
-    background-color: #fef9e7 !important;
-    border-color: var(--senior-warning) !important;
-    color: var(--senior-dark-text) !important;
+    background-color: #fdebd0 !important;
+    border: 3px solid #d68910 !important;
+    color: #7d4f0a !important;
+    font-weight: 600 !important;
+}
+
+.alert-success {
+    background-color: #d5f4e6 !important;
+    border: 3px solid #1e8449 !important;
+    color: #0d5e2f !important;
+    font-weight: 600 !important;
+}
+
+.alert-danger {
+    background-color: #f9e0dd !important;
+    border: 3px solid #c0392b !important;
+    color: #7b241c !important;
+    font-weight: 600 !important;
 }
 
 /* Media queries for desktop and iPad */
@@ -421,13 +464,16 @@ header h1, header small {
     padding: 0.75rem 1.5rem !important;
     font-weight: 700 !important;
     border: 3px solid white !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
 }
 
 #masterSongListBtn:hover {
-    background-color: white !important;
-    color: var(--senior-navy) !important;
+    background: white !important;
+    color: var(--senior-secondary) !important;
     transform: scale(1.05);
     transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(255,255,255,0.3) !important;
 }
 
 /* Host Member Details button */
@@ -436,15 +482,17 @@ header h1, header small {
     padding: 0.75rem 1.5rem !important;
     font-weight: 700 !important;
     border: 3px solid white !important;
-    background-color: var(--senior-success) !important;
+    background: linear-gradient(135deg, var(--senior-coral) 0%, var(--senior-warning) 100%) !important;
     color: white !important;
+    box-shadow: 0 4px 12px rgba(255, 127, 80, 0.4) !important;
 }
 
 #hostMemberDetailsBtn:hover {
-    background-color: white !important;
-    color: var(--senior-success) !important;
+    background: white !important;
+    color: var(--senior-coral) !important;
     transform: scale(1.05);
     transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(255,255,255,0.3) !important;
 }
 
 /* Modal styling */
@@ -661,6 +709,42 @@ header h1, header small {
 
 .master-song-table .badge.bg-secondary {
     background-color: var(--senior-sage) !important;
+}
+
+/* Song selection checkboxes - Senior-friendly large checkboxes */
+.master-song-table .song-select-checkbox {
+    width: 30px !important;
+    height: 30px !important;
+    cursor: pointer !important;
+    border: 3px solid var(--senior-navy) !important;
+    border-radius: 0.25rem !important;
+}
+
+.master-song-table .song-select-checkbox:checked {
+    background-color: var(--senior-success) !important;
+    border-color: var(--senior-success) !important;
+}
+
+.master-song-table .song-select-checkbox:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+.master-song-table .song-select-checkbox:focus {
+    box-shadow: 0 0 0 0.3rem rgba(39, 174, 96, 0.3) !important;
+}
+
+/* Add Songs to Playlist button */
+#addSongsToPlaylistBtn {
+    font-size: 1.5rem !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 700 !important;
+    min-width: 250px !important;
+}
+
+#addSongsToPlaylistBtn:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease;
 }
 
 /* Table responsiveness */

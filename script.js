@@ -2680,9 +2680,14 @@ class MasterSongListManager {
         const masterBtn = document.getElementById('masterSongListBtn');
         const modal = document.getElementById('masterSongListModal');
         const searchInput = document.getElementById('songSearchInput');
+        const addSongsBtn = document.getElementById('addSongsToPlaylistBtn');
         
         if (masterBtn) {
             masterBtn.addEventListener('click', () => this.openMasterList());
+        }
+        
+        if (addSongsBtn) {
+            addSongsBtn.addEventListener('click', () => this.addSongsToPlaylist());
         }
         
         if (searchInput) {
@@ -2772,7 +2777,9 @@ class MasterSongListManager {
                     ${song.taught}
                 </span>
             </td>
-            <td class="song-notes">${this.escapeHtml(song.notes)}</td>
+            <td class="text-center song-checkbox">
+                <input type="checkbox" class="form-check-input song-select-checkbox" data-song-id="${song.id}" style="width: 30px; height: 30px; cursor: pointer;">
+            </td>
         `;
         
         // Add edit button click handler
@@ -2838,8 +2845,8 @@ class MasterSongListManager {
                     </button>
                 </div>
             </td>
-            <td>
-                <textarea class="form-control form-control-lg" id="edit-notes-${song.id}" rows="2">${this.escapeHtml(song.notes)}</textarea>
+            <td class="text-center">
+                <input type="checkbox" class="form-check-input" disabled style="width: 30px; height: 30px;">
             </td>
         `;
         
@@ -2893,8 +2900,7 @@ class MasterSongListManager {
                     song.title.toLowerCase().includes(searchTerm) ||
                     song.raga.toLowerCase().includes(searchTerm) ||
                     song.album.toLowerCase().includes(searchTerm) ||
-                    song.songNumber.toLowerCase().includes(searchTerm) ||
-                    song.notes.toLowerCase().includes(searchTerm)
+                    song.songNumber.toLowerCase().includes(searchTerm)
                 );
             });
         }
@@ -3065,8 +3071,7 @@ class MasterSongListManager {
             duration: document.getElementById(`edit-duration-${songId}`).value.trim(),
             raga: document.getElementById(`edit-raga-${songId}`).value.trim(),
             album: document.getElementById(`edit-album-${songId}`).value.trim(),
-            taught: taughtBtnGroup ? taughtBtnGroup.dataset.taught : 'Yes',
-            notes: document.getElementById(`edit-notes-${songId}`).value.trim()
+            taught: taughtBtnGroup ? taughtBtnGroup.dataset.taught : 'Yes'
         };
         
         // Validate required fields
@@ -3127,6 +3132,108 @@ class MasterSongListManager {
                 saveBtn.innerHTML = '<i class="bi bi-check-circle"></i> Save';
                 saveBtn.disabled = false;
             }
+        }
+    }
+    
+    static addSongsToPlaylist() {
+        // Cancel any edit mode first
+        if (this.currentEditRow) {
+            this.cancelEdit();
+        }
+        
+        // Get all checked checkboxes
+        const checkboxes = document.querySelectorAll('.song-select-checkbox:checked');
+        
+        if (checkboxes.length === 0) {
+            Utils.showToast('warning', 'Please select at least one song to add to the playlist');
+            return;
+        }
+        
+        // Collect selected song IDs
+        const selectedSongIds = Array.from(checkboxes).map(cb => parseInt(cb.dataset.songId));
+        
+        // Get the selected songs from the master list
+        const selectedSongs = this.allSongs.filter(song => selectedSongIds.includes(song.id));
+        
+        console.log(`Adding ${selectedSongs.length} songs to playlist:`, selectedSongs);
+        
+        // Get current playlist from AppState
+        if (!AppState.currentPlaylist || !Array.isArray(AppState.currentPlaylist)) {
+            Utils.showToast('error', 'No playlist generated. Please generate a playlist first.');
+            return;
+        }
+        
+        // Convert selected songs to playlist format
+        const newPlaylistSongs = selectedSongs.map(song => ({
+            id: song.id,
+            title: song.title,
+            songNumber: song.songNumber,
+            duration: song.duration,
+            raga: song.raga,
+            album: song.album
+        }));
+        
+        // Merge with existing playlist
+        const mergedPlaylist = [...AppState.currentPlaylist, ...newPlaylistSongs];
+        
+        console.log('Before sorting - merged playlist:', mergedPlaylist.map(s => ({album: s.album, songNumber: s.songNumber, title: s.title})));
+        
+        // Sort the merged playlist using the existing PlaylistOrder.sortPlaylist method
+        const sortedPlaylist = PlaylistOrder.sortPlaylist(mergedPlaylist);
+        
+        console.log('After sorting - sorted playlist:', sortedPlaylist.map(s => ({album: s.album, songNumber: s.songNumber, title: s.title})));
+        
+        // Update the global playlist using App.updatePlaylistDisplay
+        if (typeof App !== 'undefined' && typeof App.updatePlaylistDisplay === 'function') {
+            App.updatePlaylistDisplay(sortedPlaylist);
+        } else {
+            console.error('App.updatePlaylistDisplay not available');
+        }
+        
+        // Update statistics
+        const totalDuration = this.calculateTotalDuration(sortedPlaylist);
+        const totalSongs = sortedPlaylist.length;
+        
+        // Update the UI counters
+        const totalSongsEl = document.getElementById('totalSongs');
+        const totalDurationEl = document.getElementById('totalDuration');
+        if (totalSongsEl) totalSongsEl.textContent = totalSongs;
+        if (totalDurationEl) totalDurationEl.textContent = totalDuration;
+        
+        // Show success message
+        Utils.showToast('success', `Successfully added ${selectedSongs.length} song(s) to the playlist!`);
+        
+        // Uncheck all checkboxes
+        checkboxes.forEach(cb => cb.checked = false);
+        
+        // Close the modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('masterSongListModal'));
+        if (modal) {
+            modal.hide();
+        }
+    }
+    
+    static calculateTotalDuration(playlist) {
+        let totalSeconds = 0;
+        
+        playlist.forEach(song => {
+            if (song.duration) {
+                const parts = song.duration.split(':');
+                if (parts.length === 2) {
+                    const mins = parseInt(parts[0]) || 0;
+                    const secs = parseInt(parts[1]) || 0;
+                    totalSeconds += (mins * 60) + secs;
+                }
+            }
+        });
+        
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        
+        if (hours > 0) {
+            return `${hours}:${String(minutes).padStart(2, '0')}:00`;
+        } else {
+            return `${minutes}:00`;
         }
     }
 }
@@ -3676,6 +3783,14 @@ class App {
             console.error('Application initialization error:', error);
             Utils.showToast('error', 'Failed to initialize application');
         }
+    }
+    
+    static updatePlaylistDisplay(playlist) {
+        // Update the global playlist data
+        AppState.currentPlaylist = playlist;
+        
+        // Re-render the playlist using PlaylistManager
+        PlaylistManager.renderPlaylist(playlist);
     }
 }
 
