@@ -459,123 +459,66 @@ class PdfService {
                 printWrapper.appendChild(panel);
             }
 
-            // Build a clean table that contains only the required columns
-            const outTable = document.createElement('table');
-            outTable.style.width = '100%';
-            outTable.style.borderCollapse = 'collapse';
-            outTable.style.fontSize = '11px';
-            // Enable header repeat per page
-            outTable.style.pageBreakInside = 'auto';
-            outTable.style.marginTop = '6px';
-
-            const thead = document.createElement('thead');
-            thead.style.display = 'table-header-group';
-            const hr = document.createElement('tr');
-            // New PDF column set and order
-            const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
-            headers.forEach((h, i) => {
-                const th = document.createElement('th');
-                th.textContent = h;
-                th.style.border = '0.35px solid #000';
-                th.style.padding = '4px 6px';
-                th.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
-                // Column widths tuned for A4 with Hour column included
-                const widths = ['8%', '50%', '16%', '10%', '10%', '6%'];
-                th.style.width = widths[i];
-                th.style.whiteSpace = 'nowrap';
-                hr.appendChild(th);
-            });
-            thead.appendChild(hr);
-            outTable.appendChild(thead);
-
-            const tbody = document.createElement('tbody');
-            tbody.style.display = 'table-row-group';
+            // Get all playlist rows
             const rows = elements.playlistTableBody ? elements.playlistTableBody.querySelectorAll('tr') : [];
             
             // Calculate rows per page based on header content
-            let rowsPerPage = 30; // default
-            
-            // Estimate header lines to adjust rows per page
             let headerLines = 2; // Base: invocation row + minimum spacing
             
             if (hd && hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
-                // Estimate lines for prarthanai (assume ~80 chars per line at 11px font)
                 const prarthanaiLength = hd.selectedPrarthanai.text.length;
                 headerLines += Math.ceil(prarthanaiLength / 80);
             }
             
             if (hd && hd.selectedFunction && hd.selectedFunction.name) {
-                headerLines += 1; // Function name
+                headerLines += 1;
             }
             
             if (hd && hd.bhajanDetails && (hd.bhajanDetails.date || hd.bhajanDetails.startTime)) {
-                headerLines += 1; // Date/time line
+                headerLines += 1;
             }
             
             if (hd && hd.selectedMember && (hd.selectedMember.name || hd.selectedMember.address)) {
-                headerLines += 1; // Member name
+                headerLines += 1;
                 if (hd.selectedMember.address) {
-                    // Estimate address lines (assume ~60 chars per line for smaller font)
                     const addressLength = hd.selectedMember.address.length;
                     headerLines += Math.ceil(addressLength / 60);
                 }
                 if (hd.selectedMember.phone || (hd.selectedMember.phone_numbers && hd.selectedMember.phone_numbers.length)) {
-                    headerLines += 1; // Phone line
+                    headerLines += 1;
                 }
             }
             
-            // Adjust rows per page based on header size
-            // Each header line takes roughly the space of 1 table row
-            // First page: reduce by header lines + 2 for safety margin
-            // Subsequent pages: can fit more rows (no header box, just table header)
-            // Updated baseline to 38 from 32 to account for 30% smaller header fonts (invocation/prarthanai)
-            const firstPageRows = Math.max(15, 38 - headerLines); // Minimum 15 rows, adjust from 38 baseline
-            const subsequentPageRows = 35; // More rows on pages without the header box
+            // Calculate pagination
+            const firstPageRows = Math.max(15, 34 - Math.ceil(headerLines * 1.2));
+            const subsequentPageRows = 38;
             
-            rows.forEach((tr, idx) => {
+            // Helper function to create table header row
+            const createHeaderRow = () => {
+                const hr = document.createElement('tr');
+                const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
+                const widths = ['8%', '50%', '16%', '10%', '10%', '6%'];
+                headers.forEach((h, i) => {
+                    const th = document.createElement('th');
+                    th.textContent = h;
+                    th.style.border = '0.35px solid #000';
+                    th.style.padding = '4px 6px';
+                    th.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
+                    th.style.width = widths[i];
+                    th.style.whiteSpace = 'nowrap';
+                    th.style.backgroundColor = '#e9ecef';
+                    th.style.fontWeight = '700';
+                    hr.appendChild(th);
+                });
+                return hr;
+            };
+            
+            // Helper function to create data row
+            const createDataRow = (tr) => {
                 const tds = tr.querySelectorAll('td');
-                if (tds.length < 11) return; // ensure row structure present
+                if (tds.length < 11) return null;
                 
-                // Determine if we need a page break
-                let needsPageBreak = false;
-                if (idx === firstPageRows) {
-                    needsPageBreak = true; // First page break
-                } else if (idx > firstPageRows && (idx - firstPageRows) % subsequentPageRows === 0) {
-                    needsPageBreak = true; // Subsequent page breaks
-                }
-                
-                // Inject a page break + header only before new pages
-                if (needsPageBreak && idx > 0) {
-                    // Force a page break first
-                    const brTr = document.createElement('tr');
-                    const brTd = document.createElement('td');
-                    brTd.colSpan = 6;
-                    brTd.style.padding = '0';
-                    brTd.style.border = 'none';
-                    brTr.style.pageBreakBefore = 'always';
-                    brTr.style.breakBefore = 'page';
-                    brTr.appendChild(brTd);
-                    tbody.appendChild(brTr);
-
-                    // Then append a header-like row at the top of the new page
-                    const hdrRow = document.createElement('tr');
-                    const hdrs = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
-                    hdrs.forEach((txt, i) => {
-                        const td = document.createElement('td');
-                        td.textContent = txt;
-                        td.style.border = '0.35px solid #000';
-                        td.style.padding = '4px 6px';
-                        td.style.fontWeight = '700';
-                        td.style.backgroundColor = '#e9ecef';
-                        td.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
-                        hdrRow.appendChild(td);
-                    });
-                    tbody.appendChild(hdrRow);
-                }
                 const row = document.createElement('tr');
-                row.style.pageBreakInside = 'avoid';
-                row.style.breakInside = 'avoid';
-                // Map from on-screen table to export: skip drag/delete columns
                 const slno = tds[2]?.textContent.trim() || '';
                 const title = tds[3]?.textContent.trim() || '';
                 const raagam = tds[5]?.textContent.trim() || '';
@@ -583,6 +526,7 @@ class PdfService {
                 const hour = tds[9]?.textContent.trim() || '';
                 const alChk = tr.querySelector('.alankaaram-checkbox');
                 const al = alChk && alChk.checked ? '✓' : '';
+                
                 [slno, title, raagam, songNo, hour, al].forEach((val, i) => {
                     const td = document.createElement('td');
                     td.textContent = val;
@@ -592,10 +536,55 @@ class PdfService {
                     if (i === 5) { td.style.fontWeight = '700'; td.style.fontSize = '14px'; }
                     row.appendChild(td);
                 });
-                tbody.appendChild(row);
-            });
-            outTable.appendChild(tbody);
-            printWrapper.appendChild(outTable);
+                return row;
+            };
+            
+            // Build tables page by page
+            const rowsArray = Array.from(rows);
+            let currentIndex = 0;
+            let pageNum = 0;
+            
+            while (currentIndex < rowsArray.length) {
+                const rowsInThisPage = (pageNum === 0) ? firstPageRows : subsequentPageRows;
+                const pageRows = rowsArray.slice(currentIndex, currentIndex + rowsInThisPage);
+                
+                if (pageRows.length === 0) break;
+                
+                // Add page break div before subsequent pages
+                if (pageNum > 0) {
+                    const pageBreakDiv = document.createElement('div');
+                    pageBreakDiv.style.pageBreakBefore = 'always';
+                    pageBreakDiv.style.breakBefore = 'page';
+                    pageBreakDiv.style.height = '0';
+                    printWrapper.appendChild(pageBreakDiv);
+                }
+                
+                // Create table for this page
+                const pageTable = document.createElement('table');
+                pageTable.style.width = '100%';
+                pageTable.style.borderCollapse = 'collapse';
+                pageTable.style.fontSize = '11px';
+                pageTable.style.marginTop = pageNum === 0 ? '6px' : '0';
+                pageTable.style.pageBreakInside = 'avoid';
+                
+                // Add header
+                const thead = document.createElement('thead');
+                thead.appendChild(createHeaderRow());
+                pageTable.appendChild(thead);
+                
+                // Add data rows
+                const tbody = document.createElement('tbody');
+                pageRows.forEach(tr => {
+                    const dataRow = createDataRow(tr);
+                    if (dataRow) tbody.appendChild(dataRow);
+                });
+                pageTable.appendChild(tbody);
+                
+                printWrapper.appendChild(pageTable);
+                
+                currentIndex += rowsInThisPage;
+                pageNum++;
+            }
 
             // Wait a bit to ensure fonts are loaded
             await new Promise(resolve => setTimeout(resolve, 500));
@@ -605,8 +594,13 @@ class PdfService {
                 margin: [5,5,5,5],
                 filename: fileName,
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollY: 0 },
-                pagebreak: { mode: ['css','legacy'] },
+                html2canvas: { 
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#ffffff', 
+                    scrollY: 0
+                },
+                pagebreak: { mode: ['css', 'legacy'] },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             }).from(printWrapper).save();
         } catch (error) {
