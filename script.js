@@ -379,7 +379,13 @@ class PdfService {
             printWrapper.style.width = '190mm'; /* keep content inside A4 minus margins */
 
             // Header panel (centered), like the old PDF
-            const hd = AppState.playlistHeaderData || {};
+            // Use current AppState values so changes to member selection are reflected
+            const hd = {
+                selectedPrarthanai: AppState.selectedPrarthanai,
+                selectedFunction: AppState.selectedFunction,
+                selectedMember: AppState.selectedMember,
+                bhajanDetails: AppState.bhajanDetails
+            };
             if (hd && (hd.selectedPrarthanai || hd.selectedFunction || (hd.bhajanDetails && (hd.bhajanDetails.date || hd.bhajanDetails.startTime)))) {
                 const panel = document.createElement('div');
                 panel.style.border = '0.6px solid #999';
@@ -913,15 +919,15 @@ class PlaylistManager {
     }
 
     static renderPlaylistHeader() {
-        const headerData = AppState.playlistHeaderData;
-
-        console.log('Rendering playlist header with data:', headerData);
-        console.log('AppState selections:', {
+        // Use current AppState values so changes are reflected immediately
+        const headerData = {
             selectedPrarthanai: AppState.selectedPrarthanai,
             selectedFunction: AppState.selectedFunction,
             selectedMember: AppState.selectedMember,
             bhajanDetails: AppState.bhajanDetails
-        });
+        };
+
+        console.log('Rendering playlist header with data:', headerData);
 
         // Remove existing header if any
         const existingHeader = document.getElementById('playlistHeader');
@@ -1969,6 +1975,11 @@ class MemberManager {
         elements.selectedMemberAddress.textContent = member.address;
         elements.selectedMemberPhone.textContent = `Phone: ${member.phone_numbers.join(', ')}`;
         elements.selectedMemberDisplay.classList.remove('d-none');
+        
+        // Refresh playlist header if playlist exists to show updated member info
+        if (AppState.currentPlaylist && AppState.currentPlaylist.length > 0) {
+            PlaylistManager.renderPlaylistHeader();
+        }
         
         // Auto-collapse the bhajan details selector (since member is part of bhajan details)
         this.collapseSelector('bhajan');
