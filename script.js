@@ -497,7 +497,7 @@ class PdfService {
             const createHeaderRow = () => {
                 const hr = document.createElement('tr');
                 const headers = ['Sl.No', 'Song Title', 'Raagam', 'Sthalam', 'Song No', 'Hour', 'A'];
-                const widths = ['5%', '35%', '13%', '24%', '9%', '8%', '6%']; // Increased Song Title from 30% to 35%, adjusted other columns
+                const widths = ['5%', '35%', '13%', '16%', '17%', '8%', '6%']; // Song No 17%, Sthalam 16%
                 headers.forEach((h, i) => {
                     const th = document.createElement('th');
                     th.textContent = h;
