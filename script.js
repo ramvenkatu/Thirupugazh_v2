@@ -375,8 +375,8 @@ class PdfService {
             printWrapper.appendChild(styleEl);
             printWrapper.style.fontFamily = "'Noto Sans Tamil', 'Noto Serif Tamil', 'Lohit Tamil', 'Samyak Tamil', 'Tamil MN', 'Tamil Sangam MN', 'Arial Unicode MS', sans-serif";
             printWrapper.style.padding = '0';
-            printWrapper.style.margin = '0';
-            printWrapper.style.width = '190mm'; /* keep content inside A4 minus margins */
+            printWrapper.style.margin = '0 auto'; // Center horizontally
+            printWrapper.style.width = '187.34mm'; /* Reduced by 5% from 197.2mm to prevent truncation */
 
             // Header panel (centered), like the old PDF
             // Use current AppState values so changes to member selection are reflected
@@ -489,21 +489,23 @@ class PdfService {
                 }
             }
             
-            // Calculate pagination
-            const firstPageRows = Math.max(15, 34 - Math.ceil(headerLines * 1.2));
-            const subsequentPageRows = 38;
+            // Calculate pagination - adjusted for header space
+            const firstPageRows = Math.max(20, 42 - Math.ceil(headerLines * 1.5)); // More conservative calculation
+            const subsequentPageRows = 48;
             
             // Helper function to create table header row
             const createHeaderRow = () => {
                 const hr = document.createElement('tr');
-                const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
-                const widths = ['8%', '50%', '16%', '10%', '10%', '6%'];
+                const headers = ['Sl.No', 'Song Title', 'Raagam', 'Sthalam', 'Song No', 'Hour', 'A'];
+                const widths = ['5%', '35%', '13%', '24%', '9%', '8%', '6%']; // Increased Song Title from 30% to 35%, adjusted other columns
                 headers.forEach((h, i) => {
                     const th = document.createElement('th');
                     th.textContent = h;
-                    th.style.border = '0.35px solid #000';
-                    th.style.padding = '4px 6px';
-                    th.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
+                    th.style.borderWidth = '0.5px';
+                    th.style.borderStyle = 'solid';
+                    th.style.borderColor = '#999';
+                    th.style.padding = '2px 4px';
+                    th.style.textAlign = (i === 1 || i === 2 || i === 3) ? 'left' : 'center';
                     th.style.width = widths[i];
                     th.style.whiteSpace = 'nowrap';
                     th.style.backgroundColor = '#e9ecef';
@@ -522,18 +524,42 @@ class PdfService {
                 const slno = tds[2]?.textContent.trim() || '';
                 const title = tds[3]?.textContent.trim() || '';
                 const raagam = tds[5]?.textContent.trim() || '';
+                const album = tds[6]?.textContent.trim() || ''; // Get album data
                 const songNo = tds[4]?.textContent.trim() || '';
                 const hour = tds[9]?.textContent.trim() || '';
                 const alChk = tr.querySelector('.alankaaram-checkbox');
                 const al = alChk && alChk.checked ? '✓' : '';
                 
-                [slno, title, raagam, songNo, hour, al].forEach((val, i) => {
+                [slno, title, raagam, album, songNo, hour, al].forEach((val, i) => {
                     const td = document.createElement('td');
                     td.textContent = val;
-                    td.style.border = '0.35px solid #000';
-                    td.style.padding = '4px 6px';
-                    td.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
-                    if (i === 5) { td.style.fontWeight = '700'; td.style.fontSize = '14px'; }
+                    td.style.borderWidth = '0.5px';
+                    td.style.borderStyle = 'solid';
+                    td.style.borderColor = '#999';
+                    td.style.padding = '2px 4px';
+                    td.style.textAlign = (i === 1 || i === 2 || i === 3) ? 'left' : 'center';
+                    td.style.backgroundColor = '#f5f5f5'; // Light gray background
+                    td.style.color = '#000'; // Black color
+                    
+                    // Different styling for different columns
+                    if (i === 1) {
+                        // Song Title - keep original size and bold
+                        td.style.fontWeight = '600';
+                        td.style.fontSize = '12.65px';
+                    } else if (i === 2 || i === 3) {
+                        // Raagam and Sthalam - reduced by 30% from 11.5px to 8.05px
+                        td.style.fontWeight = '500';
+                        td.style.fontSize = '8.05px';
+                    } else if (i === 6) {
+                        // Alankaaram
+                        td.style.fontWeight = '700';
+                        td.style.fontSize = '16.1px';
+                    } else {
+                        // Other columns
+                        td.style.fontWeight = '600';
+                        td.style.fontSize = '12px';
+                    }
+                    
                     row.appendChild(td);
                 });
                 return row;
@@ -566,6 +592,9 @@ class PdfService {
                 pageTable.style.fontSize = '11px';
                 pageTable.style.marginTop = pageNum === 0 ? '6px' : '0';
                 pageTable.style.pageBreakInside = 'avoid';
+                pageTable.style.borderWidth = '0.5px';
+                pageTable.style.borderStyle = 'solid';
+                pageTable.style.borderColor = '#999';
                 
                 // Add header
                 const thead = document.createElement('thead');
@@ -591,7 +620,7 @@ class PdfService {
 
             const fileName = `thirupugazh_playlist_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`;
             await html2pdf().set({
-                margin: [5,5,5,5],
+                margin: [6.4, 6.4, 6.4, 6.4], // 0.64cm on all sides
                 filename: fileName,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { 
