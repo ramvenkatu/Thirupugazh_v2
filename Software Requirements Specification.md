@@ -3,8 +3,8 @@ Here is the complete Software Requirements Specification (SRS) document, updated
 ***
 
 ### **Software Requirements Specification: Thirupugazh Song List Generator**
-**Version:** 3.3
-**Date:** October 26, 2025
+**Version:** 3.4
+**Date:** December 31, 2025
 
 ---
 ### 1. Introduction
@@ -15,7 +15,27 @@ This document specifies the requirements for the Thirupugazh Song List Generator
 #### 1.2 Scope
 The system will consist of a client-side web application and a server-side Node.js backend. The web interface will allow users to generate playlists with comprehensive event details including prayer selection, function/occasion specification, bhajan scheduling details, and host member coordination. The backend will house a rule-based engine to construct playlists according to the strict sequence, manage persistent history in a MySQL database, and securely interact with LLM services. The scope includes glassmorphism UI design, comprehensive event management, enhanced PDF generation with headers, and robust error handling.
 
-#### 1.3 Latest Updates (Version 3.3)
+#### 1.3 Latest Updates (Version 3.4 - December 31, 2025)
+* **Intelligent PDF Filename Generation:** PDF files now automatically generated with descriptive names in format: `Occasion_DD-MM-YYYY_Day_HHMM[AM/PM]_HHMM[AM/PM].pdf` (e.g., `குரு_பூர்ணிமா_30-10-2025_Thursday_0800AM_1000AM.pdf`). Filenames incorporate function/occasion name, date (day-month-year), day of week, and time range in 12-hour format with AM/PM designation for easy identification and organization.
+* **Optimized PDF Rendering:** Enhanced PDF generation with html2pdf.js best practices:
+  - **High-Resolution Output:** Increased canvas scale from 1.5 to 4 for sharper text and finer border rendering
+  - **Thin Borders:** Implemented 0.5pt solid borders with light gray (#ccc) color for professional appearance
+  - **Border-Collapse:** Proper use of `border-collapse: collapse` with `cellspacing="0"` for clean single-line borders
+  - **Calibri 14pt Font:** Professional font sizing with mixed sizes (14pt for song titles, 11pt for Raagam/Hour columns)
+* **Improved Pagination:** Optimized row distribution across pages:
+  - **First Page:** 38 songs with header panel
+  - **Subsequent Pages:** 51 songs per page with 8px top margin to prevent border bleeding
+  - **Clean Page Breaks:** Separate tables per page with explicit page break divs preventing content spillage
+* **Enhanced Table Formatting:** 
+  - **6-Column Layout:** Sl.No (5%), Song Title (45%), Raagam (18%), Song No (18%), Hour (8%), A (6%)
+  - **Minimal Cell Padding:** 0px vertical, 1px horizontal for compact layout
+  - **Line Height:** 1.0 for tight spacing, allowing maximum content per page
+* **Visual Refinements:**
+  - **Light Gray Borders:** Subtle #ccc borders replacing heavier #999 for cleaner professional look
+  - **Compact Header Panel:** Reduced spacing (11px fonts, 2px margins) to maximize table space
+  - **3mm Page Margins:** Minimal margins for maximum content area
+
+#### 1.3.1 Previous Updates (Version 3.3 - October 26, 2025)
 * **Header Alignment and Invocation:** Playlist header refined. Invocation spelling standardized to "ஓம் ஸ்ரீ மஹாகணபதயே நமஹ" (not மகாகணபதயே). Invocation appears left/right; Function and Date|Day|Time centered; Host details centered.
 * **Bhajan Details Layout:** Fixed grid widths (2-2-3-3-2) and input-group sizing so Date, Day, Start, End, and Duration are fully visible on one row (wraps gracefully on smaller screens).
 * **Playlist UI Columns:** Renamed "Alankaaram" column to "A". Hour label compacted to "Hr" (e.g., "1st Hr").
@@ -227,13 +247,32 @@ The application is a client-server system.
 * **FR-3.1: Streamlined Action Layout:** The system shall organize primary actions (Generate Playlist, Export PDF, Clear Playlist) in a single, consolidated location below the duration input for improved user workflow.
 * **FR-3.2: Playlist Table Display:** The generated playlist shall be rendered in a Bootstrap-styled table and include the following columns (drag and delete controls may appear as leading columns in the UI): "Sl.No", "Song Title", "Song No", "Raagam", "Album", "Duration", "Cum. Time", "Hour" (shown as e.g., "1st Hr"), and "A" (Alankaaram). The "Alankaaram" header label shall display as "A" in the UI.
 * **FR-5.3: Enhanced PDF Export:** The system shall provide comprehensive PDF generation capabilities with the following specifications:
-    * **FR-5.3.1: Portrait Orientation:** PDF documents shall be generated in A4 portrait orientation with minimal margins (~5mm) for maximum content utilization
-    * **FR-5.3.2: Font Stack:** PDF shall use the 'Noto Sans Tamil', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif stack for Tamil text fidelity
-    * **FR-5.3.3: Comprehensive Header Panel:** PDF shall include a centered header panel containing invocation (left/right), prarthanai text, function (bold), date|day|time, and host details
-    * **FR-5.3.4: Column Set and Order:** PDF table shall contain exactly 5 columns in this order: Sl.No, Song Title, Raagam, Song No, A (Alankaaram). No Duration or Cumulative Time columns in the PDF
-    * **FR-5.3.5: Alankaaram Mark:** The "A" column shall display a bold checkmark (✓) when enabled; leave empty when not
-    * **FR-5.3.6: Repeating Headers:** Column headers shall repeat on every page. If a table spans multiple pages, a column header row shall appear at the top of each page
-    * **FR-5.3.7: Borders:** Table borders shall be thin (~0.35px) for a light, professional grid
+    * **FR-5.3.1: Portrait Orientation:** PDF documents shall be generated in A4 portrait orientation with minimal margins (3mm) for maximum content utilization
+    * **FR-5.3.2: Intelligent Filename Generation:** PDF files shall be automatically named using the format: `Occasion_DD-MM-YYYY_Day_HHMM[AM/PM]_HHMM[AM/PM].pdf`
+        - **Occasion:** Function/occasion name with spaces and special characters replaced by underscores
+        - **Date:** DD-MM-YYYY format (e.g., 30-10-2025) with leading zeros
+        - **Day:** Day of week (e.g., Sunday, Monday) from bhajan details
+        - **Time Range:** Start time and end time in 12-hour format with AM/PM designation (e.g., 0800AM, 1000AM)
+        - **Example:** `குரு_பூர்ணிமா_30-10-2025_Thursday_0800AM_1000AM.pdf`
+        - **Fallback:** If event details unavailable, defaults to `thirupugazh_playlist.pdf`
+    * **FR-5.3.3: Font System:** PDF shall use Calibri 14pt as primary font with mixed sizing:
+        - **Song Title:** 14pt for prominence and readability
+        - **Raagam and Hour:** 11pt for compact display
+        - **Other columns:** 14pt standard
+    * **FR-5.3.4: High-Resolution Rendering:** PDF generation shall use html2canvas scale factor of 4 (up from 1.5) for sharp text rendering and fine border details
+    * **FR-5.3.5: Professional Borders:** Table borders shall use 0.5pt solid lines in light gray (#ccc) for subtle, professional appearance with proper border-collapse support
+    * **FR-5.3.6: Comprehensive Header Panel:** PDF shall include a centered header panel containing invocation (left/right), prarthanai text, function (bold), date|day|time, and host details
+    * **FR-5.3.7: Column Set and Order:** PDF table shall contain exactly 6 columns in this order: Sl.No (5%), Song Title (45%), Raagam (18%), Song No (18%), Hour (8%), A (6%)
+    * **FR-5.3.8: Alankaaram Mark:** The "A" column shall display a checkmark (✓) when enabled; leave empty when not
+    * **FR-5.3.9: Repeating Headers:** Column headers shall repeat on every page with proper top borders
+    * **FR-5.3.10: Optimized Pagination:** 
+        - **First Page:** 38 songs (accounting for header panel space)
+        - **Subsequent Pages:** 51 songs per page with 8px top margin
+        - **Clean Breaks:** Each table starts fresh after explicit page break div
+    * **FR-5.3.11: Compact Layout:** 
+        - **Cell Padding:** 0px vertical, 1px horizontal for maximum density
+        - **Line Height:** 1.0 for tight row spacing
+        - **Header Spacing:** Minimal 2px margins between header elements
 * **FR-3.5: Alankaaram Functionality:** The system shall provide comprehensive Alankaaram support with the following capabilities:
     * **FR-3.5.1: Checkbox Selection:** Each song row shall include a checkbox in the Alankaaram column allowing users to enable/disable Alankaaram for individual songs.
     * **FR-3.5.2: Time Duration Input:** When Alankaaram is enabled for a song, a time input field shall appear with a default value of 5 minutes, allowing users to specify duration between 1–30 minutes.

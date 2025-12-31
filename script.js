@@ -587,7 +587,47 @@ class PdfService {
             // Wait a bit to ensure fonts are loaded
             await new Promise(resolve => setTimeout(resolve, 500));
 
-            const fileName = `thirupugazh_playlist_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`;
+            // Generate filename: Occasion_Date_Day_FromTime_ToTime.pdf
+            let fileName = 'thirupugazh_playlist';
+            
+            if (hd && hd.selectedFunction && hd.selectedFunction.name) {
+                // Clean occasion name - remove spaces and special characters
+                const occasion = hd.selectedFunction.name.replace(/[^a-zA-Z0-9\u0B80-\u0BFF]/g, '_');
+                fileName = occasion;
+            }
+            
+            if (hd && hd.bhajanDetails) {
+                if (hd.bhajanDetails.date) {
+                    const dateObj = new Date(hd.bhajanDetails.date);
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    const year = dateObj.getFullYear();
+                    const dateStr = `${day}-${month}-${year}`;
+                    fileName += `_${dateStr}`;
+                }
+                
+                if (hd.bhajanDetails.day) {
+                    const day = hd.bhajanDetails.day.replace(/[^a-zA-Z0-9]/g, '');
+                    fileName += `_${day}`;
+                }
+                
+                if (hd.bhajanDetails.startTime && hd.bhajanDetails.endTime) {
+                    // Convert 24-hour time to 12-hour format with AM/PM
+                    const formatTime = (time24) => {
+                        const [hours, minutes] = time24.split(':').map(Number);
+                        const period = hours >= 12 ? 'PM' : 'AM';
+                        const hours12 = hours % 12 || 12;
+                        return `${hours12.toString().padStart(2, '0')}${minutes.toString().padStart(2, '0')}${period}`;
+                    };
+                    
+                    const fromTime = formatTime(hd.bhajanDetails.startTime);
+                    const toTime = formatTime(hd.bhajanDetails.endTime);
+                    fileName += `_${fromTime}_${toTime}`;
+                }
+            }
+            
+            fileName += '.pdf';
+
             await html2pdf().set({
                 margin: [3, 3, 3, 3], // 3mm margins
                 filename: fileName,
