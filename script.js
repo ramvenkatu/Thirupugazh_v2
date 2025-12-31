@@ -369,6 +369,9 @@ class PdfService {
                 body, div, span, table, td, th {
                     font-family: 'Noto Sans Tamil', 'Noto Serif Tamil', 'Lohit Tamil', 'Samyak Tamil', 'Tamil MN', 'Tamil Sangam MN', 'Arial Unicode MS', sans-serif;
                 }
+                table, th, td {
+                    border: 0.25px solid #ccc !important;
+                }
             `;
             
             const printWrapper = document.createElement('div');
@@ -401,8 +404,8 @@ class PdfService {
                 invRow.style.display = 'flex';
                 invRow.style.justifyContent = 'space-between';
                 invRow.style.fontWeight = '700';
-                invRow.style.fontSize = '0.7em'; // Reduced by 30%
-                invRow.style.marginBottom = '4px';
+                invRow.style.fontSize = '11px';
+                invRow.style.marginBottom = '2px';
                 const invL = document.createElement('span'); invL.textContent = 'ஓம் ஸ்ரீ மஹாகணபதயே நமஹ';
                 const invR = document.createElement('span'); invR.textContent = 'ஓம் ஸ்ரீ குருப்யோ நமஹ';
                 invRow.appendChild(invL); invRow.appendChild(invR);
@@ -411,8 +414,8 @@ class PdfService {
                 // Prarthanai text (Tamil) if any
                 if (hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
                     const prarthanaiDiv = document.createElement('div');
-                    prarthanaiDiv.style.marginBottom = '6px';
-                    prarthanaiDiv.style.fontSize = '0.7em'; // Reduced by 30%
+                    prarthanaiDiv.style.marginBottom = '2px';
+                    prarthanaiDiv.style.fontSize = '11px';
                     prarthanaiDiv.style.whiteSpace = 'pre-wrap'; // Allow text wrapping but preserve spaces
                     
                     const p = document.createElement('span');
@@ -426,7 +429,7 @@ class PdfService {
                     const fn = document.createElement('div');
                     fn.textContent = hd.selectedFunction.name;
                     fn.style.fontWeight = '700';
-                    fn.style.marginBottom = '4px';
+                    fn.style.marginBottom = '2px';
                     panel.appendChild(fn);
                 }
                 // Date | Day | Time
@@ -443,15 +446,16 @@ class PdfService {
                     if (segs.length) {
                         const line = document.createElement('div');
                         line.textContent = segs.join(' | ');
-                        line.style.marginBottom = '6px';
+                        line.style.marginBottom = '2px';
                         panel.appendChild(line);
                     }
                 }
                 // Host
                 if (hd.selectedMember && (hd.selectedMember.name || hd.selectedMember.address || hd.selectedMember.phone || (hd.selectedMember.phone_numbers && hd.selectedMember.phone_numbers.length))) {
                     const host = document.createElement('div');
-                    host.style.fontSize = '13.2px'; // Increased by 20% from 11px
+                    host.style.fontSize = '11px';
                     host.style.color = '#333';
+                    host.style.lineHeight = '1.2';
                     const phone = hd.selectedMember.phone || (hd.selectedMember.phone_numbers ? hd.selectedMember.phone_numbers.join(', ') : '');
                     host.innerHTML = `${hd.selectedMember.name || ''}<br>${hd.selectedMember.address || ''}<br>${phone || ''}`;
                     panel.appendChild(host);
@@ -462,54 +466,28 @@ class PdfService {
             // Get all playlist rows
             const rows = elements.playlistTableBody ? elements.playlistTableBody.querySelectorAll('tr') : [];
             
-            // Calculate rows per page based on header content
-            let headerLines = 2; // Base: invocation row + minimum spacing
-            
-            if (hd && hd.selectedPrarthanai && hd.selectedPrarthanai.text) {
-                const prarthanaiLength = hd.selectedPrarthanai.text.length;
-                headerLines += Math.ceil(prarthanaiLength / 80);
-            }
-            
-            if (hd && hd.selectedFunction && hd.selectedFunction.name) {
-                headerLines += 1;
-            }
-            
-            if (hd && hd.bhajanDetails && (hd.bhajanDetails.date || hd.bhajanDetails.startTime)) {
-                headerLines += 1;
-            }
-            
-            if (hd && hd.selectedMember && (hd.selectedMember.name || hd.selectedMember.address)) {
-                headerLines += 1;
-                if (hd.selectedMember.address) {
-                    const addressLength = hd.selectedMember.address.length;
-                    headerLines += Math.ceil(addressLength / 60);
-                }
-                if (hd.selectedMember.phone || (hd.selectedMember.phone_numbers && hd.selectedMember.phone_numbers.length)) {
-                    headerLines += 1;
-                }
-            }
-            
-            // Calculate pagination - adjusted for header space
-            const firstPageRows = Math.max(20, 42 - Math.ceil(headerLines * 1.5)); // More conservative calculation
-            const subsequentPageRows = 48;
+            // First page has header panel, subsequent pages have more room
+            const firstPageRows = 38; // Fits 38 songs on first page with header
+            const subsequentPageRows = 51; // Subsequent pages can fit 51 songs (increased from 48)
             
             // Helper function to create table header row
             const createHeaderRow = () => {
                 const hr = document.createElement('tr');
-                const headers = ['Sl.No', 'Song Title', 'Raagam', 'Sthalam', 'Song No', 'Hour', 'A'];
-                const widths = ['5%', '35%', '13%', '16%', '17%', '8%', '6%']; // Song No 17%, Sthalam 16%
+                const headers = ['Sl.No', 'Song Title', 'Raagam', 'Song No', 'Hour', 'A'];
+                const widths = ['5%', '45%', '18%', '18%', '8%', '6%'];
                 headers.forEach((h, i) => {
                     const th = document.createElement('th');
                     th.textContent = h;
-                    th.style.borderWidth = '0.5px';
-                    th.style.borderStyle = 'solid';
-                    th.style.borderColor = '#999';
-                    th.style.padding = '2px 4px';
-                    th.style.textAlign = (i === 1 || i === 2 || i === 3) ? 'left' : 'center';
+                    th.style.border = '0.5pt solid #ccc';
+                    th.style.padding = '0px 1px';
+                    th.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
                     th.style.width = widths[i];
                     th.style.whiteSpace = 'nowrap';
-                    th.style.backgroundColor = '#e9ecef';
+                    th.style.backgroundColor = '#fff';
                     th.style.fontWeight = '700';
+                    th.style.fontFamily = 'Calibri, sans-serif';
+                    th.style.fontSize = '14pt';
+                    th.style.lineHeight = '1.0';
                     hr.appendChild(th);
                 });
                 return hr;
@@ -524,40 +502,30 @@ class PdfService {
                 const slno = tds[2]?.textContent.trim() || '';
                 const title = tds[3]?.textContent.trim() || '';
                 const raagam = tds[5]?.textContent.trim() || '';
-                const album = tds[6]?.textContent.trim() || ''; // Get album data
                 const songNo = tds[4]?.textContent.trim() || '';
                 const hour = tds[9]?.textContent.trim() || '';
                 const alChk = tr.querySelector('.alankaaram-checkbox');
                 const al = alChk && alChk.checked ? '✓' : '';
                 
-                [slno, title, raagam, album, songNo, hour, al].forEach((val, i) => {
+                [slno, title, raagam, songNo, hour, al].forEach((val, i) => {
                     const td = document.createElement('td');
                     td.textContent = val;
-                    td.style.borderWidth = '0.5px';
-                    td.style.borderStyle = 'solid';
-                    td.style.borderColor = '#999';
-                    td.style.padding = '2px 4px';
-                    td.style.textAlign = (i === 1 || i === 2 || i === 3) ? 'left' : 'center';
-                    td.style.backgroundColor = '#f5f5f5'; // Light gray background
-                    td.style.color = '#000'; // Black color
+                    td.style.border = '0.5pt solid #ccc';
+                    td.style.padding = '0px 1px';
+                    td.style.textAlign = (i === 1 || i === 2) ? 'left' : 'center';
+                    td.style.backgroundColor = '#fff';
+                    td.style.color = '#000';
+                    td.style.fontFamily = 'Calibri, sans-serif';
+                    td.style.fontWeight = 'normal';
+                    td.style.lineHeight = '1.0';
                     
-                    // Different styling for different columns
-                    if (i === 1) {
-                        // Song Title - keep original size and bold
-                        td.style.fontWeight = '600';
-                        td.style.fontSize = '12.65px';
-                    } else if (i === 2 || i === 3) {
-                        // Raagam and Sthalam - reduced by 30% from 11.5px to 8.05px
-                        td.style.fontWeight = '500';
-                        td.style.fontSize = '8.05px';
-                    } else if (i === 6) {
-                        // Alankaaram
-                        td.style.fontWeight = '700';
-                        td.style.fontSize = '16.1px';
+                    // Set font size based on column - Song Title stays 14pt
+                    if (i === 2 || i === 4) {
+                        // Raagam and Hour columns - 11pt (slightly smaller)
+                        td.style.fontSize = '11pt';
                     } else {
-                        // Other columns
-                        td.style.fontWeight = '600';
-                        td.style.fontSize = '12px';
+                        // All other columns including Song Title - 14pt
+                        td.style.fontSize = '14pt';
                     }
                     
                     row.appendChild(td);
@@ -587,14 +555,15 @@ class PdfService {
                 
                 // Create table for this page
                 const pageTable = document.createElement('table');
+                pageTable.setAttribute('cellspacing', '0');
+                pageTable.setAttribute('cellpadding', '0');
                 pageTable.style.width = '100%';
                 pageTable.style.borderCollapse = 'collapse';
-                pageTable.style.fontSize = '11px';
-                pageTable.style.marginTop = pageNum === 0 ? '6px' : '0';
+                pageTable.style.fontSize = '14pt';
+                pageTable.style.fontFamily = 'Calibri, sans-serif';
+                pageTable.style.marginTop = pageNum === 0 ? '2px' : '8px';
                 pageTable.style.pageBreakInside = 'avoid';
-                pageTable.style.borderWidth = '0.5px';
-                pageTable.style.borderStyle = 'solid';
-                pageTable.style.borderColor = '#999';
+                pageTable.style.border = '0.5pt solid #ccc';
                 
                 // Add header
                 const thead = document.createElement('thead');
@@ -620,11 +589,11 @@ class PdfService {
 
             const fileName = `thirupugazh_playlist_${new Date().toISOString().slice(0,10).replace(/-/g,'')}.pdf`;
             await html2pdf().set({
-                margin: [6.4, 6.4, 6.4, 6.4], // 0.64cm on all sides
+                margin: [3, 3, 3, 3], // 3mm margins
                 filename: fileName,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { 
-                    scale: 2, 
+                    scale: 4, // Increased from 1.5 to 4 for finer details
                     useCORS: true, 
                     backgroundColor: '#ffffff', 
                     scrollY: 0
