@@ -651,7 +651,21 @@ class PdfService {
 class PlaylistManager {
     static renderPlaylist(playlist) {
         AppState.currentPlaylist = playlist;
-        AppState.alankaaramData = {}; // Clear Alankaaram data for new playlist
+        
+        console.log('Before cleanup - Alankaaram data:', JSON.stringify(AppState.alankaaramData));
+        console.log('Current playlist song IDs:', playlist.map(s => s.id));
+        
+        // Only remove Alankaaram data for songs that are no longer in the playlist
+        // Convert both to strings for consistent comparison
+        const playlistSongIds = new Set(playlist.map(song => String(song.id)));
+        Object.keys(AppState.alankaaramData).forEach(songId => {
+            if (!playlistSongIds.has(String(songId))) {
+                console.log('Removing Alankaaram data for song:', songId);
+                delete AppState.alankaaramData[songId];
+            }
+        });
+        
+        console.log('After cleanup - Alankaaram data:', JSON.stringify(AppState.alankaaramData));
         
         if (!playlist || playlist.length === 0) {
             this.showEmptyState();
@@ -893,6 +907,9 @@ class PlaylistManager {
                     enabled: isChecked,
                     time: isChecked ? (timeInput.value || '5') : '5'
                 };
+                
+                console.log('Checkbox changed for song ID:', song.id, 'Checked:', isChecked);
+                console.log('Updated Alankaaram data:', JSON.stringify(AppState.alankaaramData));
 
                 // Update cumulative durations and playlist stats
                 this.updateCumulativeDurations();
@@ -1045,9 +1062,19 @@ class PlaylistManager {
     }
 
     static removeSong(songId) {
+        console.log('Removing song with ID:', songId);
+        console.log('Alankaaram data before removal:', JSON.stringify(AppState.alankaaramData));
+        
         const index = AppState.currentPlaylist.findIndex(song => song.id === songId);
         if (index !== -1) {
             const removedSong = AppState.currentPlaylist.splice(index, 1)[0];
+            
+            // Remove Alankaaram data for this specific song (check both string and number keys)
+            delete AppState.alankaaramData[songId];
+            delete AppState.alankaaramData[String(songId)];
+            
+            console.log('Alankaaram data after deletion:', JSON.stringify(AppState.alankaaramData));
+            
             this.renderPlaylist(AppState.currentPlaylist);
             Utils.showToast('success', `Removed: ${removedSong.title}`);
             
@@ -1774,7 +1801,7 @@ class PrarthanaiManager {
         prarthanaisData.verses.forEach(verse => {
             const firstWords = this.getFirstWords(verse.text, 3);
             const button = document.createElement('button');
-            button.className = 'btn btn-outline-primary btn-sm';
+            button.className = 'btn btn-outline-primary prarthanai-btn';
             button.dataset.verseId = verse.id;
             button.innerHTML = `${firstWords}...`;
             button.title = verse.text; // Full text on hover
@@ -1867,24 +1894,22 @@ class FunctionManager {
         container.innerHTML = '';
         
         functionsData.functions.forEach(func => {
-            const cardDiv = document.createElement('div');
-            cardDiv.className = 'col-12';
+            const buttonDiv = document.createElement('div');
+            buttonDiv.className = 'col-6';
             
-            cardDiv.innerHTML = `
-                <div class="card function-card cursor-pointer" data-function-id="${func.id}">
-                    <div class="card-body py-2 px-3">
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-calendar-event me-2 text-primary"></i>
-                            <span class="fw-bold">${func.name}</span>
-                        </div>
-                    </div>
-                </div>
+            const button = document.createElement('button');
+            button.className = 'btn btn-outline-primary btn-sm w-100 text-start function-btn';
+            button.style.fontSize = '0.85rem'; // Ensure smaller font size
+            button.dataset.functionId = func.id;
+            button.innerHTML = `
+                <i class="bi bi-calendar-event me-2"></i>
+                <span>${func.name}</span>
             `;
             
-            const card = cardDiv.querySelector('.function-card');
-            card.addEventListener('click', () => this.selectFunction(func));
+            button.addEventListener('click', () => this.selectFunction(func));
             
-            container.appendChild(cardDiv);
+            buttonDiv.appendChild(button);
+            container.appendChild(buttonDiv);
         });
     }
     
@@ -1892,13 +1917,15 @@ class FunctionManager {
         // Update application state
         AppState.selectedFunction = func;
         
-        // Update card states
-        elements.functionContainer.querySelectorAll('.function-card').forEach(card => {
-            card.classList.remove('border-primary', 'bg-primary', 'text-white');
+        // Update button states
+        elements.functionContainer.querySelectorAll('.function-btn').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
         });
         
-        const selectedCard = elements.functionContainer.querySelector(`[data-function-id="${func.id}"]`);
-        selectedCard.classList.add('border-primary', 'bg-primary', 'text-white');
+        const selectedBtn = elements.functionContainer.querySelector(`[data-function-id="${func.id}"]`);
+        selectedBtn.classList.remove('btn-outline-primary');
+        selectedBtn.classList.add('btn-primary');
         
         // Show selected function
         elements.selectedFunctionText.textContent = func.name;
@@ -1933,14 +1960,16 @@ class FunctionManager {
     static updateSelectedDisplay(func) {
         if (!func) return;
         
-        // Update card states
-        elements.functionContainer.querySelectorAll('.function-card').forEach(card => {
-            card.classList.remove('border-primary', 'bg-primary', 'text-white');
+        // Update button states
+        elements.functionContainer.querySelectorAll('.function-btn').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
         });
         
-        const selectedCard = elements.functionContainer.querySelector(`[data-function-id="${func.id}"]`);
-        if (selectedCard) {
-            selectedCard.classList.add('border-primary', 'bg-primary', 'text-white');
+        const selectedBtn = elements.functionContainer.querySelector(`[data-function-id="${func.id}"]`);
+        if (selectedBtn) {
+            selectedBtn.classList.remove('btn-outline-primary');
+            selectedBtn.classList.add('btn-primary');
         }
         
         // Show selected function
@@ -2280,10 +2309,6 @@ class EventHandlers {
         // Window events
         window.addEventListener('beforeunload', this.handleBeforeUnload);
 
-        // Alankaaram checkbox functionality (event delegation)
-        document.addEventListener('change', this.handleAlankaaramCheckbox);
-        document.addEventListener('input', this.handleAlankaaramTimeChange);
-
         // Playlist table actions (event delegation)
         if (elements.playlistTableBody) {
             elements.playlistTableBody.addEventListener('click', this.handlePlaylistClick);
@@ -2480,51 +2505,6 @@ class EventHandlers {
             e.returnValue = 'Playlist generation is in progress. Are you sure you want to leave?';
         }
     }
-
-    static handleAlankaaramCheckbox(e) {
-        if (e.target.classList.contains('alankaaram-checkbox')) {
-            const songIndex = parseInt(e.target.dataset.songIndex);
-            const timeContainer = e.target.closest('.alankaaram-container').querySelector('.alankaaram-time-container');
-            
-            if (e.target.checked) {
-                timeContainer.classList.remove('d-none');
-                // Initialize Alankaaram data if not exists
-                if (!AppState.alankaaramData) {
-                    AppState.alankaaramData = {};
-                }
-                AppState.alankaaramData[songIndex] = {
-                    enabled: true,
-                    minutes: 4
-                };
-            } else {
-                timeContainer.classList.add('d-none');
-                if (AppState.alankaaramData && AppState.alankaaramData[songIndex]) {
-                    AppState.alankaaramData[songIndex].enabled = false;
-                }
-            }
-            
-            // Auto-save after alankaaram change
-            PlaylistStorage.debouncedAutoSave();
-        }
-    }
-
-    static handleAlankaaramTimeChange(e) {
-        if (e.target.classList.contains('alankaaram-time')) {
-            const songIndex = parseInt(e.target.dataset.songIndex);
-            const minutes = parseInt(e.target.value) || 4;
-            
-            if (!AppState.alankaaramData) {
-                AppState.alankaaramData = {};
-            }
-            if (!AppState.alankaaramData[songIndex]) {
-                AppState.alankaaramData[songIndex] = { enabled: true };
-            }
-            AppState.alankaaramData[songIndex].minutes = minutes;
-            
-            // Auto-save after time change
-            PlaylistStorage.debouncedAutoSave();
-        }
-    }
 }
 
 // Playlist Storage Service - Auto-save/Load functionality
@@ -2582,16 +2562,12 @@ class PlaylistStorage {
             // Restore playlist
             AppState.currentPlaylist = data.playlist;
             
-            // Restore alankaaram data
-            AppState.alankaaramData = {};
-            data.playlist.forEach(song => {
-                if (song.alankaaramEnabled) {
-                    AppState.alankaaramData[song.id] = {
-                        enabled: song.alankaaramEnabled,
-                        time: song.alankaaramTime
-                    };
-                }
-            });
+            // Restore alankaaram data from saved alankaaramData object
+            if (data.alankaaramData) {
+                AppState.alankaaramData = data.alankaaramData;
+            } else {
+                AppState.alankaaramData = {};
+            }
             
             // Restore header data
             if (data.headerData) {

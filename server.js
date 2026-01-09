@@ -1515,10 +1515,19 @@ app.get('/api/playlists/current', async (req, res) => {
         const enrichedSongs = playlistSongs.map(ps => {
             const fullSong = songs.find(s => s.id === ps.song_id);
             return {
-                ...fullSong,
-                alankaaramEnabled: ps.alankaaram_enabled,
-                alankaaramTime: ps.alankaaram_time
+                ...fullSong
             };
+        });
+        
+        // Build alankaaramData object from playlist_songs data
+        const alankaaramData = {};
+        playlistSongs.forEach(ps => {
+            if (ps.alankaaram_enabled) {
+                alankaaramData[ps.song_id] = {
+                    enabled: ps.alankaaram_enabled === 1,
+                    time: ps.alankaaram_time?.toString() || '5'
+                };
+            }
         });
         
         // Get header data
@@ -1552,6 +1561,7 @@ app.get('/api/playlists/current', async (req, res) => {
         
         res.json({
             playlist: enrichedSongs,
+            alankaaramData: alankaaramData,
             headerData: headerData,
             metadata: {
                 playlistName: playlists[0].playlist_name,

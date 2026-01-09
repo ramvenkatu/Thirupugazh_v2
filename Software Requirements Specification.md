@@ -277,7 +277,12 @@ The application is a client-server system.
     * **FR-3.5.1: Checkbox Selection:** Each song row shall include a checkbox in the Alankaaram column allowing users to enable/disable Alankaaram for individual songs.
     * **FR-3.5.2: Time Duration Input:** When Alankaaram is enabled for a song, a time input field shall appear with a default value of 5 minutes, allowing users to specify duration between 1–30 minutes.
     * **FR-3.5.3: Visual Indicators:** The checkbox shall be accompanied by a musical note icon for clear visual identification.
-    * **FR-3.5.4: Data Persistence:** Alankaaram selections and time durations shall be maintained in browser memory until the playlist is cleared or regenerated.
+    * **FR-3.5.4: Persistent Selection State:** Alankaaram selections and time durations shall be preserved across playlist modifications:
+        - **Add Songs:** When new songs are added via AI assistant or manual commands, existing Alankaaram selections remain intact
+        - **Remove Songs:** When a song is deleted from the playlist, its Alankaaram data is automatically removed
+        - **Playlist Refresh:** Any playlist modification that retains existing songs shall preserve their Alankaaram state
+        - **Clear Playlist:** Only the "Clear Playlist" action shall reset all Alankaaram data
+        - **Storage:** Alankaaram data is stored by unique song ID, ensuring selections persist even if songs are reordered
 * **FR-3.6: Alankaaram PDF Display:** The PDF export shall include the Alankaaram column with the following specifications:
     * **FR-3.6.1: Tickmark Display:** Songs with Alankaaram enabled shall show a checkmark (✓) symbol in the Alankaaram column.
     * **FR-3.6.2: Clean Display:** The checkmark displays without time duration for professional, clean appearance.

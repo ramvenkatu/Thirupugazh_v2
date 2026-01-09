@@ -423,17 +423,40 @@ body, h1, h2, h3, h4, h5, h6, .card-title {
     color: var(--hc-text) !important;
 }
 
-/* Function selector cards */
-.function-card {
-    border: 1px solid var(--selector-border);
+/* Function selector buttons */
+.function-btn {
+    transition: all 0.2s ease-in-out;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem; /* Slightly smaller font */
+    background-color: white !important;
+    color: #0d6efd !important;
+    border: 2px solid #0d6efd !important;
 }
 
-.function-card:hover {
-    background-color: rgba(8, 66, 152, 0.08); /* subtle tint of primary */
+.function-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f8f9fa !important;
 }
 
-.function-card .text-primary {
-    color: var(--selector-bg) !important;
+.function-btn.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.function-btn i {
+    transition: transform 0.2s ease-in-out;
+}
+
+.function-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Prarthanai selector buttons - normal size buttons with 20% smaller font */
+.prarthanai-btn {
+    font-size: 0.8rem !important; /* 20% reduction from 1rem base */
 }
 
 /* Selected Function display */
