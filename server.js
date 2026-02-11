@@ -1039,6 +1039,9 @@ app.post('/api/generate-pdf', async (req, res) => {
         <head>
             <meta charset="UTF-8">
             <title>Thirupugazh Playlist</title>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
             <style>
                 @page {
                     size: A4 portrait;
@@ -1063,7 +1066,7 @@ app.post('/api/generate-pdf', async (req, res) => {
                 }
                 
                 body {
-                    font-family: 'Noto Sans Tamil', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    font-family: 'Noto Sans Tamil', 'Noto Serif Tamil', 'Lohit Tamil', 'TSC_Paranar', 'Tamil Sangam MN', 'Nirmala UI', 'Arial Unicode MS', sans-serif;
                     font-size: 11pt;
                     font-weight: bold;
                     font-style: normal;
@@ -1392,7 +1395,15 @@ app.post('/api/generate-pdf', async (req, res) => {
         });
         
         const page = await browser.newPage();
+        
+        // Set content and wait for fonts to load
         await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+        
+        // Wait for fonts to be fully loaded
+        await page.evaluateHandle('document.fonts.ready');
+        
+        // Additional wait to ensure font rendering
+        await page.waitForTimeout(1000);
         
         const pdfBuffer = await page.pdf({
             format: 'A4',
